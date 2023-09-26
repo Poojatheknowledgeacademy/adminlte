@@ -17,3 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+# Ignore the uploads folder within the public directory
+public/Images/
