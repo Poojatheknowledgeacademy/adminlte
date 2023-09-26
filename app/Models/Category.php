@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Slug;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +24,8 @@ class Category extends Model
         'created_by',
     ];
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
         // create a event  on saving
         static::saving(function ($category) {
@@ -34,5 +36,10 @@ class Category extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function slugs()
+    {
+        return $this->morphMany(Slug::class, 'entity');
     }
 }
