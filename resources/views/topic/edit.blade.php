@@ -44,73 +44,66 @@
                                             </span>
                                         @enderror
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="slug">Slug</label>
+                                        <label for="exampleInput2">slug</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                            id="slug" name="slug" value="{{ $topic->slug }}">
+                                            id="exampleInput2" name="slug"  value="{{$topic->slug}}">
                                         @error('slug')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="category_id">Category Name</label>
-                                        <select class="form-control @error('category_id') is-invalid @enderror"
-                                            id="category_id" name="category_id">
-                                            <option value="">Select a category</option> <!-- Default empty option -->
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}"
-                                                    {{ $topic->category_id == $category->id ? 'selected' : '' }}>
-                                                    {{ $category->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('category_id')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
 
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select class="form-control select2bs4 " style="width: 100%;"name="category_id">
 
+                                            @foreach ($categories as $category)
+                                          <option value="{{$category->id}}"{{ $topic->category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
+                                          @endforeach
+                                        </select>
+                                        @error('category_id')
+                                            <span class="error invalid-feedback d-block" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                      </div>
 
-                                    <div class="d-flex form-group">
-                                        <div class="d-flex align-items-center">
-                                            <label for="logo" class="mr-2">Logo</label>
-                                            <input type="file" class="@error('logo') is-invalid @enderror" id="logo"
-                                                name="logo">
-                                            <span class="mx-2">
-                                                <img src="/{{ $topic->logo }}" width="60px" alt="topic Image"
-                                                    id="topicImage">
-                                            </span>
-                                            <span class="mx-2" id="deleteLogo">
-                                                <i class="fas fa-trash text-danger" onclick="removeLogo()"></i>
-                                            </span>
-                                            <span class="mx-2" id="undoLogo" style="display: none;">
-                                                <i class="fas fa-undo text-primary" onclick="undoLogo()"></i>
-                                            </span>
+                                    <div class="form-group">
+                                        <label for="icon">Logo</label>
+                                        <div class="input-group">
+                                            <div class="col-md-6">
+                                                <input type="file" class="form-control @error('logo') is-invalid @enderror"
+                                                id="logo" name="logo"value="{{ $topic->logo }}">
+                                            </div>
+                                            @if ($topic->logo)
+                                                <div class="col-md-3">
+                                                    <img src="{{ asset($topic->logo) }}" alt="Current Icon"
+                                                        class="img-thumbnail" height="50" width="50" id="cLogo">
+                                                    <i class="fas fa-trash text-danger" id="removelogo"
+                                                        onClick="removeLogo()"></i>
+                                                    <input type="hidden"id="removelogotxt" name="removelogotxt" value>
+                                                    <i class="fas fa-undo text-danger" id="undoremocelogo"
+                                                        onClick="undoLogo()" style="display: none";></i>
+                                                </div>
+                                            @endif
+                                            @error('logo')
+                                                <span class="error invalid-feedback d-block" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
-                                    <input type="hidden" id="removelogotxt" name="removelogotxt" value="">
-                                    @error('logo')
-                                        <span class="error invalid-feedback d-block" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-
-
 
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" name="is_active"
-                                                id="customSwitch1" {{ $category->is_active == 1 ? 'checked' : '' }}>
+                                                id="customSwitch1" {{ $topic->is_active == 1 ? 'checked' : '' }}>
                                             <label class="custom-control-label" for="customSwitch1">Active</label>
                                         </div>
                                     </div>
-
 
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>
@@ -124,35 +117,22 @@
         </section>
     </div>
 @endsection
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    function removeIcon() {
-        $('#undoIcon').show();
-        $('#deleteIcon').hide();
-        $('#removeicontxt').val('removed');
-        $('#categoryImage1').attr('src', '{{ asset('Images/NoImage.png') }}');
-    }
-
-    function undoIcon() {
-        $('#undoIcon').hide();
-        $('#deleteIcon').show();
-        $('#removeicontxt').val('');
-        $('#categoryImage1').attr('src', '/{{ $category->icon }}');
-    }
 
     function removeLogo() {
-        $('#undoLogo').show();
-        $('#deleteLogo').hide();
         $('#removelogotxt').val('removed');
-        $('#categoryImage2').attr('src', '{{ asset('Images/NoImage.png') }}');
+        $('#cLogo').attr('src', '{{ asset('Images/icon/no-image.png') }}');
+        $('#removelogo').hide();
+        $('#undoremocelogo').show();
     }
 
     function undoLogo() {
-        $('#undoLogo').hide();
-        $('#deleteLogo').show();
-        $('#removelogotxt').val('');
-        $('#categoryImage2').attr('src', '/{{ $category->logo }}');
+        $('#removelogotxt').val(null);
+        $('#cLogo').attr('src', '{{ asset($topic->logo) }}');
+        $('#removelogo').show();
+        $('#undoremocelogo').hide();
     }
+
 </script>
