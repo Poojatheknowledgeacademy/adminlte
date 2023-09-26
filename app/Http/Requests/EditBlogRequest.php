@@ -24,6 +24,7 @@ class EditBlogRequest extends FormRequest
         return [
             'category_id'=>'required',
             'title'=>'required|string|min:3|max:100',
+            'slug'=>'required|string|min:3|max:100',
             'short_description'=>'required|string|min:10|max:200',
             'summary'=>'required',
             'featured_img1'=>'sometimes|required|image|mimes:jpeg,png,jpg,gif|max:2048',

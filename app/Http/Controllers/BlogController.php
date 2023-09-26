@@ -32,6 +32,8 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
+       // print_r($request->all());
+       // die();
         $image1 = $request->file('featured_img1');
         $image1name = time() . '_' . $image1->getClientOriginalName();
         $image1location = 'Images/featureimage1/';
@@ -88,6 +90,7 @@ class BlogController extends Controller
         $blog->category_id = $request->category_id;
         $blog->is_popular = $popular;
         $blog->title = $request->title;
+        $blog->slug = $request->slug;
         $blog->short_description = $request->short_description;
         $blog->summary = $request->summary;
         $blog->author_name = $request->author_name;

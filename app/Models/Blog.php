@@ -18,6 +18,7 @@ class Blog extends Model
         'category_id',
 
         'title',
+        'slug',
 
         'short_description',
 
