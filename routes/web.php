@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('blogs', BlogController::class);
     Route::resource('topic',TopicController::class);
     Route::resource('course',CourseController ::class);
+    Route::resource('tag',TagController ::class);
 });

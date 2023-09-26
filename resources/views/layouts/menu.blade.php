@@ -35,3 +35,10 @@
         <p>Course</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('tag.index') }}" class="nav-link {{ Request::is('tag') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Tags</p>
+    </a>
+</li>
