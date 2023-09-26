@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Slug;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -16,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(2);
+        $categories = Category::paginate(10);
         return view('category.list', compact('categories'));
     }
 
@@ -64,7 +65,7 @@ class CategoryController extends Controller
         $is_technical = $request->is_technical == "on" ? 1 : 0;
 
 
-        Category::create([
+        $category = Category::create([
             'name' => $request->name,
             'slug' => $request->slug,
             'icon' => $icon_location . $icon_name,
@@ -73,6 +74,12 @@ class CategoryController extends Controller
             'is_popular' => $is_popular,
             'is_technical' => $is_technical
         ]);
+
+
+
+        $slug = new Slug;
+        $slug->slug =$request->slug;
+        $category->slugs()->save($slug);
 
         session()->flash('success', 'Category Created successfully.');
         return redirect()->route('category.index');
@@ -147,6 +154,9 @@ class CategoryController extends Controller
             'is_popular' => $is_popular,
             'is_technical' => $is_technical
         ]);
+
+        $category->slugs()->update(['slug'=>$request->slug]);
+
         session()->flash('success', 'Category updated successfully.');
         return redirect()->route('category.index');
     }
