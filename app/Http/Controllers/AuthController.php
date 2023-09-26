@@ -18,21 +18,20 @@ class AuthController extends Controller
 
     public function customLogin(Request $request)
     {
-
-      
         $request->validate([
             'email' => 'required',
             'password' => 'required',
+
         ]);
 
         $credentials = $request->only('email', 'password');
-      
         if (Auth::attempt($credentials)) {
-           
-            return redirect()->route('user.index')->withSuccess('Signed in');;
+            return redirect()->route('user.index')->withSuccess('Signed in');
+        }else{
+            return redirect("login")->with('error', 'Login details are not valid');
+
         }
 
-        return redirect("login")->withSuccess('Login details are not valid');
     }
 
 
