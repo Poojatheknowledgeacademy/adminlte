@@ -45,6 +45,14 @@
     <!-- BS Stepper -->
     <link rel="stylesheet" href="{{ asset('plugins/bs-stepper/css/bs-stepper.min.css') }}">
 
+    <!-- select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    {{-- <style>
+        #pieces {
+            width: 100%;
+        }
+    </style> --}}
+
 
 
 </head>
@@ -173,6 +181,10 @@
     <script src="{{ asset('adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <!-- BS-Stepper -->
     <script src="{{ asset('adminlte/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
+    <!-- select2 -->
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
     <script>
         $(function() {
@@ -205,6 +217,16 @@
 
 
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#pieces').select2({
+                tags: true
+            });
+            $('#show').on('click', function(e) {
+                alert($('#pieces').val());
+            });
+        });
     </script>
 
 
