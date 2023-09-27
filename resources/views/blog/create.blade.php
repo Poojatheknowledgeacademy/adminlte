@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
     {{-- @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif --}}
+<div class="alert alert-danger">
+   <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+   </ul>
+</div>
+@endif --}}
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -41,19 +41,17 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <select name="category_id" class="form-control select2bs4 @error('category_id') is-invalid @enderror">
+                                    <select name="category_id"
+                                        class="form-control select2bs4 @error('category_id') is-invalid @enderror">
                                         <option value="">Select a category</option>
                                         @foreach ($category as $categories)
                                             <option value="{{ $categories->id }}">{{ $categories->name }}</option>
-
                                         @endforeach
-
                                     </select>
                                     @error('category_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="form-group">
                                     <label>Slug</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
@@ -81,9 +79,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Summary</label>
-                                    {{-- <textarea id="summernote">
-                                        Place <em>some</em> <u>text</u> <strong>here</strong>
-                                      </textarea> --}}
                                     <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary') }}</textarea>
                                     @error('summary')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -99,7 +94,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Featured image2</label>
-
                                     <div class="custom-file">
                                         <input type="file"
                                             class="form-control @error('featured_img2') is-invalid @enderror"
@@ -108,7 +102,6 @@
                                     @error('featured_img2')
                                         <div class="error invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
-
                                 </div>
                                 <div class="form-group">
                                     <label>Author Name</label>
@@ -131,31 +124,15 @@
                                         @enderror
                                     </div>
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label>Tag</label>
-                                    <div style="width: 50%">
-                                        <select id="pieces" nam="tag" class="form-control select2bs4 @error('tag') is-invalid @enderror" multiple>
-                                        </select>
-                                      </div>
-
-
-                                </div> --}}
                                 <div class="form-group">
-
                                     <label>Tags</label>
-
-                                    <select class="select2" name="tagname1" multiple="multiple"  style="width: 100%;" id="pieces">
+                                    <select class="select2" name="tagname1" multiple="multiple" style="width: 100%;"
+                                        id="pieces">
                                         <option value="">select tag</option>
                                         @foreach ($tags as $tag)
-
-                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-
-
-
-                                    @endforeach
-
+                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                        @endforeach
                                     </select>
-
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
@@ -180,10 +157,5 @@
                 </div>
             </div>
         </div>
-        </div>
     </section>
-    </div>
 @endsection
-
-
-
