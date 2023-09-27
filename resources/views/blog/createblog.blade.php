@@ -53,6 +53,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="form-group">
                                     <label>Slug</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
@@ -130,6 +131,32 @@
                                         @enderror
                                     </div>
                                 </div>
+                                {{-- <div class="form-group">
+                                    <label>Tag</label>
+                                    <div style="width: 50%">
+                                        <select id="pieces" nam="tag" class="form-control select2bs4 @error('tag') is-invalid @enderror" multiple>
+                                        </select>
+                                      </div>
+
+
+                                </div> --}}
+                                <div class="form-group">
+
+                                    <label>Tags</label>
+
+                                    <select class="select2" name="tagname1" multiple="multiple"  style="width: 100%;" id="pieces">
+                                        <option value="">select tag</option>
+                                        @foreach ($tags as $tag)
+
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+
+
+
+                                    @endforeach
+
+                                    </select>
+
+                                </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="customSwitch1"
@@ -157,3 +184,6 @@
     </section>
     </div>
 @endsection
+
+
+
