@@ -20,19 +20,19 @@ use App\Http\Controllers\TagController;
 |
 */
 
-
-Route::get('/login',         [AuthController::class, 'index'])->name('login');
+Route::get('/',             [AuthController::class, 'index'])->name('login');
+Route::get('/login',        [AuthController::class, 'index'])->name('login');
 Route::post('custom-login', [AuthController::class, 'customLogin'])->name('login.custom');
-Route::post('logout',        [AuthController::class, 'logout'])->name('logout');
+Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', [UserController::class, 'index'])->name('user.index');
 
-    Route::resource('users',   UserController::class);
+    Route::get('dashboard',     [UserController::class, 'index'])->name('user.index');
+    Route::resource('users',    UserController::class);
     Route::resource('category', CategoryController::class);
-    Route::resource('blogs', BlogController::class);
-    Route::resource('topic',TopicController::class);
-    Route::resource('course',CourseController ::class);
-    Route::resource('tag',TagController ::class);
+    Route::resource('blogs',    BlogController::class);
+    Route::resource('topic',    TopicController::class);
+    Route::resource('course',   CourseController ::class);
+    Route::resource('tag',      TagController ::class);
 });

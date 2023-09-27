@@ -37,6 +37,7 @@
                                 <form method="POST" action="{{ route('tag.update', $tag->id) }}">
                                     @csrf
                                     @method('PUT') <!-- Use the PUT method for updating -->
+
                                     <div class="form-group">
                                         <label for="name">Name</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -48,7 +49,6 @@
                                         @enderror
                                     </div>
 
-
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" name="is_active"
@@ -56,7 +56,6 @@
                                             <label class="custom-control-label" for="customSwitch1">Active</label>
                                         </div>
                                     </div>
-
 
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>

@@ -9,8 +9,6 @@ use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-
-
 class TagController extends Controller
 {
     /**
