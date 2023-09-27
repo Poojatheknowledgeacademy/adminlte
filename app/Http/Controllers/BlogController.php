@@ -1,23 +1,29 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\EditBlogRequest;
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Category;
 use Illuminate\Http\Request;
-class BlogController extends Controller {
+
+class BlogController extends Controller
+{
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
         $blog = Blog::paginate(2);
         return view('blog.list', compact('blog'));
     }
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create()
+    {
         $category = Category::all();
         $tags = Tag::where('is_active', 1)->get();
         return view('blog.create', compact('category', 'tags'));
@@ -25,46 +31,72 @@ class BlogController extends Controller {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBlogRequest $request) {
+    public function store(StoreBlogRequest $request)
+    {
+
         $image1 = $request->file('featured_img1');
         $image1name = time() . '_' . $image1->getClientOriginalName();
         $image1location = 'Images/featureimage1/';
         $image1->move($image1location, $image1name);
         $filepath1 = $image1location . $image1name;
+
         $image2 = $request->file('featured_img2');
         $image2name = time() . '_' . $image2->getClientOriginalName();
         $image2location = 'Images/featureimage2/';
         $image2->move($image2location, $image2name);
         $filepath2 = $image2location . $image2name;
+
         $id = auth()->user()->id;
         if ($request->is_popular == 'on') {
             $popular = '1';
         } else {
             $popular = '0';
         }
-        $data = $request->validated();
+
         $blog = Blog::create(array_merge($request->all(), ["created_by" => $id, "is_popular" => $popular, "featured_img1" => $filepath1, "featured_img2" => $filepath2]));
-        $blog->slugs()->create(['slug' => $request->slug, ]);
+        $blog->slugs()->create(['slug' => $request->slug,]);
+
+        $tags = $request->tags;
+        if (!empty($tags)) {
+            $tagIds = [];
+            foreach ($tags as $tagname) {
+                $tag = Tag::find($tagname);
+
+                if (!$tag) {
+                    $newTag = new Tag();
+                    $newTag->name = $tagname;
+                    $newTag->save();
+                    $tagIds[] = $newTag->id;
+                } else {
+                    $tagIds[] = $tag->id;
+                }
+            }
+            $blog->tags()->sync($tagIds);
+        }
+
         return redirect()->route('blogs.index')->with('success', 'Blog Created Successfully.');
     }
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog) {
+    public function show(Blog $blog)
+    {
         //
 
     }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Blog $blog) {
+    public function edit(Blog $blog)
+    {
         $category = category::all();
         return view('blog.edit', compact('blog', 'category'));
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditBlogRequest $request, Blog $blog) {
+    public function update(EditBlogRequest $request, Blog $blog)
+    {
         if ($request->is_popular == 'on') {
             $popular = '1';
         } else {
@@ -111,7 +143,8 @@ class BlogController extends Controller {
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blog $blog) {
+    public function destroy(Blog $blog)
+    {
         //
         $post = blog::find($blog->id);
         $post->delete();

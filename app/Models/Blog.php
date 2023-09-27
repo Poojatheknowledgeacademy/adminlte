@@ -56,4 +56,8 @@ class Blog extends Model
 
         return $this->morphMany(Slug::class, 'entity');
     }
+
+    public function tags(){
+      return $this->belongsToMany('App\Models\Tag','blog_tags','blog_id','tag_id');
+     }
 }

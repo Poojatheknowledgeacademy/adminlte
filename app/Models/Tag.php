@@ -33,4 +33,8 @@ class Tag extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function blogs(){
+      return $this->belongsToMany('App\Models\Blog','blog_tags','tag_id','blog_id');
+     }
+
 }
