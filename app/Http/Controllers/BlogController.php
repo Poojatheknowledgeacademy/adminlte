@@ -53,7 +53,23 @@ class BlogController extends Controller
             $popular = '0';
         }
 
-        $blog = Blog::create(array_merge($request->all(), ["created_by" => $id, "is_popular" => $popular, "featured_img1" => $filepath1, "featured_img2" => $filepath2]));
+
+
+        $blog = Blog::create([
+            "category_id" => $request->category_id,
+            "title" => $request->title,
+            "short_description" => $request->short_description,
+            "summary" => $request->summary,
+            "featured_img1" => $filepath1,
+            "featured_img2" => $filepath2,
+            "author_name" => $request->author_name,
+            "is_popular" => $popular,
+            "views_count" => $request->views_count,
+            "order_sequence" => $request->order_sequence,
+            "added_date" => $request->added_date,
+            "created_by" => $id,
+            "is_active" => $request->is_active,
+        ]);
         $blog->slugs()->create(['slug' => $request->slug,]);
 
         $tags = $request->tags;

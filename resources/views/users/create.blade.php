@@ -32,20 +32,31 @@
                             <div class="card-body">
                                 <form method="POST" action="{{ route('users.store') }}">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Name</label>
-                                        <input type="name" class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1"
-                                         placeholder="Enter email" name="name">
-                                         @error('name')
+                                        <input type="text" class="form-control" id="name" placeholder="Enter email" name="name">
+                                        <span id="name-error" class="error invalid-feedback" role="alert"></span>
+                                    </div>
+
+
+
+                                    {{-- <div class="form-group">
+                                        <label for="exampleInputEmail1">Name</label>
+                                        <input type="name" class="form-control @error('name') is-invalid @enderror"
+                                            id="exampleInputEmail1" placeholder="Enter email" name="name">
+                                        @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
+
+
                                             </span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email </label>
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1"
-                                        placeholder="Enter email" name="email">
+                                        <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                            id="exampleInputEmail1" placeholder="Enter email" name="email">
                                         @error('email')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -54,14 +65,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Password </label>
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputEmail1"
-                                        placeholder="Enter Passsword" name="password">
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                            id="exampleInputEmail1" placeholder="Enter Passsword" name="password">
                                         @error('password')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Create</button>
                                     </div>
@@ -74,3 +85,24 @@
         </section>
     </div>
 @endsection
+<script>
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('name-error');
+
+    nameInput.addEventListener('blur', validateName);
+    nameInput.addEventListener('input', clearNameError);
+
+    function validateName() {
+        if (nameInput.value.trim() === '') {
+            nameError.textContent = 'Name is required!';
+        } else {
+            // Perform your server-side validation here if needed
+            nameError.textContent = ''; // Clear the error message
+        }
+    }
+
+    function clearNameError() {
+        nameError.textContent = ''; // Clear the error message while typing
+    }
+</script>
+

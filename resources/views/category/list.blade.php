@@ -58,7 +58,6 @@
 
                                                 <th scope="col">Category Id</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col">Slug</th>
                                                 <th scope="col">Icon</th>
                                                 <th scope="col">Logo</th>
                                                 <th scope="col">Active</th>
@@ -75,19 +74,18 @@
                                                 <tr>
                                                     <th scope="row">{{ $category->id }}</th>
                                                     <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->slug }}</td>
                                                     <td>
                                                         @if ($category->icon)
                                                             <i class="fas fa-check text-primary"></i>
                                                         @else
-                                                            <i class="fas fa-times text-danger"></i>
+                                                            <i class="fas fa-times text-secondary"></i>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($category->logo)
                                                             <i class="fas fa-check text-primary"></i>
                                                         @else
-                                                            <i class="fas fa-times text-danger"></i>
+                                                            <i class="fas fa-times text-secondary"></i>
                                                         @endif
                                                     </td>
                                                     <td>

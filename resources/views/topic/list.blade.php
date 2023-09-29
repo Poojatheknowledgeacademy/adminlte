@@ -58,8 +58,7 @@
 
                                                 <th scope="col">Id</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col">Slug</th>
-                                                <th scope="col">Category Id</th>
+                                                 <th scope="col">Category Name</th>
                                                 <th scope="col">Logo</th>
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Created By</th>
@@ -73,13 +72,12 @@
                                                 <tr>
                                                     <th scope="row">{{ $topic->id }}</th>
                                                     <td>{{ $topic->name }}</td>
-                                                    <td>{{ $topic->slug }}</td>
-                                                    <td>{{ $topic->category_id }}</td>
+                                                    <td>{{ $topic->category->name }}</td>
                                                     <td>
                                                         @if ($topic->logo)
                                                             <i class="fas fa-check text-primary"></i>
                                                         @else
-                                                            <i class="fas fa-times text-danger"></i>
+                                                            <i class="fas fa-times text-secondary"></i>
                                                         @endif
                                                     </td>
 
