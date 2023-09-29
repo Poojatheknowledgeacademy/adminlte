@@ -30,6 +30,7 @@ class StoreBlogRequest extends FormRequest
             'featured_img2'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'author_name'=>'required|string|min:2|max:50',
             'added_date'=>'required|date',
+            'tags'=>'required',
 
         ];
     }
