@@ -58,7 +58,6 @@ class TopicController extends Controller
 
         $topic = Topic::create([
             'name' => $request->name,
-            'slug' => $request->slug,
             'category_id' => $category_id,
             'logo' => $logo_location . $logo_name,
             'is_active' => $is_active,
@@ -113,7 +112,6 @@ class TopicController extends Controller
 
         $topic->update([
             'name' => $request->name,
-            'slug' => $request->slug,
             'category_id' => $request->category_id,
             'logo' => $request->logo,
             'is_active' => $is_active,
