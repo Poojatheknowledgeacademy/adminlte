@@ -43,10 +43,6 @@
                                             <th scope="col">Id</th>
                                             <th scope="col">category Name</th>
                                             <th scope="col">Title</th>
-                                            {{-- <th scope="col">Short Description</th>
-                                            <th scope="col">Summary</th> --}}
-                                            {{-- <th scope="col">Featured Image1</th>
-                                            <th scope="col">Featured Image2</th> --}}
                                             <th scope="col">Author Name</th>
                                             <th scope="col">Is_Popular</th>
                                             <th scope="col">Is_Active</th>
@@ -58,13 +54,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @php
-                                            $id = 1;
-                                        @endphp --}}
+
                                         @foreach ($blog as $blogs)
                                             <tr>
                                                 <td>{{ $blogs->id }}</td>
-                                                <td>{{$blogs->category->name }}</td>
+                                                <td>{{ $blogs->category->name }}</td>
                                                 <td>{{ $blogs->title }}</td>
                                                 {{-- <td>{{ $blogs->short_description }}</td>
                                                 <td>{{ $blogs->summary }}</td> --}}
@@ -74,25 +68,21 @@
                                                         width="100" height="100"></td> --}}
                                                 <td>{{ $blogs->author_name }}</td>
 
-                                                @if ($blogs->is_popular == '1')
-                                                    <td>
-                                                        <i class="fas fa-check" style="font-size: 24px; color: green;"></i>
-                                                    </td>
-                                                @else
-                                                    <td>
-                                                        <i class="fas fa-times" style="font-size: 24px; color: red;"></i>
-                                                    </td>
-                                                @endif
+                                                <td>
+                                                    @if ($blogs->is_popular == 1)
+                                                        <i class="fas fa-check text-primary"></i>
+                                                    @else
+                                                        <i class="fas fa-times text-secondary"></i>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($blogs->is_active == 1)
+                                                        <i class="fas fa-toggle-on text-primary"></i>
+                                                    @else
+                                                        <i class="fas fa-toggle-on text-secondary"></i>
+                                                    @endif
+                                                </td>
 
-                                                @if ($blogs->is_active == '1')
-                                                    <td>
-                                                        <i class="fas fa-check" style="font-size: 24px; color: green;"></i>
-                                                    </td>
-                                                @else
-                                                    <td>
-                                                        <i class="fas fa-times" style="font-size: 24px; color: red;"></i>
-                                                    </td>
-                                                @endif
                                                 <td>{{ $blogs->added_date }}</td>
 
 
@@ -106,13 +96,21 @@
                                                 @endif
                                                 <td>{{ $blogs->updated_at->format('Y-m-d') }}</td>
                                                 <td>{{ $blogs->updated_at->format('H:i:s') }}</td>
+
                                                 <td>
-                                                    <form action="{{ route('blogs.destroy', $blogs->id) }}" method="POST">
-                                                        <a class="btn btn-primary"
-                                                            href="{{ route('blogs.edit', $blogs->id) }}"><i class="fa fa-edit"></i></a>
+                                                    <a href="{{ route('blogs.edit', $blogs->id) }}"><i
+                                                            class="fas fa-edit"></i></a>
+
+                                                    <a href="{{ route('blogs.destroy', $blogs->id) }}" class="delete-link"
+                                                        onclick="event.preventDefault(); document.getElementById('delete-form-{{ $blogs->id }}').submit();">
+                                                        <i class="fas fa-trash text-danger"></i>
+                                                        <!-- Move the closing </i> tag here -->
+                                                    </a>
+                                                    <form id="delete-form-{{ $blogs->id }}"
+                                                        action="{{ route('blogs.destroy', $blogs->id) }}" method="POST"
+                                                        style="display: none;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

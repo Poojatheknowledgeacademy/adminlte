@@ -33,15 +33,8 @@
                                 <form method="POST" action="{{ route('users.store') }}">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
+
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Name</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Enter email" name="name">
-                                        <span id="name-error" class="error invalid-feedback" role="alert"></span>
-                                    </div>
-
-
-
-                                    {{-- <div class="form-group">
                                         <label for="exampleInputEmail1">Name</label>
                                         <input type="name" class="form-control @error('name') is-invalid @enderror"
                                             id="exampleInputEmail1" placeholder="Enter email" name="name">
@@ -72,7 +65,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div> --}}
+                                    </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Create</button>
                                     </div>
