@@ -117,17 +117,17 @@
 <script>
     $(document).ready(function() {
         // Attach input event listeners to the input fields
-        $('input[name="category_name"]').on('input', function() {
+        $('#category_name').on('input', function() {
             removeErrorMessages($(this));
         });
 
-        $('input[name="category_slug"]').on('input', function() {
+        $('#category_slug').on('input', function() {
             removeErrorMessages($(this));
         });
-        $('input[name="icon"]').on('input', function() {
+        $('#icon').on('input', function() {
             removeErrorMessages($(this));
         });
-        $('input[name="logo"]').on('input', function() {
+        $('#logo').on('input', function() {
             removeErrorMessages($(this));
         });
         // Function to remove error messages and reset input field's border
