@@ -32,7 +32,7 @@
                                 <form method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Name</label>
+                                        <label for="exampleInputEmail1">Name<span class="text-danger">*</label>
                                         <input type="text" id="category_name"
                                             class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1"
                                             name="name" placeholder="Enter name">
@@ -43,7 +43,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Slug</label>
+                                        <label for="exampleInputEmail1">Slug<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
                                             id="exampleInputEmail1" id="category_slug" name="slug"
                                             placeholder="Enter slug">
@@ -54,7 +54,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputFile">Icon</label>
+                                        <label for="exampleInputFile">Icon<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file"
@@ -69,7 +69,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputFile">logo</label>
+                                        <label for="exampleInputFile">logo<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <input type="file" class="form-control @error('logo') is-invalid @enderror"
                                                 id="logo" name="logo">
