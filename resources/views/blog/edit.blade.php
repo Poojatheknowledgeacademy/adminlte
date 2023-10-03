@@ -81,7 +81,6 @@
                                     @enderror
                                 </div>
 
-
                                 <div class="form-group">
                                         <label for="icon">Featured image1</label>
                                         <div class="input-group">
@@ -89,31 +88,29 @@
                                                 <input type="file"
                                                     class="form-control @error('featured_img1') is-invalid @enderror" id="featured_img1"
                                                     name="featured_img1">
-                                            </div>
-                                            @if ($blog->featured_img1)
-                                            <div class="col-md-3">
-                                                <img src="{{ asset($blog->featured_img1) }}" alt="Current feature image 1"
-                                                    class="img-thumbnail" height="50" width="50" id="cIcon">
-                                                <i class="fas fa-trash text-danger" id="removefeatureimage1"
-                                                    onClick="removefeatureimage1()"></i>
-                                                <input type="hidden"id="removefeature1txt" name="removefeature1txt" value>
-                                                <i class="fas fa-undo text-danger" id="undoremovefimage1"
-                                                    onClick="undofeatureimage1()" style="display: none";></i>
-                                            </div>
-                                            @error('featured_img1')
+
+                                            </div>@if ($blog->featured_img1)
+                                                <div class="col-md-3">
+                                                    <img src="{{ asset($blog->featured_img1) }}" alt="Current feature image 1"
+                                                        class="img-thumbnail" height="50" width="50" id="cIcon">
+                                                    <i class="fas fa-trash text-danger" id="removefeatureimage1"
+                                                        onClick="removefeatureimage1()"></i>
+                                                    <input type="hidden"id="removefeature1txt" name="removefeature1txt" value>
+                                                    <i class="fas fa-undo text-danger" id="undoremovefimage1"
+                                                        onClick="undofeatureimage1()" style="display: none";></i>
+                                                </div>
+                                                @error('featured_img1')
                                                 <span class="error invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         @else
-                                             <!-- <div class="col-md-3">
-                                                <img src="{{ asset('Images/featureimage1/no-image.png') }}" alt="No Image"
-                                                    class="img-thumbnail" height="50" width="50" id="cIcon">  -->
-                                            </div>
                                         @endif
                                     </div>
-                                </div>  
+                                </div>
 
+                
+                                
                                 <div class="form-group">
                                         <label for="icon">Featured image2</label>
                                         <div class="input-group">
@@ -121,30 +118,27 @@
                                                 <input type="file"
                                                     class="form-control @error('featured_img2') is-invalid @enderror" id="featured_img2"
                                                     name="featured_img2">
-                                            </div>
-                                            @if ($blog->featured_img1)
-                                            <div class="col-md-3">
-                                                <img src="{{ asset($blog->featured_img2) }}" alt="Current feature image 2"
-                                                    class="img-thumbnail" height="50" width="50" id="cIcon">
-                                                <i class="fas fa-trash text-danger" id="removefeatureimage2"
-                                                    onClick="removefeatureimage2()"></i>
-                                                <input type="hidden"id="removefeature2txt" name="removefeature1txt" value>
-                                                <i class="fas fa-undo text-danger" id="undoremovefimage2"
-                                                    onClick="undofeatureimage2()" style="display: none";></i>
-                                            </div>
-                                            @error('featured_img2')
+                                                    
+                                            </div>@if ($blog->featured_img2)
+                                                <div class="col-md-3">
+                                                    <img src="{{ asset($blog->featured_img2) }}" alt="Current feature image 2"
+                                                        class="img-thumbnail" height="50" width="50" id="cIcon">
+                                                    <i class="fas fa-trash text-danger" id="removefeatureimage2"
+                                                        onClick="removefeatureimage2()"></i>
+                                                    <input type="hidden"id="removefeature2txt" name="removefeature2txt" value>
+                                                    <i class="fas fa-undo text-danger" id="undoremovefimage2"
+                                                        onClick="undofeatureimage2()" style="display: none";></i>
+                                                </div>
+                                                @error('featured_img2')
                                                 <span class="error invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         @else
-                                             <!-- <div class="col-md-3">
-                                                <img src="{{ asset('Images/featureimage1/no-image.png') }}" alt="No Image"
-                                                    class="img-thumbnail" height="50" width="50" id="cIcon">  -->
-                                            </div>
                                         @endif
                                     </div>
-                                </div>  
+                                </div>
+
 
                                 <div class="form-group">
                                     <label>Author Name</label>

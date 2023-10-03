@@ -58,6 +58,7 @@ class BlogController extends Controller
         $blog = Blog::create([
             "category_id" => $request->category_id,
             "title" => $request->title,
+            "slug" => $request->slug,
             "short_description" => $request->short_description,
             "summary" => $request->summary,
             "featured_img1" => $filepath1,
