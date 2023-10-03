@@ -67,14 +67,12 @@ class CategoryController extends Controller
 
         $category = Category::create([
             'name' => $request->name,
-            'slug' => $request->slug,
             'icon' => $icon_location . $icon_name,
             'logo' => $logo_location . $logo_name,
             'is_active' => $is_active,
             'is_popular' => $is_popular,
             'is_technical' => $is_technical
         ]);
-
 
 
         $slug = new Slug;
@@ -147,7 +145,6 @@ class CategoryController extends Controller
 
         $category->update([
             'name' => $request->name,
-            'slug' => $request->slug,
             'icon' => $category->icon,
             'logo' => $category->logo,
             'is_active' => $is_active,

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
@@ -33,26 +34,28 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Name</label>
-                                        <input type="text" id="category_name"
-                                            class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1"
-                                            name="name" placeholder="Enter name">
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                            id="exampleInputEmail1" name="name" placeholder="Enter name">
+
                                         @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Slug</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                            id="exampleInputEmail1" id="category_slug" name="slug"
-                                            placeholder="Enter slug">
+                                            id="exampleInputEmail1" name="slug" placeholder="Enter slug">
+
                                         @error('slug')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+
                                     <div class="form-group">
                                         <label for="exampleInputFile">Icon</label>
                                         <div class="input-group">
@@ -68,6 +71,7 @@
                                             </span>
                                         @enderror
                                     </div>
+
                                     <div class="form-group">
                                         <label for="exampleInputFile">logo</label>
                                         <div class="input-group">
@@ -80,27 +84,29 @@
                                             </span>
                                         @enderror
                                     </div>
+
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_active"
-                                                id="customSwitch1" checked>
+                                            <input type="checkbox" class="custom-control-input" name="is_active" id="customSwitch1" checked>
                                             <label class="custom-control-label" for="customSwitch1">Active</label>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_popular"
-                                                id="customSwitch2" checked>
+                                            <input type="checkbox" class="custom-control-input" name="is_popular" id="customSwitch2" checked>
                                             <label class="custom-control-label" for="customSwitch2">Popular</label>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_technical"
-                                                id="customSwitch3" checked>
+                                            <input type="checkbox" class="custom-control-input" name="is_technical" id="customSwitch3" checked>
                                             <label class="custom-control-label" for="customSwitch3">Technical</label>
                                         </div>
                                     </div>
+
+
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Create</button>
                                     </div>
@@ -113,34 +119,21 @@
         </section>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+{{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // Attach input event listeners to the input fields
-        $('#category_name').on('input', function() {
-            removeErrorMessages($(this));
-        });
-
-        $('#category_slug').on('input', function() {
-            removeErrorMessages($(this));
-        });
-        $('#icon').on('input', function() {
-            removeErrorMessages($(this));
-        });
-        $('#logo').on('input', function() {
-            removeErrorMessages($(this));
-        });
-        // Function to remove error messages and reset input field's border
-        function removeErrorMessages(inputField) {
-            // Find the parent element and then find the error message element
-            var parent = inputField.closest('.form-group');
-            var errorElement = parent.find('.error');
-
-            // Remove the error message if it exists
-            errorElement.remove();
-
-            // Remove the is-invalid class to reset the input field's border
-            inputField.removeClass('is-invalid');
-        }
+    $(function () {
+      bsCustomFileInput.init();
     });
-</script>
+    </script>
+
+<script>
+    $('#logo').on('change', function() {
+        alert('fjkh');
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+    })
+</script> --}}

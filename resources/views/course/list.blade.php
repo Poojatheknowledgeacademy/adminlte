@@ -58,15 +58,16 @@
 
                               {{-- <td></td> --}}
                               <td>{{ $courses->name }}</td>
-                              @if ($courses->is_active == '1')
+
                               <td>
-                                 <i class="fas fa-check" style="font-size: 24px; color: green;"></i>
-                              </td>
-                              @else
-                              <td>
-                                 <i class="fas fa-times" style="font-size: 24px; color: red;"></i>
-                              </td>
-                              @endif
+                                @if ($courses->is_active == 1)
+                                    <i class="fas fa-toggle-on text-primary"></i>
+                                @else
+                                    <i class="fas fa-toggle-on text-secondary"></i>
+                                @endif
+                            </td>
+
+                             
                               @if ($courses->createdBy)
                               <td>
                                  {{ $courses->createdBy->name }}
@@ -76,15 +77,24 @@
                               @endif
                               <td>{{ $courses->updated_at->format('Y-m-d') }}</td>
                               <td>{{ $courses->updated_at->format('H:i:s') }}</td>
+
                               <td>
-                                 <form action="{{ route('course.destroy', $courses->id) }}" method="POST">
-                                    <a class="btn btn-primary"
-                                       href="{{ route('course.edit', $courses->id) }}"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('course.edit', $courses->id) }}"><i
+                                        class="fas fa-edit"></i></a>
+
+                                <a href="{{ route('course.destroy', $courses->id) }}"
+                                    class="delete-link"
+                                    onclick="event.preventDefault(); document.getElementById('delete-form-{{ $courses->id }}').submit();">
+                                    <i class="fas fa-trash text-danger"></i>
+                                    <!-- Move the closing </i> tag here -->
+                                </a>
+                                <form id="delete-form-{{ $courses->id }}"
+                                    action="{{ route('course.destroy', $courses->id) }}"
+                                    method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                 </form>
-                              </td>
+                                </form>
+                            </td>
                            </tr>
                            @endforeach
                         </tbody>

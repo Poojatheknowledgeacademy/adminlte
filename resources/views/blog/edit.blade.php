@@ -38,12 +38,10 @@
                                         class="form-control select2bs4 @error('category_id') is-invalid @enderror">
                                         <option value="">Select a category</option>
                                         @foreach ($category as $categories)
-                                            {{-- <option value="{{ $categories->id }}">{{ $categories->name }}</option> --}}
                                             <option value="{{ $categories->id }}"
                                                 {{ $categories->id == $blog->category_id ? 'selected' : '' }}>
                                                 {{ $categories->name }}</option>
                                         @endforeach
-
                                     </select>
                                     @error('category_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -82,88 +80,66 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label>Featured image1</label>
-                                    <input type="file" class=" @error('featured_img1') is-invalid @enderror"
-                                        name="featured_img1" value="{{ $blog->featured_img1 }}">
-                                        <img id="myImage" src="{{asset($blog->featured_img1 )}}" width="70px" height="70px">
-                                        <button id="hideButton"  type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                        <button id="undoButton" style="display: none;">Undo</button>
-                                    @error('featured_img1')
-                                        <div class="error invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
+
                                 <div class="form-group">
-                                    <label>Featured image1</label>
-                                    <div class="col-md-6">
+                                        <label for="icon">Featured image1</label>
+                                        <div class="input-group">
+                                            <div class="col-md-6">
+                                                <input type="file"
+                                                    class="form-control @error('featured_img1') is-invalid @enderror" id="featured_img1"
+                                                    name="featured_img1">
 
-                                        <input type="file"
-                                            class="form-control @error('featured_img1') is-invalid @enderror"
-                                            id="featured_img1" name="featured_img1">
-                                        @if ($blog->featured_img1)
-                                            <div class="col-md-3">
-                                                <img src="{{ asset($blog->featured_img1) }}" alt="Current fetureimage1"
-                                                    class="img-thumbnail" height="50" width="50" id="cIcon">
-
-                                                <i class="fas fa-trash text-danger" id="removefeatureimage1"
-                                                    onClick="removefeatureimage1()"></i>
-
-                                                <input type="hidden"id="removefeature1txt" name="removefeature1txt" value>
-
-                                                <i class="fas fa-undo text-danger" id="undoremovefimage1"
-                                                    onClick="undofeatureimage1()" style="display: none";></i>
-                                            </div>
-                                            @error('featured_img1')
+                                            </div>@if ($blog->featured_img1)
+                                                <div class="col-md-3">
+                                                    <img src="{{ asset($blog->featured_img1) }}" alt="Current feature image 1"
+                                                        class="img-thumbnail" height="50" width="50" id="cIcon">
+                                                    <i class="fas fa-trash text-danger" id="removefeatureimage1"
+                                                        onClick="removefeatureimage1()"></i>
+                                                    <input type="hidden"id="removefeature1txt" name="removefeature1txt" value>
+                                                    <i class="fas fa-undo text-danger" id="undoremovefimage1"
+                                                        onClick="undofeatureimage1()" style="display: none";></i>
+                                                </div>
+                                                @error('featured_img1')
                                                 <span class="error invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
+                                        @else
                                         @endif
                                     </div>
                                 </div>
+
+                
+                                
                                 <div class="form-group">
-                                    <label>Featured image2</label>
-                                    <div class="col-md-6">
-
-                                        <input type="file"
-                                            class="form-control @error('featured_img2') is-invalid @enderror"
-                                            id="featured_img2" name="featured_img2">
-                                        @if ($blog->featured_img2)
-                                            <div class="col-md-3">
-                                                <img src="{{ asset($blog->featured_img2) }}" alt="Current fetureimage1"
-                                                    class="img-thumbnail" height="50" width="50" id="Icon">
-
-                                                <i class="fas fa-trash text-danger" id="removefeatureimage2"
-                                                    onClick="removefeatureimage2()"></i>
-
-                                                <input type="hidden"id="removefeature2txt" name="removefeature2txt" value>
-
-                                                <i class="fas fa-undo text-danger" id="undoremovefimage2"
-                                                    onClick="undofeatureimage2()" style="display: none";></i>
-                                            </div>
-                                            @error('featured_img2')
+                                        <label for="icon">Featured image2</label>
+                                        <div class="input-group">
+                                            <div class="col-md-6">
+                                                <input type="file"
+                                                    class="form-control @error('featured_img2') is-invalid @enderror" id="featured_img2"
+                                                    name="featured_img2">
+                                                    
+                                            </div>@if ($blog->featured_img2)
+                                                <div class="col-md-3">
+                                                    <img src="{{ asset($blog->featured_img2) }}" alt="Current feature image 2"
+                                                        class="img-thumbnail" height="50" width="50" id="cIcon">
+                                                    <i class="fas fa-trash text-danger" id="removefeatureimage2"
+                                                        onClick="removefeatureimage2()"></i>
+                                                    <input type="hidden"id="removefeature2txt" name="removefeature2txt" value>
+                                                    <i class="fas fa-undo text-danger" id="undoremovefimage2"
+                                                        onClick="undofeatureimage2()" style="display: none";></i>
+                                                </div>
+                                                @error('featured_img2')
                                                 <span class="error invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
+                                        @else
                                         @endif
                                     </div>
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label>Featured image2</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file"
-                                                class="form-control @error('featured_img2') is-invalid @enderror"
-                                                name="featured_img2" value="{{ $blog->featured_img2 }}">
 
-                                        </div>
 
-                                        @error('featured_img2')
-                                            <div class="error invalid-feedback d-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div> --}}
                                 <div class="form-group">
                                     <label>Author Name</label>
                                     <div class="input-group">
@@ -196,7 +172,7 @@
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                            name="is_popular" {{ $blog->is_active ? 'checked' : '' }}>
+                                            name="is_active" {{ $blog->is_active ? 'checked' : '' }}>
                                         <label class="custom-control-label" for="customSwitch1">Active</label>
                                     </div>
                                 </div>
@@ -214,50 +190,30 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function removefeatureimage1() {
-
-        $('#removefeatureimage1').val('removed');
-
+        $('#removefeature1txt').val('removed');
         $('#cIcon').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
-
         $('#removefeatureimage1').hide();
-
         $('#undoremovefimage1').show();
-
     }
 
     function undofeatureimage1() {
-
         $('#removefeature1txt').val(null);
-
         $('#cIcon').attr('src', '{{ asset($blog->featured_img1) }}');
-
         $('#removefeatureimage1').show();
-
         $('#undoremovefimage1').hide();
-
     }
 
     function removefeatureimage2() {
-
-        $('#removefeatureimage2').val('removed');
-
+        $('#removefeature2txt').val('removed');
         $('#Icon').attr('src', '{{ asset('Images/featureimage2/no-image.png') }}');
-
         $('#removefeatureimage2').hide();
-
         $('#undoremovefimage2').show();
-
     }
 
     function undofeatureimage2() {
-
         $('#removefeature2txt').val(null);
-
         $('#Icon').attr('src', '{{ asset($blog->featured_img2) }}');
-
         $('#removefeatureimage2').show();
-
         $('#undoremovefimage2').hide();
-
     }
 </script>

@@ -29,7 +29,7 @@ class TopicController extends Controller
         $categories = Category::where('is_active', 1)->get();
 
         return view('topic.create', ['categories' => $categories]);
-        //return view('topic.create');
+
     }
 
     /**
@@ -58,7 +58,6 @@ class TopicController extends Controller
 
         $topic = Topic::create([
             'name' => $request->name,
-            'slug' => $request->slug,
             'category_id' => $category_id,
             'logo' => $logo_location . $logo_name,
             'is_active' => $is_active,
@@ -81,7 +80,8 @@ class TopicController extends Controller
     public function edit(Topic $topic): View
     {
         $categories = Category::where('is_active', 1)->get();
-        return view('topic.edit', compact('topic', 'categories'));
+        $slug = $topic->slugs->first();
+        return view('topic.edit', compact('topic', 'categories','slug'));
     }
 
     public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse
@@ -113,7 +113,6 @@ class TopicController extends Controller
 
         $topic->update([
             'name' => $request->name,
-            'slug' => $request->slug,
             'category_id' => $request->category_id,
             'logo' => $request->logo,
             'is_active' => $is_active,

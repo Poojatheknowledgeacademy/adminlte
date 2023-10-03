@@ -24,9 +24,11 @@ class Course extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
     public function Topic()
-
     {
-
         return $this->belongsTo(Topic::class);
+    }
+    public function slug()
+    {
+        return $this->belongsTo(Slug::class);
     }
 }
