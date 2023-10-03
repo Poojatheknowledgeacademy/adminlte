@@ -15,7 +15,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $course = Course::paginate(2);
+        $course = Course::paginate(5);
         return view('course.list', compact('course'));
     }
 
@@ -76,7 +76,7 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         $topic = Topic::all();
-        // print_r($course);
+       // $course->load('slug');
         return view('course.edit', compact('course', 'topic'));
     }
 
