@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                        <li class="breadcrumb-item active">Edit Blog</li>
+                        <li class="breadcrumb-item"><a href="#">Course</a></li>
+                        <li class="breadcrumb-item active">Edit Course</li>
                     </ol>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <label>Slug</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        name="slug" value="{{ $course->slug }}">
+                                        name="slug" value="{{ $course->slug->value ?? '' }}">
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

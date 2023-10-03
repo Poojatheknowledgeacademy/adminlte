@@ -15,8 +15,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $course = Course::paginate(2);
-        return view('course.list',compact('course'));
+        $course = Course::paginate(5);
+        return view('course.list', compact('course'));
     }
 
     /**
@@ -26,7 +26,7 @@ class CourseController extends Controller
     {
         //
         $topic = Topic::all();
-        return view('course.create',compact('topic'));
+        return view('course.create', compact('topic'));
     }
 
     /**
@@ -51,7 +51,14 @@ class CourseController extends Controller
             $active = '0';
         }
         $data = $request->validated();
-        Course::create(array_merge($request->all(), ["created_by" => $id, "is_active" => $active, "logo" => $filepath, ]));
+
+        $course = Course::create([
+            "name" => $request->name,
+            "topic_id" => $request->topic_id,
+            "logo" => $filepath,
+            "is_active" => $active,
+            "created_by" => $id,
+        ]);
         return redirect()->route('course.index')->with('success', 'Course Created Successfully.');
     }
 
@@ -69,8 +76,8 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         $topic = Topic::all();
-       // print_r($course);
-        return view('course.edit', compact('course','topic'));
+       // $course->load('slug');
+        return view('course.edit', compact('course', 'topic'));
     }
 
     /**
@@ -97,7 +104,7 @@ class CourseController extends Controller
             }
             $feature_image1 = $request->file('logo');
             $courselogoname = time() . '_' . $feature_image1->getClientOriginalName();
-            $feature_image1->move( $courselogolocation, $courselogoname);
+            $feature_image1->move($courselogolocation, $courselogoname);
             // $course->update(["featured_img1" =>  $courselogolocation . $courselogoname]);
             $course->logo =  $courselogolocation . $courselogoname;
         }

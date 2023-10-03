@@ -34,19 +34,18 @@ class Topic extends Model
         });
     }
 
-
-
     public function creator()
-
     {
-
         return $this->belongsTo(User::class, 'created_by');
     }
 
     public function slugs()
-
     {
-
         return $this->morphMany(Slug::class, 'entity');
+    }
+    
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
