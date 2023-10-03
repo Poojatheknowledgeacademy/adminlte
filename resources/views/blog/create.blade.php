@@ -86,17 +86,20 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Featured image1</label>
-                                    <input type="file" class="form-control @error('featured_img1') is-invalid @enderror"
+                                    <div class="custom-file">
+                                    <input type="file" class="form-control @error('featured_img1') is-invalid @enderror" id="featured_img1"
                                         name="featured_img1" value="{{ old('featured_img1') }}">
                                     @error('featured_img1')
                                         <div class="error invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
+                                    
                                 </div>
+    </div>
                                 <div class="form-group">
                                     <label>Featured image2</label>
                                     <div class="custom-file">
                                         <input type="file"
-                                            class="form-control @error('featured_img2') is-invalid @enderror"
+                                            class="form-control @error('featured_img2') is-invalid @enderror" id="featured_img2"
                                             name="featured_img2" value="{{ old('featured_img2') }}">
                                     </div>
                                     @error('featured_img2')
@@ -158,3 +161,23 @@
         </div>
     </section>
 @endsection
+
+{{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+
+<script>
+    $(function () {
+      bsCustomFileInput.init();
+    });
+    </script>
+
+
+<script>
+    $('#logo').on('change', function() {
+        alert('fjkh');
+        //get the file name
+        var fileName = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+    })
+
+</script> --}}
