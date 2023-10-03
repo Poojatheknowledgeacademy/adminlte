@@ -168,3 +168,101 @@
         });
     });
 </script>
+<script>
+
+    $(document).ready(function() {
+
+        // Attach input event listeners to the input fields
+
+        $('#blog_category').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+
+
+        $('#blog_slug').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#blog_tittle').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#blog_description').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#summernote').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#blog_image1').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#blog_image2').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#blog_authorname').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#blog_date').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        $('#blog_tag').on('input', function() {
+
+            removeErrorMessages($(this));
+
+        });
+
+        // Function to remove error messages and reset input field's border
+
+        function removeErrorMessages(inputField) {
+
+            // Find the parent element and then find the error message element
+
+            var parent = inputField.closest('.form-group');
+
+            var errorElement = parent.find('.error');
+
+
+
+            // Remove the error message if it exists
+
+            errorElement.remove();
+
+
+
+            // Remove the is-invalid class to reset the input field's border
+
+            inputField.removeClass('is-invalid');
+
+        }
+
+    });
+
+</script>
+
+
+
