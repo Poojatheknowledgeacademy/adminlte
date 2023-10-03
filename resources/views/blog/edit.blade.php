@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label>Slug</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        name="slug" value="{{ $blog->slug }}">
+                                        name="slug" value="{{ $slug ? $slug->slug : '' }}">
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -109,8 +109,8 @@
                                     </div>
                                 </div>
 
-                
-                                
+
+
                                 <div class="form-group">
                                         <label for="icon">Featured image2</label>
                                         <div class="input-group">
@@ -118,7 +118,7 @@
                                                 <input type="file"
                                                     class="form-control @error('featured_img2') is-invalid @enderror" id="featured_img2"
                                                     name="featured_img2">
-                                                    
+
                                             </div>@if ($blog->featured_img2)
                                                 <div class="col-md-3">
                                                     <img src="{{ asset($blog->featured_img2) }}" alt="Current feature image 2"

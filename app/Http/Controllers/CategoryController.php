@@ -74,10 +74,10 @@ class CategoryController extends Controller
             'is_technical' => $is_technical
         ]);
 
+        $category->slugs()->create([
+            'slug' => $request->slug,
+        ]);
 
-        $slug = new Slug;
-        $slug->slug =$request->slug;
-        $category->slugs()->save($slug);
 
         session()->flash('success', 'Category Created successfully.');
         return redirect()->route('category.index');
@@ -96,7 +96,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): View
     {
-        return view('category.edit', compact('category'));
+        $slug = $category->slugs()->first();
+        return view('category.edit', compact('category','slug'));
     }
 
     /**

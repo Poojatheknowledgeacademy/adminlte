@@ -58,7 +58,6 @@ class BlogController extends Controller
         $blog = Blog::create([
             "category_id" => $request->category_id,
             "title" => $request->title,
-            "slug" => $request->slug,
             "short_description" => $request->short_description,
             "summary" => $request->summary,
             "featured_img1" => $filepath1,
@@ -107,7 +106,8 @@ class BlogController extends Controller
     public function edit(Blog $blog)
     {
         $category = category::all();
-        return view('blog.edit', compact('blog', 'category'));
+        $slug = $blog->slugs()->first();
+        return view('blog.edit', compact('blog', 'category','slug'));
     }
     /**
      * Update the specified resource in storage.

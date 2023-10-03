@@ -43,7 +43,7 @@ class Topic extends Model
     {
         return $this->morphMany(Slug::class, 'entity');
     }
-    
+
     public function category()
     {
         return $this->belongsTo(Category::class);

@@ -27,8 +27,8 @@ class Course extends Model
     {
         return $this->belongsTo(Topic::class);
     }
-    public function slug()
+    public function slugs()
     {
-        return $this->belongsTo(Slug::class);
+        return $this->morphMany(Slug::class, 'entity');
     }
 }

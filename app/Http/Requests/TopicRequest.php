@@ -23,6 +23,7 @@ class TopicRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'slug' =>'required',
             'category_id' =>'required',
             'logo'=>'required|image|mimes:jpg,png,jpeg|max:2048',
         ];

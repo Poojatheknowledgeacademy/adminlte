@@ -6,7 +6,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\EditcourseRequest;
 use App\Models\Course;
 use App\Models\Topic;
-use Illuminate\Http\Request;
+use App\Models\Slug;
 
 class CourseController extends Controller
 {
@@ -59,6 +59,10 @@ class CourseController extends Controller
             "is_active" => $active,
             "created_by" => $id,
         ]);
+        $course->slugs()->create([
+            'slug' => $request->slug,
+        ]);
+
         return redirect()->route('course.index')->with('success', 'Course Created Successfully.');
     }
 
@@ -76,8 +80,8 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         $topic = Topic::all();
-       // $course->load('slug');
-        return view('course.edit', compact('course', 'topic'));
+        $slug = $course->slugs()->first();
+        return view('course.edit', compact('course', 'topic','slug'));
     }
 
     /**

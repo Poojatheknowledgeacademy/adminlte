@@ -29,7 +29,6 @@ class TopicController extends Controller
         $categories = Category::where('is_active', 1)->get();
 
         return view('topic.create', ['categories' => $categories]);
-
     }
 
     /**
@@ -80,8 +79,8 @@ class TopicController extends Controller
     public function edit(Topic $topic): View
     {
         $categories = Category::where('is_active', 1)->get();
-        $slug = $topic->slugs->first();
-        return view('topic.edit', compact('topic', 'categories','slug'));
+        $slug = $topic->slugs()->first();
+        return view('topic.edit', compact('topic', 'categories', 'slug'));
     }
 
     public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse

@@ -48,7 +48,7 @@
                                     <div class="form-group">
                                         <label for="exampleInput2">slug</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                            id="exampleInput2" name="slug"  value="{{$topic->slug}}">
+                                            id="exampleInput2" name="slug" value="{{ $slug ? $slug->slug : '' }}">
                                         @error('slug')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -61,22 +61,25 @@
                                         <select class="form-control select2bs4 " style="width: 100%;"name="category_id">
 
                                             @foreach ($categories as $category)
-                                          <option value="{{$category->id}}"{{ $topic->category_id == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
-                                          @endforeach
+                                                <option
+                                                    value="{{ $category->id }}"{{ $topic->category_id == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}</option>
+                                            @endforeach
                                         </select>
                                         @error('category_id')
                                             <span class="error invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                      </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="icon">Logo</label>
                                         <div class="input-group">
                                             <div class="col-md-6">
-                                                <input type="file" class="form-control @error('logo') is-invalid @enderror"
-                                                id="logo" name="logo"value="{{ $topic->logo }}">
+                                                <input type="file"
+                                                    class="form-control @error('logo') is-invalid @enderror" id="logo"
+                                                    name="logo"value="{{ $topic->logo }}">
                                             </div>
                                             @if ($topic->logo)
                                                 <div class="col-md-3">
@@ -120,7 +123,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-
     function removeLogo() {
         $('#removelogotxt').val('removed');
         $('#cLogo').attr('src', '{{ asset('Images/icon/no-image.png') }}');
@@ -134,5 +136,4 @@
         $('#removelogo').show();
         $('#undoremocelogo').hide();
     }
-
 </script>

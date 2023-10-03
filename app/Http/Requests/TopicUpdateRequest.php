@@ -24,6 +24,7 @@ class TopicUpdateRequest extends FormRequest
         return [
             'name' => 'required',
             'category_id' =>'required',
+            'slug' =>'required',
             'logo'=>'sometimes|image|mimes:jpg,png,jpeg|max:2048',
         ];
     }

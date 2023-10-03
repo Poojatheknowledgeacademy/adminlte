@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <label>Slug</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        name="slug" value="{{ $course->slug->value ?? '' }}">
+                                        name="slug" value="{{ $slug ? $slug->slug : '' }}">
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
