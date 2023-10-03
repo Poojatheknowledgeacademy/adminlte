@@ -158,3 +158,13 @@
         </div>
     </section>
 @endsection
+<script>
+    $(document).ready(function() {
+        $('#pieces').select2({
+            tags: true
+        });
+        $('#show').on('click', function(e) {
+            alert($('#pieces').val());
+        });
+    });
+</script>
