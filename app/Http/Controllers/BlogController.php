@@ -107,7 +107,9 @@ class BlogController extends Controller
     {
         $category = category::all();
         $slug = $blog->slugs()->first();
-        return view('blog.edit', compact('blog', 'category','slug'));
+        $tags = Tag::where('is_active', 1)->get();
+
+        return view('blog.edit', compact('blog', 'category','slug','tags'));
     }
     /**
      * Update the specified resource in storage.
@@ -155,6 +157,20 @@ class BlogController extends Controller
             $blog->featured_img2 = null;
         }
         $blog->save();
+
+        // $tags = $request->tags;
+        // $tagIds = [];
+
+        // if (!empty($tags)) {
+        //     foreach ($tags as $tagName) {
+        //         $tag = Tag::firstOrCreate(['name' => $tagName]);
+        //         $tagIds[] = $tag->id;
+        //     }
+        // }
+
+        // // Sync the updated tags
+        // $blog->tags()->sync($tagIds);
+
         return redirect()->route('blogs.index')->with('success', 'Blog Updated Successfully');
     }
     /**

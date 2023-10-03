@@ -163,6 +163,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label>Tags</label>
+                                    <select class="select2" name="tags[]" multiple="multiple" style="width: 100%;"
+                                        id="pieces">
+                                        @foreach ($tags as $tag)
+                                             <option value="{{ $tag->id }}" {{ $blog->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                            {{-- <option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTagIds) ? 'selected' : '' }}>{{ $tag->name }}</option> --}}
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="customSwitch1"
                                             name="is_popular" {{ $blog->is_popular ? 'checked' : '' }}>
