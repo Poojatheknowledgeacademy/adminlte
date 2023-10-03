@@ -17,11 +17,7 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
+
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">

@@ -2,23 +2,7 @@
 
 
 @section('content')
-    @if (session()->has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
 
-    @if (session()->has('danger'))
-        <div class="alert alert-danger">
-            {{ session('danger') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
         <section class="content-header">

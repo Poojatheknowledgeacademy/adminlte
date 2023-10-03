@@ -2,23 +2,6 @@
 
 
 @section('content')
-    @if (session()->has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    @if (session()->has('danger'))
-        <div class="alert alert-danger">
-            {{ session('danger') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -87,15 +70,14 @@
                                                         <a href="{{ route('tag.edit', $tag->id) }}"><i
                                                                 class="fas fa-edit"></i></a>
 
-                                                        <a href="{{ route('tag.destroy', $tag->id) }}"
-                                                            class="delete-link"
+                                                        <a href="{{ route('tag.destroy', $tag->id) }}" class="delete-link"
                                                             onclick="event.preventDefault(); document.getElementById('delete-form-{{ $tag->id }}').submit();">
                                                             <i class="fas fa-trash text-danger"></i>
                                                             <!-- Move the closing </i> tag here -->
                                                         </a>
                                                         <form id="delete-form-{{ $tag->id }}"
-                                                            action="{{ route('tag.destroy', $tag->id) }}"
-                                                            method="POST" style="display: none;">
+                                                            action="{{ route('tag.destroy', $tag->id) }}" method="POST"
+                                                            style="display: none;">
                                                             @csrf
                                                             @method('DELETE')
                                                         </form>
