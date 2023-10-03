@@ -44,6 +44,8 @@
 
     <!-- BS Stepper -->
     <link rel="stylesheet" href="{{ asset('plugins/bs-stepper/css/bs-stepper.min.css') }}">
+    <!--Jquery -->
+    <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js')}}"></script>
 
 
 
@@ -175,51 +177,8 @@
     <script src="{{ asset('adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <!-- BS-Stepper -->
     <script src="{{ asset('adminlte/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
-    <script>
-        $(function() {
-            // Summernote
-            $('#summernote').summernote()
-
-            // CodeMirror
-            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-                mode: "htmlmixed",
-                theme: "monokai"
-            });
-            //Initialize Select2 Elements
-            // $('.select2').select2()
-
-            // //Initialize Select2 Elements
-            // $('.select2bs4').select2({
-            //     theme: 'bootstrap4'
-            // })
-
-        })
-
-        $(function() {
-            //Initialize Select2 Elements
-            $('.select2').select2()
-
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-
-
-        })
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#pieces').select2({
-                tags: true
-            });
-            $('#show').on('click', function(e) {
-                alert($('#pieces').val());
-            });
-        });
-    </script>
-
-
-
+     <!-- Custom js -->
+     <script src="{{ asset('adminlte/dist/js/custom.js') }}"></script>
 </body>
 
 </html>
