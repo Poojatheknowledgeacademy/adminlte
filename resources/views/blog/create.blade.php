@@ -41,7 +41,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <select name="category_id"
+                                    <select id="blog_category" name="category_id"
                                         class="form-control select2bs4 @error('category_id') is-invalid @enderror">
                                         <option value="">Select a category</option>
                                         @foreach ($category as $categories)
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Slug</label>
-                                    <input type="text" class="form-control @error('slug') is-invalid @enderror"
+                                    <input type="text" id="blog_slug" class="form-control @error('slug') is-invalid @enderror"
                                         name="slug" value="{{ old('slug') }}">
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
