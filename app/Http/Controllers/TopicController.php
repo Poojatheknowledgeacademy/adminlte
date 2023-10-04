@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Yajra\DataTables\Facades\Datatables;
+use Illuminate\Http\Request;
 use App\Http\Requests\TopicRequest;
 use App\Models\Topic;
 use App\Models\Category;
@@ -15,10 +17,16 @@ class TopicController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $topics = Topic::paginate(5);
-        return view('topic.list', compact('topics'));
+        // $topics = Topic::paginate(5);
+        // return view('topic.list', compact('topics'));
+
+        if ($request->ajax()) {
+            $query = Topic::with('creator', 'category');
+            return Datatables::eloquent($query)->make(true);
+        }
+        return view('topic.list');
     }
 
     /**
@@ -83,87 +91,42 @@ class TopicController extends Controller
         return view('topic.edit', compact('topic', 'categories', 'slug'));
     }
     public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse
-{
-    if ($request->hasFile('logo')) {
-        $logo_location = 'Images/logo/';
+    {
+        if ($request->hasFile('logo')) {
+            $logo_location = 'Images/logo/';
 
-        // Remove old file
-        if (!empty($topic->logo)) {
-            unlink(public_path($topic->logo));
+            // Remove old file
+            if (!empty($topic->logo)) {
+                unlink(public_path($topic->logo));
+            }
+
+            // Upload new file
+            $logo = $request->file('logo');
+            $logo_name = time() . '_' . $logo->getClientOriginalName();
+            $logo->move($logo_location, $logo_name);
+
+            $topic->logo = $logo_location . $logo_name;
         }
 
-        // Upload new file
-        $logo = $request->file('logo');
-        $logo_name = time() . '_' . $logo->getClientOriginalName();
-        $logo->move($logo_location, $logo_name);
+        if ($request->input('removelogotxt')) {
+            $topic->logo = null;
+        }
 
-        $topic->logo = $logo_location . $logo_name;
+        $is_active = $request->has('is_active') ? 1 : 0;
+
+        $topic->update([
+            'name' => $request->input('name'),
+            'category_id' => $request->input('category_id'),
+            'logo' => $topic->logo,
+            'is_active' => $is_active,
+        ]);
+
+        $topic->slugs()->update(['slug' => $request->slug]);
+
+        session()->flash('success', 'Topic updated successfully.');
+
+        return redirect()->route('topic.index');
     }
-
-    if ($request->input('removelogotxt')) {
-        $topic->logo = null;
-    }
-
-    $is_active = $request->has('is_active') ? 1 : 0;
-
-    $topic->update([
-        'name' => $request->input('name'),
-        'category_id' => $request->input('category_id'),
-        'logo' => $topic->logo,
-        'is_active' => $is_active,
-    ]);
-
-    $topic->slugs()->updateOrCreate([
-        'slug' => $request->input('slug')
-    ]);
-
-    session()->flash('success', 'Topic updated successfully.');
-
-    return redirect()->route('topic.index');
-}
-
-
-    // public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse
-    // {
-    //     if (!empty($request->file('logo'))) {
-
-    //         $logo_location = 'Images/logo/';
-
-    //         //code for remove old file
-    //         if (!empty($topic->logo)) {
-    //             unlink(public_path($topic->logo));
-    //         }
-    //         //upload new file
-    //         $logo = $request->file('logo');
-    //         $logo_name = time() . '_' . $logo->getClientOriginalName();
-
-    //         // File upload location
-    //         $logo_location = 'Images/logo/';
-
-    //         $logo->move($logo_location, $logo_name);
-
-    //         $topic->update(['logo' => $logo_location . $logo_name]);
-    //     }
-    //     if ($request['removelogotxt'] != null) {
-    //         $topic->logo = null;
-    //     }
-
-    //     $is_active = $request->is_active == "on" ? 1 : 0;
-
-    //     $topic->update([
-    //         'name' => $request->name,
-    //         'category_id' => $request->category_id,
-    //         'logo' => $request->logo,
-    //         'is_active' => $is_active,
-    //     ]);
-
-    //     $topic->slugs()->updateOrCreate(
-    //         ['slug' => $request->slug]
-    //     );
-    //     session()->flash('success', 'Topic updated successfully.');
-
-    //     return redirect()->route('topic.index');
-    // }
 
     /**
      * Remove the specified resource from storage.
