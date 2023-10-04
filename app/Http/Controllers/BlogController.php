@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+ use Yajra\DataTables\Facades\Datatables;
 
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\EditBlogRequest;
@@ -14,10 +15,19 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blog = Blog::paginate(5);
-        return view('blog.list', compact('blog'));
+        // $blog = Blog::paginate(5);
+        // return view('blog.list', compact('blog'));
+
+        if ($request->ajax()) {
+            $query = Blog::with('creator');
+            //print_r($query);
+           // die();
+            return Datatables::eloquent($query)->make(true);
+        }
+        return view('blog.list');
+
     }
     /**
      * Show the form for creating a new resource.
@@ -115,8 +125,10 @@ class BlogController extends Controller
      */
     public function update(EditBlogRequest $request, Blog $blog)
     {
-        // print_r($blog);
-        // die();
+
+        // $tags = $request->tags;
+        // print_r($tags);
+       // die();
         if ($request->is_popular == 'on') {
             $popular = '1';
         } else {
@@ -156,20 +168,21 @@ class BlogController extends Controller
         if ($request['removefeature2txt'] != null) {
             $blog->featured_img2 = null;
         }
+
+
+        $tags = $request->tags;
+        $tagIds = [];
+
+        if (!empty($tags)) {
+            foreach ($tags as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tagIds[] = $tag->id;
+            }
+        }
+
+        // Sync the updated tags
+        $blog->tags()->sync($tagIds);
         $blog->save();
-
-        // $tags = $request->tags;
-        // $tagIds = [];
-
-        // if (!empty($tags)) {
-        //     foreach ($tags as $tagName) {
-        //         $tag = Tag::firstOrCreate(['name' => $tagName]);
-        //         $tagIds[] = $tag->id;
-        //     }
-        // }
-
-        // // Sync the updated tags
-        // $blog->tags()->sync($tagIds);
 
         return redirect()->route('blogs.index')->with('success', 'Blog Updated Successfully');
     }
