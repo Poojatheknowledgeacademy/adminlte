@@ -17,17 +17,11 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
-        // $blog = Blog::paginate(5);
-        // return view('blog.list', compact('blog'));
-
         if ($request->ajax()) {
             $query = Blog::with('creator','category');
-            //print_r($query);
-           // die();
             return Datatables::eloquent($query)->make(true);
         }
         return view('blog.list');
-
     }
     /**
      * Show the form for creating a new resource.
@@ -43,7 +37,6 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-
         $image1 = $request->file('featured_img1');
         $image1name = time() . '_' . $image1->getClientOriginalName();
         $image1location = 'Images/featureimage1/';
@@ -125,10 +118,6 @@ class BlogController extends Controller
      */
     public function update(EditBlogRequest $request, Blog $blog)
     {
-
-        // $tags = $request->tags;
-        // print_r($tags);
-       // die();
         if ($request->is_popular == 'on') {
             $popular = '1';
         } else {
@@ -169,19 +158,8 @@ class BlogController extends Controller
             $blog->featured_img2 = null;
         }
 
-
-        $tags = $request->tags;
-        $tagIds = [];
-
-        if (!empty($tags)) {
-            foreach ($tags as $tagName) {
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
-                $tagIds[] = $tag->id;
-            }
-        }
-
-        // Sync the updated tags
-        $blog->tags()->sync($tagIds);
+        $selectedTagIds = $request->input('tags', []);
+        $blog->tags()->sync($selectedTagIds);
         $blog->save();
         $blog->slugs()->update(['slug' => $request->slug]);
         return redirect()->route('blogs.index')->with('success', 'Blog Updated Successfully');
