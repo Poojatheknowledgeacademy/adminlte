@@ -31,6 +31,23 @@
                             <form method="POST" action="{{ route('course.update', $course->id) }}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 @method('PUT')
+
+                                <div class="form-group">
+                                    <label>Name<span class="text-danger">*</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" value="{{ $course->name }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label>Slug<span class="text-danger">*</label>
+                                    <input type="text" class="form-control @error('slug') is-invalid @enderror"
+                                        name="slug" value="{{ $slug ? $slug->slug : '' }}">
+                                    @error('slug')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <label>Topic<span class="text-danger">*</label>
                                     <select name="topic_id"
@@ -45,22 +62,6 @@
 
                                     </select>
                                     @error('topic_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label>Name<span class="text-danger">*</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" value="{{ $course->name }}">
-                                    @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label>Slug<span class="text-danger">*</label>
-                                    <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        name="slug" value="{{ $slug ? $slug->slug : '' }}">
-                                    @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
