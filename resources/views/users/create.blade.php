@@ -35,9 +35,9 @@
 
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Name</label>
+                                        <label for="exampleInputEmail1">Name<span class="text-danger">*</label>
                                         <input type="name" class="form-control @error('name') is-invalid @enderror"
-                                            id="exampleInputEmail1" placeholder="Enter email" name="name">
+                                            id="name" placeholder="Enter email" name="name">
                                         @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -47,9 +47,9 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email </label>
+                                        <label for="exampleInputEmail1">Email<span class="text-danger">* </label>
                                         <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                            id="exampleInputEmail1" placeholder="Enter email" name="email">
+                                            id="email" placeholder="Enter email" name="email">
                                         @error('email')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -57,9 +57,9 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Password </label>
+                                        <label for="exampleInputEmail1">Password<span class="text-danger">* </label>
                                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                            id="exampleInputEmail1" placeholder="Enter Passsword" name="password">
+                                            id="password" placeholder="Enter Passsword" name="password">
                                         @error('password')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -78,7 +78,41 @@
         </section>
     </div>
 @endsection
+
+<!--Jquery -->
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
 <script>
+    $(document).ready(function() {
+        // Attach input event listeners to the input fields
+        $('#name').on('input', function() {
+            removeErrorMessages($(this));
+        });
+
+        $('#email').on('input', function() {
+            removeErrorMessages($(this));
+        });
+        $('#password').on('input', function() {
+            removeErrorMessages($(this));
+        });
+
+        // Function to remove error messages and reset input field's border
+        function removeErrorMessages(inputField) {
+            // Find the parent element and then find the error message element
+            var parent = inputField.closest('.form-group');
+            var errorElement = parent.find('.error');
+
+            // Remove the error message if it exists
+            errorElement.remove();
+
+            // Remove the is-invalid class to reset the input field's border
+            inputField.removeClass('is-invalid');
+        }
+    });
+</script>
+
+
+
+{{-- <script>
     const nameInput = document.getElementById('name');
     const nameError = document.getElementById('name-error');
 
@@ -97,5 +131,6 @@
     function clearNameError() {
         nameError.textContent = ''; // Clear the error message while typing
     }
-</script>
+</script> --}}
+
 

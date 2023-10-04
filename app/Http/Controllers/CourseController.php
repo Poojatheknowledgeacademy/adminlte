@@ -6,7 +6,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\EditcourseRequest;
 use App\Models\Course;
 use App\Models\Topic;
-use App\Models\Slug;
+
 
 class CourseController extends Controller
 {
@@ -34,9 +34,7 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
-        //print_r($request->all());
-        //die();
+
         $courseimage = $request->file('logo');
         $courseimagename = time() . '_' . $courseimage->getClientOriginalName();
         $courselocation = 'Images/courselogo/';
@@ -81,7 +79,7 @@ class CourseController extends Controller
     {
         $topic = Topic::all();
         $slug = $course->slugs()->first();
-        return view('course.edit', compact('course', 'topic','slug'));
+        return view('course.edit', compact('course', 'topic', 'slug'));
     }
 
     /**
@@ -89,8 +87,6 @@ class CourseController extends Controller
      */
     public function update(EditcourseRequest $request, Course $course)
     {
-
-
         if ($request->is_active == 'on') {
             $active = '1';
         } else {
@@ -99,8 +95,7 @@ class CourseController extends Controller
         $course->topic_id = $request->topic_id;
         $course->is_active = $active;
         $course->name = $request->name;
-        $course->slug = $request->slug;
-
+        
         if ($request->file('logo')) {
             $courselogolocation = 'Images/courselogo/';
             if (!empty($course->logo)) {

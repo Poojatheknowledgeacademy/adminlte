@@ -107,9 +107,7 @@ class BlogController extends Controller
     {
         $category = category::all();
         $slug = $blog->slugs()->first();
-        $tags = Tag::where('is_active', 1)->get();
-
-        return view('blog.edit', compact('blog', 'category','slug','tags'));
+        return view('blog.edit', compact('blog', 'category','slug'));
     }
     /**
      * Update the specified resource in storage.
@@ -124,7 +122,6 @@ class BlogController extends Controller
         $blog->category_id = $request->category_id;
         $blog->is_popular = $popular;
         $blog->title = $request->title;
-        $blog->slug = $request->slug;
         $blog->short_description = $request->short_description;
         $blog->summary = $request->summary;
         $blog->author_name = $request->author_name;
@@ -178,7 +175,6 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
         $post = blog::find($blog->id);
         $post->delete();
         return redirect()->route('blogs.index')->with('success', 'Blog Deleted Successfully');

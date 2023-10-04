@@ -35,7 +35,7 @@
                                     @csrf
                                     @method('PUT') <!-- Use the PUT method for updating -->
                                     <div class="form-group">
-                                        <label for="name">Name</label>
+                                        <label for="name">Name<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="name" name="name" value="{{ $category->name }}">
                                         @error('name')
@@ -46,7 +46,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Slug</label>
+                                        <label for="name">Slug<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
                                             id="slug" name="slug" value="{{ $slug ? $slug->slug : '' }}">
                                         @error('slug')
@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="icon">Icon</label>
+                                        <label for="icon">Icon<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <div class="col-md-6">
                                                 <input type="file"
@@ -84,7 +84,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="icon">Logo</label>
+                                        <label for="icon">Logo<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <div class="col-md-6">
                                                 <input type="file" class="form-control @error('logo') is-invalid @enderror"
@@ -146,7 +146,9 @@
         </section>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--Jquery -->
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
 
 <script>
     function removeIcon() {

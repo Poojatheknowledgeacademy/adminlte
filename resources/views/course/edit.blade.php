@@ -32,7 +32,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label>Topic</label>
+                                    <label>Topic<span class="text-danger">*</label>
                                     <select name="topic_id"
                                         class="form-control select2bs4 @error('topic_id') is-invalid @enderror">
                                         <option value="">Select a topic</option>
@@ -49,7 +49,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Name<span class="text-danger">*</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         name="name" value="{{ $course->name }}">
                                     @error('name')
@@ -57,7 +57,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Slug</label>
+                                    <label>Slug<span class="text-danger">*</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
                                         name="slug" value="{{ $slug ? $slug->slug : '' }}">
                                     @error('slug')
@@ -65,7 +65,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Logo</label>
+                                    <label>Logo<span class="text-danger">*</label>
                                     <div class="col-md-6">
 
                                         <input type="file" class="form-control @error('logo') is-invalid @enderror"
@@ -111,7 +111,11 @@
         </div>
     </section>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--Jquery -->
+
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+
 <script>
     function logoimage() {
 

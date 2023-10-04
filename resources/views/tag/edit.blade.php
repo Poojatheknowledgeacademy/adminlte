@@ -39,7 +39,7 @@
                                     @method('PUT') <!-- Use the PUT method for updating -->
 
                                     <div class="form-group">
-                                        <label for="name">Name</label>
+                                        <label for="name">Name<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="name" name="name" value="{{ $tag->name }}">
                                         @error('name')

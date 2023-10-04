@@ -32,7 +32,7 @@
                                 <form method="POST" action="{{ route('tag.store') }}" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                     <div class="form-group">
-                                        <label for="exampleInput1">Name</label>
+                                        <label for="exampleInput1">Name<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="tag_name" name="name" placeholder="Enter name">
                                         @error('name')
@@ -60,7 +60,10 @@
         </section>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--Jquery -->
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+
 <script>
     $(document).ready(function() {
         // Attach input event listeners to the input fields
