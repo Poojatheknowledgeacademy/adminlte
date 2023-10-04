@@ -19,7 +19,8 @@ class Course extends Model
         'slug',
         'created_by'
     ];
-    public function createdBy()
+
+    public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }

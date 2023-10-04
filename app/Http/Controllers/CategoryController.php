@@ -17,11 +17,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        // $categories = Category::paginate(10);
-        // return view('category.list', compact('categories'));
         if ($request->ajax()) {
             $query = Category::with('creator');
-
             return Datatables::eloquent($query)->make(true);
         }
         return view('category.list');
