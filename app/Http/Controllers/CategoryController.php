@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Slug;
@@ -15,10 +15,13 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::paginate(10);
-        return view('category.list', compact('categories'));
+        if ($request->ajax()) {
+            $query = Category::with('creator');
+            return Datatables::eloquent($query)->make(true);
+        }
+        return view('category.list');
     }
 
     /**

@@ -40,9 +40,13 @@ class Blog extends Model
         'created_by',
 
     ];
-    public function createdBy()
+
+    public function creator()
+
     {
+
         return $this->belongsTo(User::class, 'created_by');
+
     }
     public function category()
 
