@@ -123,6 +123,4 @@
         </section>
     </div>
 @endsection
-
-
 <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
