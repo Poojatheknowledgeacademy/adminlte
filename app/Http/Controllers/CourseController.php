@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Yajra\DataTables\Facades\Datatables;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\EditcourseRequest;
 use App\Models\Course;
@@ -13,10 +14,15 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $course = Course::paginate(5);
-        return view('course.list', compact('course'));
+        // $course = Course::paginate(5);
+        // return view('course.list', compact('course'));
+        if ($request->ajax()) {
+            $query = Course::with('creator','topic');
+            return Datatables::eloquent($query)->make(true);
+        }
+        return view('course.list');
     }
 
     /**
@@ -88,7 +94,7 @@ class CourseController extends Controller
         } else {
             $active = '0';
         }
-        
+
         $course->topic_id = $request->topic_id;
         $course->is_active = $active;
         $course->name = $request->name;

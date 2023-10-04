@@ -39,19 +39,7 @@
                         <div class="card-body">
                             <form method="POST" action="{{ route('course.store') }}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                <div class="form-group">
-                                    <label>Topic<span class="text-danger">*</label>
-                                    <select name="topic_id"
-                                       id="topic_name" class="form-control select2bs4 @error('topic_id') is-invalid @enderror">
-                                        <option value="">Select a Topic</option>
-                                        @foreach ($topic as $topics)
-                                            <option value="{{ $topics->id }}">{{ $topics->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('topic_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+
                                 <div class="form-group">
                                     <label>Name<span class="text-danger">*</label>
                                     <input type="text" id="course_name" class="form-control @error('name') is-invalid @enderror"
@@ -65,6 +53,19 @@
                                     <input type="text" id="course_slug" class="form-control @error('slug') is-invalid @enderror"
                                         name="slug" value="{{ old('slug') }}">
                                     @error('slug')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label>Topic<span class="text-danger">*</label>
+                                    <select name="topic_id"
+                                       id="topic_name" class="form-control select2bs4 @error('topic_id') is-invalid @enderror">
+                                        <option value="">Select a Topic</option>
+                                        @foreach ($topic as $topics)
+                                            <option value="{{ $topics->id }}">{{ $topics->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('topic_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
