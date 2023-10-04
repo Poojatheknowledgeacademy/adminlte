@@ -183,7 +183,7 @@ class BlogController extends Controller
         // Sync the updated tags
         $blog->tags()->sync($tagIds);
         $blog->save();
-
+        $blog->slugs()->update(['slug' => $request->slug]);
         return redirect()->route('blogs.index')->with('success', 'Blog Updated Successfully');
     }
     /**
