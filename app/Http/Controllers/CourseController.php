@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCourseRequest;
@@ -16,10 +17,8 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
-        // $course = Course::paginate(5);
-        // return view('course.list', compact('course'));
         if ($request->ajax()) {
-            $query = Course::with('creator','topic');
+            $query = Course::with('creator', 'topic');
             return Datatables::eloquent($query)->make(true);
         }
         return view('course.list');
@@ -30,7 +29,6 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
         $topic = Topic::all();
         return view('course.create', compact('topic'));
     }
@@ -87,6 +85,9 @@ class CourseController extends Controller
         $slug = $course->slugs()->first();
         return view('course.edit', compact('course', 'topic', 'slug'));
     }
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(EditcourseRequest $request, Course $course)
     {
         if ($request->is_active == 'on') {
@@ -122,48 +123,13 @@ class CourseController extends Controller
 
         return redirect()->route('course.index')->with('success', 'Course Updated Successfully');
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(EditcourseRequest $request, Course $course)
-    // {
-    //     if ($request->is_active == 'on') {
-    //         $active = '1';
-    //     } else {
-    //         $active = '0';
-    //     }
-    //     $course->topic_id = $request->topic_id;
-    //     $course->is_active = $active;
-    //     $course->name = $request->name;
-
-    //     if ($request->file('logo')) {
-    //         $courselogolocation = 'Images/courselogo/';
-    //         if (!empty($course->logo)) {
-    //             unlink(public_path($course->logo));
-    //         }
-    //         $feature_image1 = $request->file('logo');
-    //         $courselogoname = time() . '_' . $feature_image1->getClientOriginalName();
-    //         $feature_image1->move($courselogolocation, $courselogoname);
-    //         // $course->update(["featured_img1" =>  $courselogolocation . $courselogoname]);
-    //         $course->logo =  $courselogolocation . $courselogoname;
-    //     }
-    //     if ($request['removelogotxt'] != null) {
-    //         $course->logo = null;
-    //     }
-
-    //     $course->save();
-
-    //     return redirect()->route('course.index')->with('success', 'Course Updated Successfully');
-    // }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Course $course)
     {
-        $post = Course::find($course->id);
-        $post->delete();
-        return redirect()->route('course.index')->with('success', 'Course Deleted Successfully');
+        $course->delete();
+        return redirect()->route('course.index')
+            ->with('danger', 'Course deleted successfully');
     }
 }
