@@ -123,8 +123,8 @@
                                                     name: 'id'
                                                 },
                                                 {
-                                                    data: 'category_id',
-                                                    name: 'category_id'
+                                                    data: 'category.name',
+                                                    name: 'category.name'
                                                 },
                                                 {
                                                     data: 'title',

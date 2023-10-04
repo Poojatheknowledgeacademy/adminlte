@@ -21,7 +21,7 @@ class BlogController extends Controller
         // return view('blog.list', compact('blog'));
 
         if ($request->ajax()) {
-            $query = Blog::with('creator');
+            $query = Blog::with('creator','category');
             //print_r($query);
            // die();
             return Datatables::eloquent($query)->make(true);
