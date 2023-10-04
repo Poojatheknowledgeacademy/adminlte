@@ -68,9 +68,9 @@
                                                 name: 'is_active',  // Name it 'is_active'
                                                 render: function (data, type, full, meta) {
                                                     if (data === 1) {
-                                                        return '<i class="fas fa-toggle-on text-primary"></i> Active';
+                                                        return '<i class="fas fa-toggle-on text-primary"></i>';
                                                     } else {
-                                                        return '<i class="fas fa-toggle-on text-secondary"></i> Inactive';
+                                                        return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                     }
                                                 }
                                             },
