@@ -15,13 +15,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
 
         // $users = User::paginate(10);
         //return view('users.list', compact('users'));
         if ($request->ajax()) {
-            dd($request->all());
+           // dd($request->all());
            // return Datatables::of(User::query())->make(true);
            return Datatables::eloquent(User::query())->make(true);
         }

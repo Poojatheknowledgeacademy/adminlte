@@ -95,8 +95,7 @@ class CourseController extends Controller
         $course->topic_id = $request->topic_id;
         $course->is_active = $active;
         $course->name = $request->name;
-        $course->slug = $request->slug;
-
+        
         if ($request->file('logo')) {
             $courselogolocation = 'Images/courselogo/';
             if (!empty($course->logo)) {

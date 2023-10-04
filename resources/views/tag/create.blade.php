@@ -60,7 +60,10 @@
         </section>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--Jquery -->
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+
 <script>
     $(document).ready(function() {
         // Attach input event listeners to the input fields
