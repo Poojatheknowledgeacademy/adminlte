@@ -175,6 +175,20 @@
             alert($('#pieces').val());
         });
     });
+    $(document).ready(function() {
+
+        var t = $('#summernote').summernote(
+
+            {
+
+                height: 100,
+
+                focus: true
+
+            }
+
+        );
+    });
 </script>
 <script>
     $(document).ready(function() {
