@@ -40,7 +40,7 @@
                             <form method="POST" action="{{ route('blogs.store') }}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group">
-                                    <label>Category</label>
+                                    <label>Category<span class="text-danger">*</label>
                                     <select name="category_id"
                                         class="form-control select2bs4 @error('category_id') is-invalid @enderror">
                                         <option value="">Select a category</option>
@@ -53,7 +53,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Slug</label>
+                                    <label>Slug<span class="text-danger">*</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
                                         name="slug" value="{{ old('slug') }}">
                                     @error('slug')
@@ -61,7 +61,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Title</label>
+                                    <label>Title<span class="text-danger">*</label>
                                     <input type="text" class="form-control @error('title') is-invalid @enderror"
                                         name="title" value="{{ old('title') }}">
                                     @error('title')
@@ -69,7 +69,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Short description</label>
+                                    <label>Short description<span class="text-danger">*</label>
                                     <input type="text"
                                         class="form-control @error('short_description') is-invalid @enderror"
                                         name="short_description" value="{{ old('short_description') }}">
@@ -78,14 +78,14 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Summary</label>
+                                    <label>Summary<span class="text-danger">*<span class="text-danger">*</label>
                                     <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary') }}</textarea>
                                     @error('summary')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Featured image1</label>
+                                    <label>Featured image1<span class="text-danger">*</label>
                                     <input type="file" class="form-control @error('featured_img1') is-invalid @enderror"
                                         name="featured_img1" value="{{ old('featured_img1') }}">
                                     @error('featured_img1')
@@ -93,7 +93,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Featured image2</label>
+                                    <label>Featured image2<span class="text-danger">*</label>
                                     <div class="custom-file">
                                         <input type="file"
                                             class="form-control @error('featured_img2') is-invalid @enderror"
@@ -104,7 +104,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Author Name</label>
+                                    <label>Author Name<span class="text-danger">*</label>
                                     <div class="input-group">
                                         <input type="text"
                                             class="form-control @error('author_name') is-invalid @enderror"
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Date</label>
+                                    <label for="exampleInputPassword1">Date<span class="text-danger">*</label>
                                     <div class="input-group">
                                         <input type="date" class="form-control @error('added_date') is-invalid @enderror"
                                             name="added_date" value="{{ old('added_date') }}">
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tags</label>
+                                    <label>Tags<span class="text-danger">*</label>
                                     <select class="select2" name="tags[]" multiple="multiple" style="width: 100%;"
                                         id="pieces">
                                         @foreach ($tags as $tag)

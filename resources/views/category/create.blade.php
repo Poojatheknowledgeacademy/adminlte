@@ -33,9 +33,9 @@
                                 <form method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Name</label>
+                                        <label for="exampleInputEmail1">Name<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="exampleInputEmail1" name="name" placeholder="Enter name">
+                                            id="name" name="name" placeholder="Enter name">
 
                                         @error('name')
                                             <span class="error invalid-feedback" role="alert">
@@ -45,9 +45,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Slug</label>
+                                        <label for="exampleInputEmail1">Slug<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                            id="exampleInputEmail1" name="slug" placeholder="Enter slug">
+                                            id="slug" name="slug" placeholder="Enter slug">
 
                                         @error('slug')
                                             <span class="error invalid-feedback" role="alert">
@@ -57,10 +57,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputFile">Icon</label>
+                                        <label for="exampleInputFile">Icon<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file"
+                                                <input type="file" id="icon"
                                                     class="form-control @error('icon') is-invalid @enderror" id="icon"
                                                     name="icon">
                                             </div>
@@ -73,7 +73,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputFile">logo</label>
+                                        <label for="exampleInputFile">logo<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <input type="file" class="form-control @error('logo') is-invalid @enderror"
                                                 id="logo" name="logo">
@@ -87,21 +87,24 @@
 
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_active" id="customSwitch1" checked>
+                                            <input type="checkbox" class="custom-control-input" name="is_active"
+                                                id="customSwitch1" checked>
                                             <label class="custom-control-label" for="customSwitch1">Active</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_popular" id="customSwitch2" checked>
+                                            <input type="checkbox" class="custom-control-input" name="is_popular"
+                                                id="customSwitch2" checked>
                                             <label class="custom-control-label" for="customSwitch2">Popular</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_technical" id="customSwitch3" checked>
+                                            <input type="checkbox" class="custom-control-input" name="is_technical"
+                                                id="customSwitch3" checked>
                                             <label class="custom-control-label" for="customSwitch3">Technical</label>
                                         </div>
                                     </div>
@@ -119,6 +122,43 @@
         </section>
     </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Attach input event listeners to the input fields
+        $('#name').on('input', function() {
+            removeErrorMessages($(this));
+        });
+
+        $('#slug').on('input', function() {
+            removeErrorMessages($(this));
+        });
+        $('#icon').on('input', function() {
+            removeErrorMessages($(this));
+        });
+        $('#logo').on('input', function() {
+            removeErrorMessages($(this));
+        });
+
+        // Function to remove error messages and reset input field's border
+        function removeErrorMessages(inputField) {
+            // Find the parent element and then find the error message element
+            var parent = inputField.closest('.form-group');
+            var errorElement = parent.find('.error');
+
+            // Remove the error message if it exists
+            errorElement.remove();
+
+            // Remove the is-invalid class to reset the input field's border
+            inputField.removeClass('is-invalid');
+        }
+    });
+</script>
+
+
+
+
 
 
 {{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>

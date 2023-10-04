@@ -35,7 +35,7 @@
                                     @csrf
                                     @method('PUT') <!-- Use the PUT method for updating -->
                                     <div class="form-group">
-                                        <label for="name">Name</label>
+                                        <label for="name">Name<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="name" name="name" value="{{ $topic->name }}">
                                         @error('name')
@@ -46,7 +46,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInput2">slug</label>
+                                        <label for="exampleInput2">Slug<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
                                             id="exampleInput2" name="slug" value="{{ $slug ? $slug->slug : '' }}">
                                         @error('slug')
@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Category</label>
+                                        <label>Category<span class="text-danger">*</label>
                                         <select class="form-control select2bs4 " style="width: 100%;"name="category_id">
 
                                             @foreach ($categories as $category)
@@ -74,7 +74,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="icon">Logo</label>
+                                        <label for="icon">Logo<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <div class="col-md-6">
                                                 <input type="file"

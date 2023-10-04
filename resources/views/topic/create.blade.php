@@ -67,10 +67,10 @@
 
                                     <div class="form-group">
 
-                                        <label for="exampleInput1">Name</label>
+                                        <label for="topic_name">Name<span class="text-danger">*</label>
 
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="exampleInput1" name="name" placeholder="Enter name">
+                                            id="topic_name" name="name" placeholder="Enter name">
 
 
 
@@ -86,10 +86,10 @@
 
                                     <div class="form-group">
 
-                                        <label for="exampleInput2">slug</label>
+                                        <label for="topic_slug">slug<span class="text-danger">*</label>
 
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                            id="exampleInput2" name="slug" placeholder="Enter slug">
+                                            id="topic_slug" name="slug" placeholder="Enter slug">
 
 
 
@@ -105,10 +105,10 @@
 
                                     <div class="form-group">
 
-                                        <label for="category_id">Category Name</label>
+                                        <label for="category_id">Category Name<span class="text-danger">*</label>
 
                                         <select class="form-control @error('category_id') is-invalid @enderror"
-                                            id="category_id" name="category_id">
+                                            id="category_name" name="category_id">
 
                                             <option value="">Select a category</option> <!-- Default empty option -->
 
@@ -122,43 +122,26 @@
 
                                         @error('category_id')
                                             <span class="error invalid-feedback" role="alert">
-
                                                 <strong>{{ $message }}</strong>
-
                                             </span>
                                         @enderror
-
                                     </div>
-
-
-
-
-
-
 
                                     <div class="form-group">
 
-                                        <label for="exampleInputFile">logo</label>
+                                        <label for="exampleInputFile">logo<span class="text-danger">*</label>
 
                                         <div class="input-group">
 
                                             <input type="file" class="form-control @error('logo') is-invalid @enderror"
                                                 id="logo" name="logo">
-
                                         </div>
-
                                         @error('logo')
                                             <span class="error invalid-feedback d-block" role="alert">
-
                                                 <strong>{{ $message }}</strong>
-
                                             </span>
                                         @enderror
-
                                     </div>
-
-
-
 
 
                                     <div class="form-group">
@@ -171,33 +154,18 @@
                                             <label class="custom-control-label" for="customSwitch1">Active</label>
 
                                         </div>
-
                                     </div>
-
-
-
-
 
                                     <div class="card-footer">
-
                                         <button type="submit" class="btn btn-primary">Create</button>
-
                                     </div>
-
                                 </form>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
-
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -211,7 +179,7 @@
         $('#topic_slug').on('input', function() {
             removeErrorMessages($(this));
         });
-        $('#icon').on('input', function() {
+        $('#category_name').on('input', function() {
             removeErrorMessages($(this));
         });
         $('#logo').on('input', function() {
