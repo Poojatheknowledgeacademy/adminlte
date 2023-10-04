@@ -87,8 +87,9 @@
                                         <label for="icon">Logo<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <div class="col-md-6">
-                                                <input type="file" class="form-control @error('logo') is-invalid @enderror"
-                                                id="logo" name="logo"value="{{ $category->logo }}">
+                                                <input type="file"
+                                                    class="form-control @error('logo') is-invalid @enderror" id="logo"
+                                                    name="logo"value="{{ $category->logo }}">
                                             </div>
                                             @if ($category->logo)
                                                 <div class="col-md-3">
@@ -147,37 +148,35 @@
     </div>
 @endsection
 
-<!--Jquery -->
-<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+@push('child-scripts')
+    <script>
+        function removeIcon() {
+            $('#removeicontxt').val('removed');
+            $('#cIcon').attr('src', '{{ asset('Images/icon/no-image.png') }}');
+            $('#removeicon').hide();
+            $('#undoremoceicon').show();
+        }
 
-<script>
-    function removeIcon() {
-        $('#removeicontxt').val('removed');
-        $('#cIcon').attr('src', '{{ asset('Images/icon/no-image.png') }}');
-        $('#removeicon').hide();
-        $('#undoremoceicon').show();
-    }
-
-    function undoIcon() {
-        $('#removeicontxt').val(null);
-        $('#cIcon').attr('src', '{{ asset($category->icon) }}');
-        $('#removeicon').show();
-        $('#undoremoceicon').hide();
-    }
+        function undoIcon() {
+            $('#removeicontxt').val(null);
+            $('#cIcon').attr('src', '{{ asset($category->icon) }}');
+            $('#removeicon').show();
+            $('#undoremoceicon').hide();
+        }
 
 
-    function removeLogo() {
-        $('#removelogotxt').val('removed');
-        $('#cLogo').attr('src', '{{ asset('Images/icon/no-image.png') }}');
-        $('#removelogo').hide();
-        $('#undoremocelogo').show();
-    }
+        function removeLogo() {
+            $('#removelogotxt').val('removed');
+            $('#cLogo').attr('src', '{{ asset('Images/icon/no-image.png') }}');
+            $('#removelogo').hide();
+            $('#undoremocelogo').show();
+        }
 
-    function undoLogo() {
-        $('#removelogotxt').val(null);
-        $('#cLogo').attr('src', '{{ asset($category->logo) }}');
-        $('#removelogo').show();
-        $('#undoremocelogo').hide();
-    }
-
-</script>
+        function undoLogo() {
+            $('#removelogotxt').val(null);
+            $('#cLogo').attr('src', '{{ asset($category->logo) }}');
+            $('#removelogo').show();
+            $('#undoremocelogo').hide();
+        }
+    </script>
+@endpush

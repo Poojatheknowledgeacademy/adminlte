@@ -111,6 +111,7 @@
                                         </tbody> --}}
                                     </table>
                                 </div>
+                                @push('child-scripts')
                                 <script>
                                     $(function() {
                                         $('#table').DataTable({
@@ -217,6 +218,7 @@
                                         });
                                     });
                                 </script>
+                                @endpush
                             </div>
 
                             {{-- <div class="card-footer clearfix">
@@ -235,4 +237,5 @@
         </section>
     </div>
 @endsection
-<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+
+

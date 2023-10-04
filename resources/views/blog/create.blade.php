@@ -165,7 +165,7 @@
         </div>
     </section>
 @endsection
-<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+@push('child-scripts')
 <script>
     $(document).ready(function() {
         $('#pieces').select2({
@@ -277,3 +277,4 @@
 
     });
 </script>
+@endpush

@@ -47,74 +47,75 @@
                                         </thead>
                                     </table>
                                 </div>
-                                <script>
-                                    $(function() {
-                                        $('#table').DataTable({
-                                            processing: true,
-                                            serverSide: true,
-                                            ajax: '{{ route('users.index') }}',
-                                            columns: [{
-                                                    data: 'id',
-                                                    name: 'id'
-                                                },
-                                                {
-                                                    data: 'name',
-                                                    name: 'name'
-                                                },
-                                                {
-                                                    data: 'email',
-                                                    name: 'email'
-                                                }, {
-                                                    data: 'created_at',
-                                                    name: 'created_at',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return moment(data).format('YYYY-MM-DD');
+                                @push('child-scripts')
+                                    <script>
+                                        $(function() {
+                                            $('#table').DataTable({
+                                                processing: true,
+                                                serverSide: true,
+                                                ajax: '{{ route('users.index') }}',
+                                                columns: [{
+                                                        data: 'id',
+                                                        name: 'id'
+                                                    },
+                                                    {
+                                                        data: 'name',
+                                                        name: 'name'
+                                                    },
+                                                    {
+                                                        data: 'email',
+                                                        name: 'email'
+                                                    }, {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('YYYY-MM-DD');
+                                                            }
+                                                            return '';
                                                         }
-                                                        return '';
-                                                    }
-                                                }, {
-                                                    data: 'created_at',
-                                                    name: 'created_at',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return moment(data).format('HH:mm:ss');
+                                                    }, {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('HH:mm:ss');
+                                                            }
+                                                            return '';
                                                         }
-                                                        return '';
-                                                    }
-                                                }, {
-                                                    data: 'creator.name',
-                                                    name: 'creator.name'
-                                                }, {
-                                                    data: 'id',
-                                                    name: 'actions',
-                                                    orderable: false,
-                                                    searchable: false,
-                                                    render: function(data, type, full, meta) {
-                                                        var editUrl = '{{ route('users.edit', ':id') }}'.replace(':id', data);
-                                                        var deleteFormId = 'delete-form-' + data;
-                                                        var deleteUrl = '{{ route('users.destroy', ':id') }}'.replace(':id',
-                                                            data);
+                                                    }, {
+                                                        data: 'creator.name',
+                                                        name: 'creator.name'
+                                                    }, {
+                                                        data: 'id',
+                                                        name: 'actions',
+                                                        orderable: false,
+                                                        searchable: false,
+                                                        render: function(data, type, full, meta) {
+                                                            var editUrl = '{{ route('users.edit', ':id') }}'.replace(':id', data);
+                                                            var deleteFormId = 'delete-form-' + data;
+                                                            var deleteUrl = '{{ route('users.destroy', ':id') }}'.replace(':id',
+                                                                data);
 
-                                                        return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
-                                                            '<a href="#" class="delete-link" ' +
-                                                            '   onclick="event.preventDefault(); document.getElementById(\'' +
-                                                            deleteFormId + '\').submit();">' +
-                                                            '   <i class="fas fa-trash text-danger"></i>' +
-                                                            '</a>' +
-                                                            '<form id="' + deleteFormId + '" ' +
-                                                            '   action="' + deleteUrl +
-                                                            '" method="POST" style="display: none;">' +
-                                                            '   @csrf' +
-                                                            '   @method('DELETE')' +
-                                                            '</form>';
-                                                    }
-                                                },
-
-                                            ]
+                                                            return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
+                                                                '<a href="#" class="delete-link" ' +
+                                                                '   onclick="event.preventDefault(); document.getElementById(\'' +
+                                                                deleteFormId + '\').submit();">' +
+                                                                '   <i class="fas fa-trash text-danger"></i>' +
+                                                                '</a>' +
+                                                                '<form id="' + deleteFormId + '" ' +
+                                                                '   action="' + deleteUrl +
+                                                                '" method="POST" style="display: none;">' +
+                                                                '   @csrf' +
+                                                                '   @method('DELETE')' +
+                                                                '</form>';
+                                                        }
+                                                    },
+                                                ]
+                                            });
                                         });
-                                    });
-                                </script>
+                                    </script>
+                                @endpush
                             </div>
                         </div>
                     </div>
@@ -123,4 +124,3 @@
         </section>
     </div>
 @endsection
-<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>

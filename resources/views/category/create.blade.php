@@ -123,59 +123,37 @@
     </div>
 @endsection
 
-<!--Jquery -->
-<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
 
-<script>
-    $(document).ready(function() {
-        // Attach input event listeners to the input fields
-        $('#name').on('input', function() {
-            removeErrorMessages($(this));
+@push('child-scripts')
+    <script>
+        $(document).ready(function() {
+            // Attach input event listeners to the input fields
+            $('#name').on('input', function() {
+                removeErrorMessages($(this));
+            });
+
+            $('#slug').on('input', function() {
+                removeErrorMessages($(this));
+            });
+            $('#icon').on('input', function() {
+                removeErrorMessages($(this));
+            });
+            $('#logo').on('input', function() {
+                removeErrorMessages($(this));
+            });
+
+            // Function to remove error messages and reset input field's border
+            function removeErrorMessages(inputField) {
+                // Find the parent element and then find the error message element
+                var parent = inputField.closest('.form-group');
+                var errorElement = parent.find('.error');
+
+                // Remove the error message if it exists
+                errorElement.remove();
+
+                // Remove the is-invalid class to reset the input field's border
+                inputField.removeClass('is-invalid');
+            }
         });
-
-        $('#slug').on('input', function() {
-            removeErrorMessages($(this));
-        });
-        $('#icon').on('input', function() {
-            removeErrorMessages($(this));
-        });
-        $('#logo').on('input', function() {
-            removeErrorMessages($(this));
-        });
-
-        // Function to remove error messages and reset input field's border
-        function removeErrorMessages(inputField) {
-            // Find the parent element and then find the error message element
-            var parent = inputField.closest('.form-group');
-            var errorElement = parent.find('.error');
-
-            // Remove the error message if it exists
-            errorElement.remove();
-
-            // Remove the is-invalid class to reset the input field's border
-            inputField.removeClass('is-invalid');
-        }
-    });
-</script>
-
-
-
-
-
-
-{{-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-<script>
-    $(function () {
-      bsCustomFileInput.init();
-    });
     </script>
-
-<script>
-    $('#logo').on('change', function() {
-        alert('fjkh');
-        //get the file name
-        var fileName = $(this).val();
-        //replace the "Choose a file" label
-        $(this).next('.custom-file-label').html(fileName);
-    })
-</script> --}}
+@endpush

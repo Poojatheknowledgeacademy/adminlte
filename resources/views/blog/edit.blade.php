@@ -202,7 +202,7 @@
         </div>
     </section>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@push('child-scripts')
 <script>
     $(document).ready(function() {
 
@@ -247,3 +247,4 @@
         $('#undoremovefimage2').hide();
     }
 </script>
+@endpush

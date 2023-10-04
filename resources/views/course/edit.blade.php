@@ -28,7 +28,8 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form method="POST" action="{{ route('course.update', $course->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('course.update', $course->id) }}"
+                                enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 @method('PUT')
 
@@ -54,7 +55,6 @@
                                         class="form-control select2bs4 @error('topic_id') is-invalid @enderror">
                                         <option value="">Select a topic</option>
                                         @foreach ($topic as $topics)
-
                                             <option value="{{ $topics->id }}"
                                                 {{ $topics->id == $course->topic_id ? 'selected' : '' }}>
                                                 {{ $topics->name }}</option>
@@ -80,8 +80,8 @@
                                                 <i class="fas fa-trash text-danger" id="removelogo"
                                                     onClick="removeLogo()"></i>
                                                 <input type="hidden" id="removelogotxt" name="removelogotxt" value>
-                                                <i class="fas fa-undo text-danger" id="undoremovelogo"
-                                                    onClick="undoLogo()" style="display: none";></i>
+                                                <i class="fas fa-undo text-danger" id="undoremovelogo" onClick="undoLogo()"
+                                                    style="display: none";></i>
                                             </div>
                                         @endif
                                         @error('logo')
@@ -111,23 +111,20 @@
     </section>
 @endsection
 
-<!--Jquery -->
+@push('child-scripts')
+    <script>
+        function removeLogo() {
+            $('#removelogotxt').val('removed');
+            $('#cLogo').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
+            $('#removelogo').hide();
+            $('#undoremovelogo').show();
+        }
 
-<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
-
-<script>
-
-    function removeLogo() {
-        $('#removelogotxt').val('removed');
-        $('#cLogo').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
-        $('#removelogo').hide();
-        $('#undoremovelogo').show();
-    }
-
-    function undoLogo() {
-        $('#removelogotxt').val(null);
-        $('#cLogo').attr('src', '{{ asset($course->logo) }}');
-        $('#removelogo').show();
-        $('#undoremovelogo').hide();
-    }
-</script>
+        function undoLogo() {
+            $('#removelogotxt').val(null);
+            $('#cLogo').attr('src', '{{ asset($course->logo) }}');
+            $('#removelogo').show();
+            $('#undoremovelogo').hide();
+        }
+    </script>
+@endpush

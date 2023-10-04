@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -51,124 +50,125 @@
                                         </thead>
                                     </table>
                                 </div>
-                                <script>
-                                    $(function() {
-                                        $('#table').DataTable({
-                                            processing: true,
-                                            serverSide: true,
-                                            ajax: '{{ route('category.index') }}',
-                                            columns: [{
-                                                    data: 'id',
-                                                    name: 'id'
-                                                },
-                                                {
-                                                    data: 'name',
-                                                    name: 'name'
-                                                },
-                                                {
-                                                    data: 'icon',
-                                                    name: 'icon',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return '<i class="fas fa-check text-primary"></i>';
-                                                        } else {
-                                                            return '<i class="fas fa-times text-secondary"></i>';
+                                @push('child-scripts')
+                                    <script>
+                                        $(function() {
+                                            $('#table').DataTable({
+                                                processing: true,
+                                                serverSide: true,
+                                                ajax: '{{ route('category.index') }}',
+                                                columns: [{
+                                                        data: 'id',
+                                                        name: 'id'
+                                                    },
+                                                    {
+                                                        data: 'name',
+                                                        name: 'name'
+                                                    },
+                                                    {
+                                                        data: 'icon',
+                                                        name: 'icon',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return '<i class="fas fa-check text-primary"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-times text-secondary"></i>';
+                                                            }
                                                         }
-                                                    }
-                                                }, {
-                                                    data: 'logo',
-                                                    name: 'logo',
-                                                    render: function(data, type, full, meta) {
-                                                        console.log(data);
-                                                        if (data) {
-                                                            return '<i class="fas fa-check text-primary"></i>';
-                                                        } else {
-                                                            return '<i class="fas fa-times text-secondary"></i>';
+                                                    }, {
+                                                        data: 'logo',
+                                                        name: 'logo',
+                                                        render: function(data, type, full, meta) {
+                                                            console.log(data);
+                                                            if (data) {
+                                                                return '<i class="fas fa-check text-primary"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-times text-secondary"></i>';
+                                                            }
                                                         }
-                                                    }
-                                                }, {
-                                                    data: 'is_active',
-                                                    name: 'is_active',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return '<i class="fas fa-toggle-on text-primary"></i>';
-                                                        } else {
-                                                            return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                    }, {
+                                                        data: 'is_active',
+                                                        name: 'is_active',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                            }
                                                         }
-                                                    }
-                                                },
-                                                {
-                                                    data: 'is_popular',
-                                                    name: 'is_popular',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return '<i class="fas fa-toggle-on text-primary"></i>';
-                                                        } else {
-                                                            return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                    },
+                                                    {
+                                                        data: 'is_popular',
+                                                        name: 'is_popular',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                            }
                                                         }
-                                                    }
-                                                }, {
-                                                    data: 'is_technical',
-                                                    name: 'is_technical',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return '<i class="fas fa-toggle-on text-primary"></i>';
-                                                        } else {
-                                                            return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                    }, {
+                                                        data: 'is_technical',
+                                                        name: 'is_technical',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                            }
                                                         }
-                                                    }
-                                                }, {
-                                                    data: 'created_at',
-                                                    name: 'created_at',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return moment(data).format('YYYY-MM-DD');
+                                                    }, {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('YYYY-MM-DD');
+                                                            }
+                                                            return '';
                                                         }
-                                                        return '';
-                                                    }
-                                                }, {
-                                                    data: 'created_at',
-                                                    name: 'created_at',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return moment(data).format('HH:mm:ss');
+                                                    }, {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('HH:mm:ss');
+                                                            }
+                                                            return '';
                                                         }
-                                                        return '';
-                                                    }
-                                                }, {
-                                                    data: 'creator.name',
-                                                    name: 'creator.name'
-                                                }, {
-                                                    data: 'id',
-                                                    name: 'actions',
-                                                    orderable: false,
-                                                    searchable: false,
-                                                    render: function(data, type, full, meta) {
-                                                        var editUrl = '{{ route('category.edit', ':id') }}'.replace(':id',
-                                                        data);
-                                                        var deleteFormId = 'delete-form-' + data;
-                                                        var deleteUrl = '{{ route('category.destroy', ':id') }}'.replace(':id',
-                                                            data);
+                                                    }, {
+                                                        data: 'creator.name',
+                                                        name: 'creator.name'
+                                                    }, {
+                                                        data: 'id',
+                                                        name: 'actions',
+                                                        orderable: false,
+                                                        searchable: false,
+                                                        render: function(data, type, full, meta) {
+                                                            var editUrl = '{{ route('category.edit', ':id') }}'.replace(':id',
+                                                                data);
+                                                            var deleteFormId = 'delete-form-' + data;
+                                                            var deleteUrl = '{{ route('category.destroy', ':id') }}'.replace(':id',
+                                                                data);
 
-                                                        return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
-                                                            '<a href="#" class="delete-link" ' +
-                                                            '   onclick="event.preventDefault(); document.getElementById(\'' +
-                                                            deleteFormId + '\').submit();">' +
-                                                            '   <i class="fas fa-trash text-danger"></i>' +
-                                                            '</a>' +
-                                                            '<form id="' + deleteFormId + '" ' +
-                                                            '   action="' + deleteUrl +
-                                                            '" method="POST" style="display: none;">' +
-                                                            '   @csrf' +
-                                                            '   @method('DELETE')' +
-                                                            '</form>';
-                                                    }
-                                                },
-
-                                            ]
+                                                            return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
+                                                                '<a href="#" class="delete-link" ' +
+                                                                '   onclick="event.preventDefault(); document.getElementById(\'' +
+                                                                deleteFormId + '\').submit();">' +
+                                                                '   <i class="fas fa-trash text-danger"></i>' +
+                                                                '</a>' +
+                                                                '<form id="' + deleteFormId + '" ' +
+                                                                '   action="' + deleteUrl +
+                                                                '" method="POST" style="display: none;">' +
+                                                                '   @csrf' +
+                                                                '   @method('DELETE')' +
+                                                                '</form>';
+                                                        }
+                                                    },
+                                                ]
+                                            });
                                         });
-                                    });
-                                </script>
+                                    </script>
+                                @endpush
                             </div>
                         </div>
                     </div>
@@ -177,4 +177,3 @@
         </section>
     </div>
 @endsection
-<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>

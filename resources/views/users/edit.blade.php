@@ -35,8 +35,9 @@
                                     @method('PUT') <!-- Use the PUT method for updating -->
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Name<span class="text-danger">*</label>
-                                        <input type="name" class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail1"
-                                            value="{{ $user->name }}" placeholder="Enter Name" name="name">
+                                        <input type="name" class="form-control @error('name') is-invalid @enderror"
+                                            id="exampleInputEmail1" value="{{ $user->name }}" placeholder="Enter Name"
+                                            name="name">
                                         @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -45,18 +46,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email <span class="text-danger">*</label>
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1"
-                                            value="{{ $user->email }}" placeholder="Enter email" name="email">
+                                        <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                            id="exampleInputEmail1" value="{{ $user->email }}" placeholder="Enter email"
+                                            name="email">
                                         @error('email')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Edit</button>
-                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </div>
                             </form>
                         </div>
                     </div>
