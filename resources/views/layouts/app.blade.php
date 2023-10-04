@@ -45,7 +45,7 @@
     <!-- BS Stepper -->
     <link rel="stylesheet" href="{{ asset('plugins/bs-stepper/css/bs-stepper.min.css') }}">
     <!--Jquery -->
-    <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
 
 
 
@@ -110,8 +110,25 @@
 
         @include('layouts.sidebar')
 
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            @if (session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if (session()->has('danger'))
+                <div class="alert alert-danger">
+                    {{ session('danger') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             @yield('content')
         </div>
 
@@ -177,8 +194,8 @@
     <script src="{{ asset('adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <!-- BS-Stepper -->
     <script src="{{ asset('adminlte/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
-     <!-- Custom js -->
-     <script src="{{ asset('adminlte/dist/js/custom.js') }}"></script>
+    <!-- Custom js -->
+    <script src="{{ asset('adminlte/dist/js/custom.js') }}"></script>
 </body>
 
 </html>

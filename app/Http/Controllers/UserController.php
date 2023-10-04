@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use Yajra\DataTables\Facades\Datatables;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
@@ -13,11 +15,18 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $users = User::paginate(10);
 
-        return view('users.list', compact('users'));
+        // $users = User::paginate(10);
+        //return view('users.list', compact('users'));
+        if ($request->ajax()) {
+            dd($request->all());
+           // return Datatables::of(User::query())->make(true);
+           return Datatables::eloquent(User::query())->make(true);
+        }
+
+        return view('users.list');
     }
 
     /**
@@ -46,7 +55,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-       //
+        //
     }
 
     /**
