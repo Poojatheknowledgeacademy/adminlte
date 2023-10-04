@@ -77,9 +77,8 @@
                                         <label for="icon">Logo<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <div class="col-md-6">
-                                                <input type="file"
-                                                    class="form-control @error('logo') is-invalid @enderror" id="logo"
-                                                    name="logo"value="{{ $topic->logo }}">
+                                                <input type="file" class="form-control @error('logo') is-invalid @enderror"
+                                                id="logo" name="logo"value="{{ $topic->logo }}">
                                             </div>
                                             @if ($topic->logo)
                                                 <div class="col-md-3">
@@ -99,6 +98,34 @@
                                             @enderror
                                         </div>
                                     </div>
+
+
+                                    {{-- <div class="form-group">
+                                        <label for="icon">Logo<span class="text-danger">*</label>
+                                        <div class="input-group">
+                                            <div class="col-md-6">
+                                                <input type="file"
+                                                    class="form-control @error('logo') is-invalid @enderror" id="logo"
+                                                    name="logo">
+                                            </div>
+                                            @if ($topic->logo)
+                                                <div class="col-md-3">
+                                                    <img src="{{ asset($topic->logo) }}" alt="Current Icon"
+                                                        class="img-thumbnail" height="50" width="50" id="cLogo">
+                                                    <i class="fas fa-trash text-danger" id="removelogo"
+                                                        onClick="removeLogo()"></i>
+                                                    <input type="hidden"id="removelogotxt" name="removelogotxt" value>
+                                                    <i class="fas fa-undo text-danger" id="undoremocelogo"
+                                                        onClick="undoLogo()" style="display: none";></i>
+                                                </div>
+                                            @endif
+                                            @error('logo')
+                                                <span class="error invalid-feedback d-block" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div> --}}
 
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
