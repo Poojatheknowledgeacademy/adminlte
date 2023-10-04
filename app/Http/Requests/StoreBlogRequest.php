@@ -23,6 +23,7 @@ class StoreBlogRequest extends FormRequest
     {
         return [
             'category_id'=>'required|integer',
+            'slug'=>'required',
             'title'=>'required|string|min:3|max:100',
             'short_description'=>'required|string|min:10|max:200',
             'summary'=>'required',
