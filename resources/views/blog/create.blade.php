@@ -41,7 +41,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group">
                                     <label>Category<span class="text-danger">*</label>
-                                    <select name="category_id"
+                                    <select id="blog_category" name="category_id"
                                         class="form-control select2bs4 @error('category_id') is-invalid @enderror">
                                         <option value="">Select a category</option>
                                         @foreach ($category as $categories)
@@ -54,23 +54,25 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Slug<span class="text-danger">*</label>
-                                    <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        name="slug" value="{{ old('slug') }}">
+                                    <input type="text" id="blog_slug"
+                                        class="form-control @error('slug') is-invalid @enderror" name="slug"
+                                        value="{{ old('slug') }}">
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Title<span class="text-danger">*</label>
-                                    <input type="text" class="form-control @error('title') is-invalid @enderror"
-                                        name="title" value="{{ old('title') }}">
+                                    <input id="blog_tittle" type="text"
+                                        class="form-control @error('title') is-invalid @enderror" name="title"
+                                        value="{{ old('title') }}">
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Short description<span class="text-danger">*</label>
-                                    <input type="text"
+                                    <input id="blog_description" type="text"
                                         class="form-control @error('short_description') is-invalid @enderror"
                                         name="short_description" value="{{ old('short_description') }}">
                                     @error('short_description')
@@ -78,15 +80,16 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Summary<span class="text-danger">*<span class="text-danger">*</label>
+                                    <label>Summary<span class="text-danger">*</label>
                                     <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary') }}</textarea>
                                     @error('summary')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Featured image1<span class="text-danger">*</label>
-                                    <input type="file" class="form-control @error('featured_img1') is-invalid @enderror"
+                                    <label>Featured image1</label>
+                                    <input id="blog_image1" type="file"
+                                        class="form-control @error('featured_img1') is-invalid @enderror"
                                         name="featured_img1" value="{{ old('featured_img1') }}">
                                     @error('featured_img1')
                                         <div class="error invalid-feedback d-block">{{ $message }}</div>
@@ -95,7 +98,7 @@
                                 <div class="form-group">
                                     <label>Featured image2<span class="text-danger">*</label>
                                     <div class="custom-file">
-                                        <input type="file"
+                                        <input id="blog_image2" type="file"
                                             class="form-control @error('featured_img2') is-invalid @enderror"
                                             name="featured_img2" value="{{ old('featured_img2') }}">
                                     </div>
@@ -106,7 +109,7 @@
                                 <div class="form-group">
                                     <label>Author Name<span class="text-danger">*</label>
                                     <div class="input-group">
-                                        <input type="text"
+                                        <input id="blog_authorname" type="text"
                                             class="form-control @error('author_name') is-invalid @enderror"
                                             name="author_name" value="{{ old('author_name') }}">
                                         @error('author_name')
@@ -117,8 +120,9 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Date<span class="text-danger">*</label>
                                     <div class="input-group">
-                                        <input type="date" class="form-control @error('added_date') is-invalid @enderror"
-                                            name="added_date" value="{{ old('added_date') }}">
+                                        <input id="blog_date" type="date"
+                                            class="form-control @error('added_date') is-invalid @enderror" name="added_date"
+                                            value="{{ old('added_date') }}">
                                         @error('added_date')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -126,12 +130,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Tags<span class="text-danger">*</label>
-                                    <select class="select2" name="tags[]" multiple="multiple" style="width: 100%;"
-                                        id="pieces">
+                                    <select class="select2 @error('tags') is-invalid @enderror" name="tags[]"
+                                        multiple="multiple" style="width: 100%;" id="pieces">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('tags')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
@@ -158,6 +165,7 @@
         </div>
     </section>
 @endsection
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         $('#pieces').select2({
@@ -167,9 +175,22 @@
             alert($('#pieces').val());
         });
     });
+    $(document).ready(function() {
+
+        var t = $('#summernote').summernote(
+
+            {
+
+                height: 100,
+
+                focus: true
+
+            }
+
+        );
+    });
 </script>
 <script>
-
     $(document).ready(function() {
 
         // Attach input event listeners to the input fields
@@ -179,25 +200,19 @@
             removeErrorMessages($(this));
 
         });
-
-
-
         $('#blog_slug').on('input', function() {
 
             removeErrorMessages($(this));
-
         });
 
         $('#blog_tittle').on('input', function() {
 
             removeErrorMessages($(this));
-
         });
 
         $('#blog_description').on('input', function() {
 
             removeErrorMessages($(this));
-
         });
 
         $('#summernote').on('input', function() {
@@ -230,7 +245,7 @@
 
         });
 
-        $('#blog_tag').on('input', function() {
+        $('#pieces').on('input', function() {
 
             removeErrorMessages($(this));
 
@@ -261,8 +276,4 @@
         }
 
     });
-
 </script>
-
-
-

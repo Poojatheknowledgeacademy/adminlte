@@ -82,48 +82,88 @@ class TopicController extends Controller
         $slug = $topic->slugs()->first();
         return view('topic.edit', compact('topic', 'categories', 'slug'));
     }
-
     public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse
-    {
-        if (!empty($request->file('logo'))) {
+{
+    if ($request->hasFile('logo')) {
+        $logo_location = 'Images/logo/';
 
-            $logo_location = 'Images/logo/';
-
-            //code for remove old file
-            if (!empty($topic->logo)) {
-                unlink(public_path($topic->logo));
-            }
-            //upload new file
-            $logo = $request->file('logo');
-            $logo_name = time() . '_' . $logo->getClientOriginalName();
-
-            // File upload location
-            $logo_location = 'Images/logo/';
-
-            $logo->move($logo_location, $logo_name);
-
-            $topic->update(['logo' => $logo_location . $logo_name]);
-        }
-        if ($request['removelogotxt'] != null) {
-            $topic->logo = null;
+        // Remove old file
+        if (!empty($topic->logo)) {
+            unlink(public_path($topic->logo));
         }
 
-        $is_active = $request->is_active == "on" ? 1 : 0;
+        // Upload new file
+        $logo = $request->file('logo');
+        $logo_name = time() . '_' . $logo->getClientOriginalName();
+        $logo->move($logo_location, $logo_name);
 
-        $topic->update([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'logo' => $request->logo,
-            'is_active' => $is_active,
-        ]);
-
-        $topic->slugs()->updateOrCreate(
-            ['slug' => $request->slug]
-        );
-        session()->flash('success', 'Topic updated successfully.');
-
-        return redirect()->route('topic.index');
+        $topic->logo = $logo_location . $logo_name;
     }
+
+    if ($request->input('removelogotxt')) {
+        $topic->logo = null;
+    }
+
+    $is_active = $request->has('is_active') ? 1 : 0;
+
+    $topic->update([
+        'name' => $request->input('name'),
+        'category_id' => $request->input('category_id'),
+        'logo' => $topic->logo,
+        'is_active' => $is_active,
+    ]);
+
+    $topic->slugs()->updateOrCreate([
+        'slug' => $request->input('slug')
+    ]);
+
+    session()->flash('success', 'Topic updated successfully.');
+
+    return redirect()->route('topic.index');
+}
+
+
+    // public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse
+    // {
+    //     if (!empty($request->file('logo'))) {
+
+    //         $logo_location = 'Images/logo/';
+
+    //         //code for remove old file
+    //         if (!empty($topic->logo)) {
+    //             unlink(public_path($topic->logo));
+    //         }
+    //         //upload new file
+    //         $logo = $request->file('logo');
+    //         $logo_name = time() . '_' . $logo->getClientOriginalName();
+
+    //         // File upload location
+    //         $logo_location = 'Images/logo/';
+
+    //         $logo->move($logo_location, $logo_name);
+
+    //         $topic->update(['logo' => $logo_location . $logo_name]);
+    //     }
+    //     if ($request['removelogotxt'] != null) {
+    //         $topic->logo = null;
+    //     }
+
+    //     $is_active = $request->is_active == "on" ? 1 : 0;
+
+    //     $topic->update([
+    //         'name' => $request->name,
+    //         'category_id' => $request->category_id,
+    //         'logo' => $request->logo,
+    //         'is_active' => $is_active,
+    //     ]);
+
+    //     $topic->slugs()->updateOrCreate(
+    //         ['slug' => $request->slug]
+    //     );
+    //     session()->flash('success', 'Topic updated successfully.');
+
+    //     return redirect()->route('topic.index');
+    // }
 
     /**
      * Remove the specified resource from storage.

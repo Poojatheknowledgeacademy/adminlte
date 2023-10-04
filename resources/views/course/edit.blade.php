@@ -64,34 +64,32 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label>Logo<span class="text-danger">*</label>
-                                    <div class="col-md-6">
 
-                                        <input type="file" class="form-control @error('logo') is-invalid @enderror"
-                                            id="logo" name="logo">
+                                <div class="form-group">
+                                    <label for="logo">Logo<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control @error('logo') is-invalid @enderror"
+                                                id="logo" name="logo">
+                                        </div>
                                         @if ($course->logo)
                                             <div class="col-md-3">
-                                                <img src="{{ asset($course->logo) }}" alt="Current fetureimage1"
-                                                    class="img-thumbnail" height="50" width="50" id="cIcon">
-
-                                                <i class="fas fa-trash text-danger" id="logoimage"
-                                                    onClick="logoimage()"></i>
-
-                                                <input type="hidden"id="removelogotxt" name="removelogotxt" value>
-
+                                                <img src="{{ asset($course->logo) }}" alt="Current Logo"
+                                                    class="img-thumbnail" height="50" width="50" id="cLogo">
+                                                <i class="fas fa-trash text-danger" id="removelogo"
+                                                    onClick="removeLogo()"></i>
+                                                <input type="hidden" id="removelogotxt" name="removelogotxt" value>
                                                 <i class="fas fa-undo text-danger" id="undoremovelogo"
-                                                    onClick="undologoimage()" style="display: none";></i>
+                                                    onClick="undoLogo()" style="display: none";></i>
                                             </div>
-                                            @error('logo')
-                                                <span class="error invalid-feedback d-block" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
                                         @endif
+                                        @error('logo')
+                                            <span class="error invalid-feedback d-block" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-
 
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
@@ -111,29 +109,24 @@
         </div>
     </section>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--Jquery -->
+
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+
 <script>
-    function logoimage() {
 
-    $('#logoimage').val('removed');
-
-    $('#cIcon').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
-
-    $('#logoimage').hide();
-
-    $('#undoremovelogo').show();
-
+    function removeLogo() {
+        $('#removelogotxt').val('removed');
+        $('#cLogo').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
+        $('#removelogo').hide();
+        $('#undoremovelogo').show();
     }
 
-    function undologoimage() {
-
-    $('#removelogotxt').val(null);
-
-    $('#cIcon').attr('src', '{{ asset($course->logo) }}');
-
-    $('#logoimage').show();
-
-    $('#undoremovelogo').hide();
-
+    function undoLogo() {
+        $('#removelogotxt').val(null);
+        $('#cLogo').attr('src', '{{ asset($course->logo) }}');
+        $('#removelogo').show();
+        $('#undoremovelogo').hide();
     }
 </script>

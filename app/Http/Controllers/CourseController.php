@@ -81,10 +81,6 @@ class CourseController extends Controller
         $slug = $course->slugs()->first();
         return view('course.edit', compact('course', 'topic', 'slug'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(EditcourseRequest $request, Course $course)
     {
         if ($request->is_active == 'on') {
@@ -92,22 +88,26 @@ class CourseController extends Controller
         } else {
             $active = '0';
         }
+        
         $course->topic_id = $request->topic_id;
         $course->is_active = $active;
         $course->name = $request->name;
-        $course->slug = $request->slug;
 
-        if ($request->file('logo')) {
+        // Handle logo update
+        if ($request->hasFile('logo')) {
             $courselogolocation = 'Images/courselogo/';
+
             if (!empty($course->logo)) {
                 unlink(public_path($course->logo));
             }
+
             $feature_image1 = $request->file('logo');
             $courselogoname = time() . '_' . $feature_image1->getClientOriginalName();
             $feature_image1->move($courselogolocation, $courselogoname);
-            // $course->update(["featured_img1" =>  $courselogolocation . $courselogoname]);
             $course->logo =  $courselogolocation . $courselogoname;
         }
+
+        // Handle logo removal
         if ($request['removelogotxt'] != null) {
             $course->logo = null;
         }
@@ -116,6 +116,40 @@ class CourseController extends Controller
 
         return redirect()->route('course.index')->with('success', 'Course Updated Successfully');
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    // public function update(EditcourseRequest $request, Course $course)
+    // {
+    //     if ($request->is_active == 'on') {
+    //         $active = '1';
+    //     } else {
+    //         $active = '0';
+    //     }
+    //     $course->topic_id = $request->topic_id;
+    //     $course->is_active = $active;
+    //     $course->name = $request->name;
+
+    //     if ($request->file('logo')) {
+    //         $courselogolocation = 'Images/courselogo/';
+    //         if (!empty($course->logo)) {
+    //             unlink(public_path($course->logo));
+    //         }
+    //         $feature_image1 = $request->file('logo');
+    //         $courselogoname = time() . '_' . $feature_image1->getClientOriginalName();
+    //         $feature_image1->move($courselogolocation, $courselogoname);
+    //         // $course->update(["featured_img1" =>  $courselogolocation . $courselogoname]);
+    //         $course->logo =  $courselogolocation . $courselogoname;
+    //     }
+    //     if ($request['removelogotxt'] != null) {
+    //         $course->logo = null;
+    //     }
+
+    //     $course->save();
+
+    //     return redirect()->route('course.index')->with('success', 'Course Updated Successfully');
+    // }
 
     /**
      * Remove the specified resource from storage.

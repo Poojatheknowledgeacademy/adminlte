@@ -105,15 +105,18 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
+        $tags= Tag::all();
         $category = category::all();
         $slug = $blog->slugs()->first();
-        return view('blog.edit', compact('blog', 'category','slug'));
+        return view('blog.edit', compact('blog', 'category','slug','tags'));
     }
     /**
      * Update the specified resource in storage.
      */
     public function update(EditBlogRequest $request, Blog $blog)
     {
+        // print_r($blog);
+        // die();
         if ($request->is_popular == 'on') {
             $popular = '1';
         } else {

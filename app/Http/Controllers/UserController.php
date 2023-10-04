@@ -20,8 +20,14 @@ class UserController extends Controller
     {
 
         if ($request->ajax()) {
+<<<<<<< HEAD
             $query = User::with('creator');
             return Datatables::eloquent($query)->make(true);
+=======
+           // dd($request->all());
+           // return Datatables::of(User::query())->make(true);
+           return Datatables::eloquent(User::query())->make(true);
+>>>>>>> 465b07bfbab41dd816b28ed98c73488e1f293fc5
         }
         return view('users.list');
     }
