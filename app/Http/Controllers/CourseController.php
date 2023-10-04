@@ -117,7 +117,7 @@ class CourseController extends Controller
         if ($request['removelogotxt'] != null) {
             $course->logo = null;
         }
-
+        $course->slugs()->update(['slug' => $request->slug]);
         $course->save();
 
         return redirect()->route('course.index')->with('success', 'Course Updated Successfully');

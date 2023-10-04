@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
- use Yajra\DataTables\Facades\Datatables;
+
+use Yajra\DataTables\Facades\Datatables;
 
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\EditBlogRequest;
@@ -17,17 +18,11 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
-        // $blog = Blog::paginate(5);
-        // return view('blog.list', compact('blog'));
-
         if ($request->ajax()) {
-            $query = Blog::with('creator');
-            //print_r($query);
-           // die();
+            $query = Blog::with('creator', 'category');
             return Datatables::eloquent($query)->make(true);
         }
         return view('blog.list');
-
     }
     /**
      * Show the form for creating a new resource.
@@ -43,7 +38,6 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-
         $image1 = $request->file('featured_img1');
         $image1name = time() . '_' . $image1->getClientOriginalName();
         $image1location = 'Images/featureimage1/';
@@ -115,20 +109,16 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        $tags= Tag::all();
+        $tags = Tag::all();
         $category = category::all();
         $slug = $blog->slugs()->first();
-        return view('blog.edit', compact('blog', 'category','slug','tags'));
+        return view('blog.edit', compact('blog', 'category', 'slug', 'tags'));
     }
     /**
      * Update the specified resource in storage.
      */
     public function update(EditBlogRequest $request, Blog $blog)
     {
-
-        // $tags = $request->tags;
-        // print_r($tags);
-       // die();
         if ($request->is_popular == 'on') {
             $popular = '1';
         } else {
@@ -169,21 +159,26 @@ class BlogController extends Controller
             $blog->featured_img2 = null;
         }
 
-
         $tags = $request->tags;
-        $tagIds = [];
-
         if (!empty($tags)) {
-            foreach ($tags as $tagName) {
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
-                $tagIds[] = $tag->id;
+            $tagIds = [];
+            foreach ($tags as $tagname) {
+                $tag = Tag::find($tagname);
+
+                if (!$tag) {
+                    $newTag = new Tag();
+                    $newTag->name = $tagname;
+                    $newTag->save();
+                    $tagIds[] = $newTag->id;
+                } else {
+                    $tagIds[] = $tag->id;
+                }
             }
+            $blog->tags()->sync($tagIds);
         }
 
-        // Sync the updated tags
-        $blog->tags()->sync($tagIds);
         $blog->save();
-
+        $blog->slugs()->update(['slug' => $request->slug]);
         return redirect()->route('blogs.index')->with('success', 'Blog Updated Successfully');
     }
     /**

@@ -170,7 +170,8 @@
                                         id="pieces">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}"
-                                                {{ $blog->tags->contains($tag) ? 'selected' : '' }}>{{ $tag->name }}
+                                                {{ $blog->tags->contains('id', $tag->id) ? 'selected' : '' }}>
+                                                {{ $tag->name }}
                                             </option>
                                             {{-- <option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTagIds) ? 'selected' : '' }}>{{ $tag->name }}</option> --}}
                                         @endforeach
@@ -203,6 +204,21 @@
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function() {
+
+        var t = $('#summernote').summernote(
+
+            {
+
+                height: 100,
+
+                focus: true
+
+            }
+
+        );
+    });
+
     function removefeatureimage1() {
         $('#removefeature1txt').val('removed');
         $('#fimg1').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
