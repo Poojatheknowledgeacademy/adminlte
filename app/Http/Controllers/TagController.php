@@ -2,22 +2,29 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Tag;
+use Illuminate\Http\Request;
 use App\Http\Requests\TagRequest;
 use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Yajra\DataTables\Facades\Datatables;
 
 class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $tags = Tag::paginate(5);
-        return view('tag.list', compact('tags'));
+        if ($request->ajax()) {
+            $query = Tag::with('creator');
+            return Datatables::eloquent($query)->make(true);
+        }
+        // $tags = Tag::paginate(5);
+        // return view('tag.list', compact('tags'));
+        return view('tag.list');
     }
 
     /**

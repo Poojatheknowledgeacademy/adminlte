@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
@@ -35,7 +34,7 @@
                             <!-- /.card-header -->
                             <div class="card-body ">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered ">
+                                <table class="table table-bordered" id="table">
                                         <thead>
                                             <tr>
 
@@ -48,54 +47,92 @@
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach ($tags as $tag)
-                                                <tr>
-                                                    <th scope="row">{{ $tag->id }}</th>
-                                                    <td>{{ $tag->name }}</td>
-                                                    <td>
-                                                        @if ($tag->is_active == 1)
-                                                            <i class="fas fa-toggle-on text-primary"></i>
-                                                        @else
-                                                            <i class="fas fa-toggle-on text-secondary"></i>
-                                                        @endif
-                                                    </td>
-
-
-                                                    <td>{{ $tag->creator->name }}</td>
-                                                    <td>{{ $tag->created_at->format('m/d/Y') }}</td>
-                                                    <td>{{ $tag->created_at->format('H:i:s') }}</td>
-
-                                                    <td>
-                                                        <a href="{{ route('tag.edit', $tag->id) }}"><i
-                                                                class="fas fa-edit"></i></a>
-
-                                                        <a href="{{ route('tag.destroy', $tag->id) }}" class="delete-link"
-                                                            onclick="event.preventDefault(); document.getElementById('delete-form-{{ $tag->id }}').submit();">
-                                                            <i class="fas fa-trash text-danger"></i>
-                                                            <!-- Move the closing </i> tag here -->
-                                                        </a>
-                                                        <form id="delete-form-{{ $tag->id }}"
-                                                            action="{{ route('tag.destroy', $tag->id) }}" method="POST"
-                                                            style="display: none;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
                                     </table>
                                 </div>
+                                <script>
+                                    $(function() {
+                                        $('#table').DataTable({
+                                            processing: true,
+                                            serverSide: true,
+                                            ajax: '{{ route('tag.index') }}',
+                                            columns: [{
+                                                data: 'id',
+                                                name: 'id'
+                                            },
+                                            {
+                                                data: 'name',
+                                                name: 'name'
+                                            },
+                                            {
+                                                data: 'is_active',  // Add the 'is_active' column
+                                                name: 'is_active',  // Name it 'is_active'
+                                                render: function (data, type, full, meta) {
+                                                    if (data === 1) {
+                                                        return '<i class="fas fa-toggle-on text-primary"></i> Active';
+                                                    } else {
+                                                        return '<i class="fas fa-toggle-on text-secondary"></i> Inactive';
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                data: 'creator.name',
+                                                name: 'creator.name'
+                                            },
+                                            {
+                                                data: 'created_at',
+                                                name: 'created_at',
+                                                render: function (data, type, full, meta) {
+                                                    if (data) {
+                                                        return moment(data).format('YYYY-MM-DD');
+                                                    }
+                                                    return '';
+                                                }
+                                            },
+                                            {
+                                                data: 'created_at',
+                                                name: 'created_at',
+                                                render: function (data, type, full, meta) {
+                                                    if (data) {
+                                                        return moment(data).format('HH:mm:ss');
+                                                    }
+                                                    return '';
+                                                }
+                                            },
+                                            {
+                                                data: 'id',
+                                                name: 'actions',
+                                                orderable: false,
+                                                searchable: false,
+                                                render: function (data, type, full, meta) {
+                                                    var editUrl = '{{ route('tag.edit', ':id') }}'.replace(':id', data);
+                                                    var deleteFormId = 'delete-form-' + data;
+                                                    var deleteUrl = '{{ route('tag.destroy', ':id') }}'.replace(':id', data);
+
+                                                    return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
+                                                        '<a href="#" class="delete-link" ' +
+                                                        '   onclick="event.preventDefault(); document.getElementById(\'' +
+                                                        deleteFormId + '\').submit();">' +
+                                                        '   <i class="fas fa-trash text-danger"></i>' +
+                                                        '</a>' +
+                                                        '<form id="' + deleteFormId + '" ' +
+                                                        '   action="' + deleteUrl +
+                                                        '" method="POST" style="display: none;">' +
+                                                        '   @csrf' +
+                                                        '   @method('DELETE')' +
+                                                        '</form>';
+                                                }
+                                            },
+                                        ]
+
+                                                                                    
+                                  });
+                            });
+                 </script>
+                                                    
+                                        
                             </div>
                             <!-- /.card-body -->
-                            <div class="card-footer clearfix">
-
-                                <ul class="pagination pagination-sm m-0 float-right">
-
-                                    {!! $tags->links() !!}
-                                </ul>
-                            </div>
+                            
 
                             <!-- /.card -->
 
@@ -105,7 +142,9 @@
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     </section>
-    </div>
+    
 @endsection
+<script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
+                                
