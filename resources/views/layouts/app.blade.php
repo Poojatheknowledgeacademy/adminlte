@@ -47,10 +47,6 @@
     <!--Jquery -->
     <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
 
-
-
-
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
