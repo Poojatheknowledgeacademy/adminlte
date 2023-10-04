@@ -40,7 +40,7 @@
                             <form method="POST" action="{{ route('blogs.store') }}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group">
-                                    <label>Category</label>
+                                    <label>Category<span class="text-danger">*</label>
                                     <select id="blog_category" name="category_id"
                                         class="form-control select2bs4 @error('category_id') is-invalid @enderror">
                                         <option value="">Select a category</option>
@@ -53,7 +53,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Slug</label>
+                                    <label>Slug<span class="text-danger">*</label>
                                     <input type="text" id="blog_slug" class="form-control @error('slug') is-invalid @enderror"
                                         name="slug" value="{{ old('slug') }}">
                                     @error('slug')
@@ -61,16 +61,16 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                    <label>Title<span class="text-danger">*</label>
+                                    <input id="blog_tittle" type="text" class="form-control @error('title') is-invalid @enderror"
                                         name="title" value="{{ old('title') }}">
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Short description</label>
-                                    <input type="text"
+                                    <label>Short description<span class="text-danger">*</label>
+                                    <input id="blog_description" type="text"
                                         class="form-control @error('short_description') is-invalid @enderror"
                                         name="short_description" value="{{ old('short_description') }}">
                                     @error('short_description')
@@ -78,7 +78,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Summary<span class="text-danger">*<span class="text-danger">*</label>
+                                    <label>Summary<span class="text-danger">*</label>
                                     <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary') }}</textarea>
                                     @error('summary')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Featured image1</label>
-                                    <input type="file" class="form-control @error('featured_img1') is-invalid @enderror"
+                                    <input id="blog_image1" type="file" class="form-control @error('featured_img1') is-invalid @enderror"
                                         name="featured_img1" value="{{ old('featured_img1') }}">
                                     @error('featured_img1')
                                         <div class="error invalid-feedback d-block">{{ $message }}</div>
@@ -125,8 +125,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tags</label>
-                                    <select class="select2" name="tags[]" multiple="multiple" style="width: 100%;"
+                                    <label>Tags<span class="text-danger">*</label>
+                                    <select class="select2 @error('tags') is-invalid @enderror" name="tags[]"  multiple="multiple" style="width: 100%;"
                                         id="pieces">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
