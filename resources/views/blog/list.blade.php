@@ -111,6 +111,7 @@
                                         </tbody> --}}
                                     </table>
                                 </div>
+                                
                                 @push('child-scripts')
                                 <script>
                                     $(function() {
@@ -220,20 +221,15 @@
                                 </script>
                                 @endpush
                             </div>
-
                             {{-- <div class="card-footer clearfix">
                                 <ul class="pagination pagination-sm m-0 float-right">
                                     {{ $blog->links('pagination::bootstrap-4') }}
-
                                 </ul>
                             </div> --}}
-
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </section>
     </div>
 @endsection

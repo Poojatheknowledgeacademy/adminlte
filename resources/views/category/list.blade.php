@@ -50,6 +50,7 @@
                                         </thead>
                                     </table>
                                 </div>
+                                
                                 @push('child-scripts')
                                     <script>
                                         $(function() {

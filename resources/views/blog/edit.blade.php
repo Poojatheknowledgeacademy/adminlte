@@ -88,7 +88,6 @@
                                             <input type="file"
                                                 class="form-control @error('featured_img1') is-invalid @enderror"
                                                 id="featured_img1" name="featured_img1">
-
                                         </div>
                                         @if ($blog->featured_img1)
                                             <div class="col-md-3">
@@ -109,8 +108,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-
 
                                 <div class="form-group">
                                     <label for="icon">Featured image2</label>
@@ -202,49 +199,42 @@
         </div>
     </section>
 @endsection
+
 @push('child-scripts')
-<script>
-    $(document).ready(function() {
-
-        var t = $('#summernote').summernote(
-
-            {
-
+    <script>
+        $(document).ready(function() {
+            var t = $('#summernote').summernote({
                 height: 100,
-
                 focus: true
+            });
+        });
 
-            }
+        function removefeatureimage1() {
+            $('#removefeature1txt').val('removed');
+            $('#fimg1').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
+            $('#removefeatureimage1').hide();
+            $('#undoremovefimage1').show();
+        }
 
-        );
-    });
+        function undofeatureimage1() {
+            $('#removefeature1txt').val(null);
+            $('#fimg1').attr('src', '{{ asset($blog->featured_img1) }}');
+            $('#removefeatureimage1').show();
+            $('#undoremovefimage1').hide();
+        }
 
-    function removefeatureimage1() {
-        $('#removefeature1txt').val('removed');
-        $('#fimg1').attr('src', '{{ asset('Images/featureimage1/no-image.png') }}');
-        $('#removefeatureimage1').hide();
-        $('#undoremovefimage1').show();
-    }
+        function removefeatureimage2() {
+            $('#removefeature2txt').val('removed');
+            $('#fimg2').attr('src', '{{ asset('Images/featureimage2/no-image.png') }}');
+            $('#removefeatureimage2').hide();
+            $('#undoremovefimage2').show();
+        }
 
-    function undofeatureimage1() {
-        $('#removefeature1txt').val(null);
-        $('#fimg1').attr('src', '{{ asset($blog->featured_img1) }}');
-        $('#removefeatureimage1').show();
-        $('#undoremovefimage1').hide();
-    }
-
-    function removefeatureimage2() {
-        $('#removefeature2txt').val('removed');
-        $('#fimg2').attr('src', '{{ asset('Images/featureimage2/no-image.png') }}');
-        $('#removefeatureimage2').hide();
-        $('#undoremovefimage2').show();
-    }
-
-    function undofeatureimage2() {
-        $('#removefeature2txt').val(null);
-        $('#fimg2').attr('src', '{{ asset($blog->featured_img2) }}');
-        $('#removefeatureimage2').show();
-        $('#undoremovefimage2').hide();
-    }
-</script>
+        function undofeatureimage2() {
+            $('#removefeature2txt').val(null);
+            $('#fimg2').attr('src', '{{ asset($blog->featured_img2) }}');
+            $('#removefeatureimage2').show();
+            $('#undoremovefimage2').hide();
+        }
+    </script>
 @endpush

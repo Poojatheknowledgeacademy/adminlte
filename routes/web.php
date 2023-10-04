@@ -25,7 +25,6 @@ Route::get('/login',        [AuthController::class, 'index'])->name('login');
 Route::post('custom-login', [AuthController::class, 'customLogin'])->name('login.custom');
 Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 
-
 Route::middleware(['auth'])->group(function () {
 
     Route::get('dashboard',     [UserController::class, 'index'])->name('user.index');
@@ -33,6 +32,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('category', CategoryController::class);
     Route::resource('blogs',    BlogController::class);
     Route::resource('topic',    TopicController::class);
-    Route::resource('course',   CourseController ::class);
-    Route::resource('tag',      TagController ::class);
+    Route::resource('course',   CourseController::class);
+    Route::resource('tag',      TagController::class);
 });

@@ -19,9 +19,6 @@ class TopicController extends Controller
      */
     public function index(Request $request)
     {
-        // $topics = Topic::paginate(5);
-        // return view('topic.list', compact('topics'));
-
         if ($request->ajax()) {
             $query = Topic::with('creator', 'category');
             return Datatables::eloquent($query)->make(true);
