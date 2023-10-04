@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
- use Yajra\DataTables\Facades\Datatables;
+
+use Yajra\DataTables\Facades\Datatables;
 
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\EditBlogRequest;
@@ -18,7 +19,7 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Blog::with('creator','category');
+            $query = Blog::with('creator', 'category');
             return Datatables::eloquent($query)->make(true);
         }
         return view('blog.list');
@@ -108,10 +109,10 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        $tags= Tag::all();
+        $tags = Tag::all();
         $category = category::all();
         $slug = $blog->slugs()->first();
-        return view('blog.edit', compact('blog', 'category','slug','tags'));
+        return view('blog.edit', compact('blog', 'category', 'slug', 'tags'));
     }
     /**
      * Update the specified resource in storage.
@@ -158,8 +159,24 @@ class BlogController extends Controller
             $blog->featured_img2 = null;
         }
 
-        $selectedTagIds = $request->input('tags', []);
-        $blog->tags()->sync($selectedTagIds);
+        $tags = $request->tags;
+        if (!empty($tags)) {
+            $tagIds = [];
+            foreach ($tags as $tagname) {
+                $tag = Tag::find($tagname);
+
+                if (!$tag) {
+                    $newTag = new Tag();
+                    $newTag->name = $tagname;
+                    $newTag->save();
+                    $tagIds[] = $newTag->id;
+                } else {
+                    $tagIds[] = $tag->id;
+                }
+            }
+            $blog->tags()->sync($tagIds);
+        }
+
         $blog->save();
         $blog->slugs()->update(['slug' => $request->slug]);
         return redirect()->route('blogs.index')->with('success', 'Blog Updated Successfully');
