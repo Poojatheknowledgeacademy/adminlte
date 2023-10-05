@@ -31,7 +31,7 @@
                             <form method="POST" action="{{ route('blogs.store') }}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group">
-                                    <label>Category<span class="text-danger">*</label>
+                                    <label>Category<span class="text-danger">*</span></label>
                                     <select id="blog_category" name="category_id"
                                         class="form-control select2bs4 @error('category_id') is-invalid @enderror">
                                         <option value="">Select a category</option>
@@ -44,7 +44,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Slug<span class="text-danger">*</label>
+                                    <label>Slug<span class="text-danger">*</span></label>
                                     <input type="text" id="blog_slug"
                                         class="form-control @error('slug') is-invalid @enderror" name="slug"
                                         value="{{ old('slug') }}">
@@ -53,7 +53,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Title<span class="text-danger">*</label>
+                                    <label>Title<span class="text-danger">*</span></label>
                                     <input id="blog_tittle" type="text"
                                         class="form-control @error('title') is-invalid @enderror" name="title"
                                         value="{{ old('title') }}">
@@ -62,7 +62,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Short description<span class="text-danger">*</label>
+                                    <label>Short description<span class="text-danger">*</span></label>
                                     <input id="blog_description" type="text"
                                         class="form-control @error('short_description') is-invalid @enderror"
                                         name="short_description" value="{{ old('short_description') }}">
@@ -71,14 +71,14 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Summary<span class="text-danger">*</label>
+                                    <label>Summary<span class="text-danger">*</span></label>
                                     <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary') }}</textarea>
                                     @error('summary')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Featured image1</label>
+                                    <label>Featured image1<span class="text-danger">*</span></label>
                                     <input id="blog_image1" type="file"
                                         class="form-control @error('featured_img1') is-invalid @enderror"
                                         name="featured_img1" value="{{ old('featured_img1') }}">
@@ -87,7 +87,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Featured image2<span class="text-danger">*</label>
+                                    <label>Featured image2<span class="text-danger">*</span></label>
                                     <div class="custom-file">
                                         <input id="blog_image2" type="file"
                                             class="form-control @error('featured_img2') is-invalid @enderror"
@@ -98,7 +98,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Author Name<span class="text-danger">*</label>
+                                    <label>Author Name<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input id="blog_authorname" type="text"
                                             class="form-control @error('author_name') is-invalid @enderror"
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Date<span class="text-danger">*</label>
+                                    <label for="exampleInputPassword1">Date<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input id="blog_date" type="date"
                                             class="form-control @error('added_date') is-invalid @enderror" name="added_date"
@@ -120,8 +120,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Tags<span class="text-danger">*</label>
-                                    <select class="select2 @error('tags') is-invalid @enderror" name="tags[]"
+                                    <label>Tags<span class="text-danger">*</span></label>
+                                    <select class="form-control select2 @error('tags') is-invalid @enderror" name="tags[]"
                                         multiple="multiple" style="width: 100%;" id="pieces">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
@@ -195,9 +195,10 @@
                 removeErrorMessages($(this));
             });
 
-            $('#summernote').on('input', function() {
+            $('#summernote').on('summernote.change', function(we, contents, $editable) {
                 removeErrorMessages($(this));
             });
+
 
             $('#blog_image1').on('input', function() {
                 removeErrorMessages($(this));
