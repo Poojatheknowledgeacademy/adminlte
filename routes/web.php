@@ -9,6 +9,7 @@ use App\Http\Controllers\TopicController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('course',   CourseController::class);
     Route::resource('tag',      TagController::class);
     Route::resource('permission',      PermissionController::class);
+    Route::resource('roles', RoleController::class);
 });
