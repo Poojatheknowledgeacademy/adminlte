@@ -29,24 +29,27 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                            <form method="POST" action="{{ route('roles.store') }}">
-                            @csrf
+                                <form method="POST" action="{{ route('roles.store') }}">
+                                    @csrf
 
-                            <div class="form-group">
-                                <label for="name">Name<span class="text-danger">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    <div class="form-group">
+                                        <label for="name">Name<span class="text-danger">*</span></label>
+                                        <input type="text" name="name" id="name"
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            value="{{ old('name') }}">
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="description">Description<span class="text-danger">*</span></label>
-                                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="4">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    <div class="form-group">
+                                        <label for="description">Description<span class="text-danger">*</span></label>
+                                        <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
+                                            rows="4">{{ old('description') }}</textarea>
+                                        @error('description')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
@@ -56,7 +59,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Create Role</button>
+                                        <button type="submit" class="btn btn-primary">Create</button>
                                     </div>
                                 </form>
                             </div>
@@ -75,7 +78,7 @@
             $('#name').on('input', function() {
                 removeErrorMessages($(this));
             });
-            
+
             $('#description').on('input', function() {
                 removeErrorMessages($(this));
             });
