@@ -195,9 +195,10 @@
                 removeErrorMessages($(this));
             });
 
-            $('#summernote').on('input', function() {
+            $('#summernote').on('summernote.change', function(we, contents, $editable) {
                 removeErrorMessages($(this));
             });
+
 
             $('#blog_image1').on('input', function() {
                 removeErrorMessages($(this));
