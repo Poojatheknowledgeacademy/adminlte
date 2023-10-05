@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('course.index') }}">users</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('course.index') }}">Course</a></li>
                         </ol>
                     </div>
                 </div>

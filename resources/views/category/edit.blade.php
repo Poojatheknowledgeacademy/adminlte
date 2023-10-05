@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Category</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('category.index') }}">Category</a></li>
                             <li class="breadcrumb-item active">Edit Category</li>
                         </ol>
                     </div>

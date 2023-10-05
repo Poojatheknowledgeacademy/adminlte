@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('blogs.index') }}">Blog</a></li>
                         <li class="breadcrumb-item active">Create Blog</li>
                     </ol>
                 </div>

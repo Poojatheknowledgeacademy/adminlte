@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
- 
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -10,7 +10,7 @@
                 </div>
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Course</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('course.index') }}">Course</a></li>
                         <li class="breadcrumb-item active">Create Course</li>
                     </ol>
                 </div>
