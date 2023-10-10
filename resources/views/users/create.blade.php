@@ -66,6 +66,18 @@
                                             </span>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label>Roles<span class="text-danger">*</span></label>
+                                        <select class="form-control select2 @error('roles') is-invalid @enderror" name="roles[]"
+                                            multiple="multiple" style="width: 100%;" >
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('roles')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Create</button>
                                     </div>

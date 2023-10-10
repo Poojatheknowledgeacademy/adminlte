@@ -88,7 +88,7 @@
             $('#description').on('input', function() {
                 removeErrorMessages($(this));
             });
-           
+
 
             // Function to remove error messages and reset input field's border
             function removeErrorMessages(inputField) {

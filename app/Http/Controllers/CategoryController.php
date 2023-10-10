@@ -12,6 +12,15 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
+    function __construct()
+    {
+
+         $this->middleware('permission:category-list|category-create|category-edit|category-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:category-create', ['only' => ['create','store']]);
+         $this->middleware('permission:category-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:category-delete', ['only' => ['destroy']]);
+
+    }
     /**
      * Display a listing of the resource.
      */
@@ -62,11 +71,9 @@ class CategoryController extends Controller
             $logo->move($logo_location, $logo_name);
         }
 
-
         $is_active = $request->is_active == "on" ? 1 : 0;
         $is_popular = $request->is_popular == "on" ? 1 : 0;
         $is_technical = $request->is_technical == "on" ? 1 : 0;
-
 
         $category = Category::create([
             'name' => $request->name,
@@ -165,7 +172,6 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();

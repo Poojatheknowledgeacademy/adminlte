@@ -10,9 +10,17 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
-{
+{ function __construct()
+    {
+         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:user-create', ['only' => ['create','store']]);
+         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +38,8 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create',compact('roles'));
     }
 
     /**
@@ -39,7 +48,9 @@ class UserController extends Controller
 
     public function store(UserRequest $request): RedirectResponse
     {
-        User::create($request->all());
+        $user = User::create($request->all());
+
+        $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
@@ -59,7 +70,9 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+
+        return view('users.edit', compact('user','roles'));
     }
 
     /**
@@ -69,6 +82,8 @@ class UserController extends Controller
     {
 
         $user->update($request->all());
+        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+        $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');

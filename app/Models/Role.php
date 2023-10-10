@@ -14,7 +14,7 @@ class Role extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = [
 
-        'name', 
+        'name',
         'description',
         'is_active',
         'created_by'

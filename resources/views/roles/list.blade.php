@@ -37,9 +37,8 @@
                               <tr>
                                  <th scope="col">Id</th>
                                  <th scope="col">Name</th>
+                                 <th scope="col">Description</th>
                                  <th scope="col">Active</th>
-                                 <th scope="col">Created Date</th>
-                                 <th scope="col">Created Time</th>
                                  <th scope="col">Action</th>
                               </tr>
                            </thead>
@@ -61,6 +60,10 @@
                                         name: 'name'
                                     },
                                     {
+                                        data: 'description',
+                                        name: 'description'
+                                    },
+                                    {
                                         data: 'is_active', // Add the 'is_active' column
                                         name: 'is_active', // Name it 'is_active'
                                         render: function(data, type, full, meta) {
@@ -69,27 +72,6 @@
                                             } else {
                                                 return '<i class="fas fa-toggle-on text-secondary"></i>';
                                             }
-                                        }
-                                    },
-                                  
-                                    {
-                                        data: 'created_at',
-                                        name: 'created_at',
-                                        render: function(data, type, full, meta) {
-                                            if (data) {
-                                                return moment(data).format('YYYY-MM-DD');
-                                            }
-                                            return '';
-                                        }
-                                    },
-                                    {
-                                        data: 'created_at',
-                                        name: 'created_at',
-                                        render: function(data, type, full, meta) {
-                                            if (data) {
-                                                return moment(data).format('HH:mm:ss');
-                                            }
-                                            return '';
                                         }
                                     },
                                     {
@@ -102,7 +84,7 @@
                                             var deleteFormId = 'delete-form-' + data;
                                             var deleteUrl = '{{ route('roles.destroy', ':id') }}'.replace(':id',
                                             data);
-                        
+
                                             return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
                                                 '<a href="#" class="delete-link" ' +
                                                 '   onclick="event.preventDefault(); document.getElementById(\'' +

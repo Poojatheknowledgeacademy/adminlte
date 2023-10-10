@@ -16,6 +16,7 @@ class Permission extends Model
         'name',
         'description',
         'is_active',
+        'guard_name'
 
     ];
 }

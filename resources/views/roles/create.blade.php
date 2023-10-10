@@ -50,6 +50,18 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label>Permission<span class="text-danger">*</span></label>
+                                        <select class="form-control select2  @error('tags') is-invalid @enderror" name="permission[]"
+                                            multiple="multiple" style="width: 100%;" >
+                                            @foreach ($permission as $value)
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('permission')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
