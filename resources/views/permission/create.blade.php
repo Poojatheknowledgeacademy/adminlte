@@ -41,8 +41,6 @@
                                         @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
-
-
                                             </span>
                                         @enderror
                                     </div>

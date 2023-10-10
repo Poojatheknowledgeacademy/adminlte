@@ -17,13 +17,11 @@ class Role extends Model
         'name',
         'description',
         'is_active',
-        'created_by'
-
+        'created_by',
     ];
 
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-
 }

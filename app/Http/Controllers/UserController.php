@@ -14,12 +14,13 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
-{ function __construct()
+{
+    function __construct()
     {
-         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:user-create', ['only' => ['create','store']]);
-         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:user-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -39,7 +40,7 @@ class UserController extends Controller
     public function create(): View
     {
         $roles = Role::all();
-        return view('users.create',compact('roles'));
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -72,7 +73,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
 
-        return view('users.edit', compact('user','roles'));
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -82,7 +83,7 @@ class UserController extends Controller
     {
 
         $user->update($request->all());
-        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
+        DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')

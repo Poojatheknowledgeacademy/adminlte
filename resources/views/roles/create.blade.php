@@ -38,7 +38,9 @@
                                             class="form-control @error('name') is-invalid @enderror"
                                             value="{{ old('name') }}">
                                         @error('name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
                                     </div>
 
@@ -47,20 +49,26 @@
                                         <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
                                             rows="4">{{ old('description') }}</textarea>
                                         @error('description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label>Permission<span class="text-danger">*</span></label>
-                                        <select class="form-control select2  @error('tags') is-invalid @enderror" name="permission[]"
-                                            multiple="multiple" style="width: 100%;" >
+                                        <select class="form-control select2  @error('permission') is-invalid @enderror"
+                                            name="permission[]" multiple="multiple" style="width: 100%;"id="pieces">
                                             @foreach ($permission as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
+
                                         @error('permission')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
+
                                     </div>
 
                                     <div class="form-group">
