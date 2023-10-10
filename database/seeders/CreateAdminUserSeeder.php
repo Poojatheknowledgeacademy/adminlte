@@ -16,6 +16,25 @@ class CreateAdminUserSeeder extends Seeder
      */
     public function run(): void
     {
+        $permissions = [
+            'role-list',
+            'role-create',
+            'role-edit',
+            'role-delete',
+            'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
+            'permission-list',
+            'permission-create',
+            'permission-edit',
+            'permission-delete',
+         ];
+
+
+         foreach ($permissions as $permission) {
+              Permission::create(['name' => $permission,'guard_name'=>'web','description'=>$permission,'is_active'=>1]);
+         }
         Auth::loginUsingId(1);
         $user = User::create([
             'name' => 'ankita',
@@ -24,7 +43,7 @@ class CreateAdminUserSeeder extends Seeder
             'created_by' =>1
         ]);
 
-        $role = Role::create(['name' => 'Admin']);
+        $role = Role::create(['name' => 'Admin','guard_name'=>'web','description'=>'adminpermission','is_active'=>1]);
         $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
