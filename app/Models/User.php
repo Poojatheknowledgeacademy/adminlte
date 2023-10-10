@@ -39,7 +39,9 @@ class User extends Authenticatable
         parent::boot();
         // create a event  on saving
         static::saving(function ($user) {
-            $user->created_by = Auth::user()->id;
+            if ($authenticatedUser = Auth::user()) {
+                $user->created_by = Auth::user()->id;
+            }
         });
     }
 
