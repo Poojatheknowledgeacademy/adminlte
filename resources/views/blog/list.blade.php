@@ -113,112 +113,120 @@
                                 </div>
 
                                 @push('child-scripts')
-                                <script>
-                                    $(function() {
-                                        $('#table').DataTable({
-                                            processing: true,
-                                            serverSide: true,
-                                            ajax: '{{ route('blogs.index') }}',
+                                    <script>
+                                        $(function() {
+                                            $('#table').DataTable({
+                                                processing: true,
+                                                serverSide: true,
+                                                ajax: '{{ route('blogs.index') }}',
 
-                                            columns: [{
-                                                    data: 'id',
-                                                    name: 'id'
-                                                },
-                                                {
-                                                    data: 'category.name',
-                                                    name: 'category.name'
-                                                },
-                                                {
-                                                    data: 'title',
-                                                    name: 'title'
-                                                },
-                                                {
-                                                    data: 'author_name',
-                                                    name: 'author_name'
-                                                },
-                                                {
-                                                    data: 'is_popular',
-                                                    name: 'is_popular',
-                                                    render: function(data, type, full, meta) {
-                                                       // console.log(data);
-                                                        if (data) {
-                                                            return '<i class="fas fa-toggle-on text-primary"></i>';
-                                                        } else {
-                                                            return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                columns: [{
+                                                        data: 'id',
+                                                        name: 'id'
+                                                    },
+                                                    {
+                                                        data: 'category.name',
+                                                        name: 'category.name'
+                                                    },
+                                                    {
+                                                        data: 'title',
+                                                        name: 'title'
+                                                    },
+                                                    {
+                                                        data: 'author_name',
+                                                        name: 'author_name'
+                                                    },
+                                                    {
+                                                        data: 'is_popular',
+                                                        name: 'is_popular',
+                                                        render: function(data, type, full, meta) {
+                                                            // console.log(data);
+                                                            if (data) {
+                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                            }
                                                         }
-                                                    }
-                                                },
+                                                    },
 
-                                                {
-                                                    data: 'is_active',
-                                                    name: 'is_active',
-                                                    render: function(data, type, full, meta) {
-                                                       // console.log(data);
-                                                        if (data) {
-                                                            return '<i class="fas fa-toggle-on text-primary"></i>';
-                                                        } else {
-                                                            return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                    {
+                                                        data: 'is_active',
+                                                        name: 'is_active',
+                                                        render: function(data, type, full, meta) {
+                                                            // console.log(data);
+                                                            if (data) {
+                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                            }
                                                         }
-                                                    }
-                                                },
-                                                {
-                                                    data: 'added_date',
-                                                    name: 'added_date'
-                                                },
-                                                {
-                                                    data: 'creator.name',
-                                                    name: 'creator.name'
-                                                },
-                                                {
-                                                    data: 'created_at',
-                                                    name: 'created_at',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return moment(data).format('YYYY-MM-DD');
+                                                    },
+                                                    {
+                                                        data: 'added_date',
+                                                        name: 'added_date'
+                                                    },
+                                                    {
+                                                        data: 'creator.name',
+                                                        name: 'creator.name'
+                                                    },
+                                                    {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('YYYY-MM-DD');
+                                                            }
+                                                            return '';
                                                         }
-                                                        return '';
-                                                    }
-                                                }, {
-                                                    data: 'created_at',
-                                                    name: 'created_at',
-                                                    render: function(data, type, full, meta) {
-                                                        if (data) {
-                                                            return moment(data).format('HH:mm:ss');
+                                                    }, {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('HH:mm:ss');
+                                                            }
+                                                            return '';
                                                         }
-                                                        return '';
-                                                    }
-                                                },
+                                                    },
 
-                                                 {
-                                                    data: 'id',
-                                                    name: 'actions',
-                                                    orderable: false,
-                                                    searchable: false,
-                                                    render: function(data, type, full, meta) {
-                                                        var editUrl = '{{ route('blogs.edit', ':id') }}'.replace(':id', data);
-                                                        var deleteFormId = 'delete-form-' + data;
-                                                        var deleteUrl = '{{ route('blogs.destroy', ':id') }}'.replace(':id',
-                                                            data);
+                                                    {
+                                                        data: 'id',
+                                                        name: 'actions',
+                                                        orderable: false,
+                                                        searchable: false,
+                                                        render: function(data, type, full, meta) {
+                                                            var editUrl = '{{ route('blogs.edit', ':id') }}'.replace(':id', data);
+                                                            var deleteFormId = 'delete-form-' + data;
+                                                            var deleteUrl = '{{ route('blogs.destroy', ':id') }}'.replace(':id',
+                                                                data);
 
-                                                        return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
-                                                            '<a href="#" class="delete-link" ' +
-                                                            '   onclick="event.preventDefault(); document.getElementById(\'' +
-                                                            deleteFormId + '\').submit();">' +
-                                                            '   <i class="fas fa-trash text-danger"></i>' +
-                                                            '</a>' +
-                                                            '<form id="' + deleteFormId + '" ' +
-                                                            '   action="' + deleteUrl +
-                                                            '" method="POST" style="display: none;">' +
-                                                            '   @csrf' +
-                                                            '   @method('DELETE')' +
-                                                            '</form>';
-                                                    }
-                                                },
+                                                            @php
+                                                                $isAdmin = in_array('admin', array_column(Auth::user()->roles->toArray(), 'name'));
+                                                            @endphp
 
-                                            ]
+                                                            var action = '<a href="' + editUrl + '" class="fas fa-edit"></a>';
+
+                                                            if (@json($isAdmin)) {
+                                                                action += '<a href="#" class="delete-link" ' +
+                                                                    '   onclick="event.preventDefault(); document.getElementById(\'' +
+                                                                    deleteFormId + '\').submit();">' +
+                                                                    '   <i class="fas fa-trash text-danger"></i>' +
+                                                                    '</a>' +
+                                                                    '<form id="' + deleteFormId + '" ' +
+                                                                    '   action="' + deleteUrl +
+                                                                    '" method="POST" style="display: none;">' +
+                                                                    '   @csrf' +
+                                                                    '   @method('DELETE')' +
+                                                                    '</form>';
+                                                            }
+                                                            return action;
+                                                        }
+                                                    },
+
+                                                ]
+                                            });
                                         });
-                                    });
-                                </script>
+                                    </script>
                                 @endpush
                             </div>
                             {{-- <div class="card-footer clearfix">
@@ -233,5 +241,3 @@
         </section>
     </div>
 @endsection
-
-

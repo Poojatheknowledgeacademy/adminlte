@@ -1,16 +1,21 @@
 <!-- need to remove -->
-{{-- <li class="nav-item">
-    <a href="" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+
+ <li class="nav-item">
+    <a href="{{ route('home.index') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
         <i class="nav-icon fas fa-home"></i>
         <p>Home</p>
     </a>
-</li> --}}
+</li>
+
+@if(in_array("admin", array_column(Auth::user()->roles->toArray(), "name")))
 <li class="nav-item">
     <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('user') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user"></i>
         <p>User</p>
     </a>
 </li>
+@endif
+
 <li class="nav-item">
     <a href="{{ route('category.index') }}" class="nav-link {{ Request::is('category') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
@@ -35,24 +40,28 @@
         <p>Course</p>
     </a>
 </li>
-
+@if(in_array("admin", array_column(Auth::user()->roles->toArray(), "name")))
 <li class="nav-item">
     <a href="{{ route('tag.index') }}" class="nav-link {{ Request::is('tag') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Tags</p>
     </a>
 </li>
-
+@endif
+@if(in_array("admin", array_column(Auth::user()->roles->toArray(), "name")))
 <li class="nav-item">
     <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Roles</p>
     </a>
 </li>
+@endif
+@if(in_array("admin", array_column(Auth::user()->roles->toArray(), "name")))
 <li class="nav-item">
     <a href="{{ route('permission.index') }}" class="nav-link {{ Request::is('permission') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Permissions</p>
     </a>
 </li>
+@endif
 

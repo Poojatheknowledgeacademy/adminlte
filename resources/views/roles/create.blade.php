@@ -53,7 +53,7 @@
                                     <div class="form-group">
                                         <label>Permission<span class="text-danger">*</span></label>
                                         <select class="form-control select2  @error('tags') is-invalid @enderror" name="permission[]"
-                                            multiple="multiple" style="width: 100%;" >
+                                            multiple="multiple" style="width: 100%;" id="mySelect" >
                                             @foreach ($permission as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach

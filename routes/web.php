@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogController;
@@ -29,7 +30,7 @@ Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('dashboard',     [UserController::class, 'index'])->name('user.index');
+    Route::get('dashboard',     [HomeController::class, 'index'])->name('home.index');
     Route::resource('users',    UserController::class);
     Route::resource('category', CategoryController::class);
     Route::resource('blogs',    BlogController::class);

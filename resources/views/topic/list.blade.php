@@ -122,19 +122,26 @@
                                                             var deleteUrl = '{{ route('topic.destroy', ':id') }}'.replace(
                                                                 ':id',
                                                                 data);
+                                                            @php
+                                                                $isAdmin = in_array('admin', array_column(Auth::user()->roles->toArray(), 'name'));
+                                                            @endphp
 
-                                                            return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
-                                                                '<a href="#" class="delete-link" ' +
-                                                                '   onclick="event.preventDefault(); document.getElementById(\'' +
-                                                                deleteFormId + '\').submit();">' +
-                                                                '   <i class="fas fa-trash text-danger"></i>' +
-                                                                '</a>' +
-                                                                '<form id="' + deleteFormId + '" ' +
-                                                                '   action="' + deleteUrl +
-                                                                '" method="POST" style="display: none;">' +
-                                                                '   @csrf' +
-                                                                '   @method('DELETE')' +
-                                                                '</form>';
+                                                            var action = '<a href="' + editUrl + '" class="fas fa-edit"></a>';
+
+                                                            if (@json($isAdmin)) {
+                                                                action += '<a href="#" class="delete-link" ' +
+                                                                    'onclick="event.preventDefault(); document.getElementById(\'' +
+                                                                    deleteFormId + '\').submit();">' +
+                                                                    '<i class="fas fa-trash text-danger"></i>' +
+                                                                    '</a>' +
+                                                                    '<form id="' + deleteFormId + '" ' +
+                                                                    ' action="' + deleteUrl +
+                                                                    '" method="POST" style="display: none;">' +
+                                                                    '@csrf' +
+                                                                    '@method('DELETE')' +
+                                                                    '</form>';
+                                                            }
+                                                            return action;
                                                         }
                                                     },
                                                 ]
