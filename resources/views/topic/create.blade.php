@@ -54,10 +54,22 @@
                                             </span>
                                         @enderror
                                     </div>
-
+                                    {{-- <div class="form-group">
+                                        <label>Category<span class="text-danger">*</span></label>
+                                        <select id="blog_category" name="category_id"
+                                            class="form-control select2bs4 @error('category_id') is-invalid @enderror">
+                                            <option value="">Select a category</option>
+                                            @foreach ($category as $categories)
+                                                <option value="{{ $categories->id }}">{{ $categories->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('category_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="category_id">Category Name<span class="text-danger">*</label>
-                                        <select class="form-control @error('category_id') is-invalid @enderror"
+                                        <select class="form-control select2bs4 @error('category_id') is-invalid @enderror"
                                             id="category_name" name="category_id">
                                             <option value="">Select a category</option> <!-- Default empty option -->
                                             @foreach ($categories as $category)
