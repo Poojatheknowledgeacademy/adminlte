@@ -60,8 +60,6 @@ class TopicController extends Controller
             $logo->move($logo_location, $logo_name);
         }
 
-
-
         $category_id = $request->category_id;
 
         $is_active = $request->is_active == "on" ? 1 : 0;

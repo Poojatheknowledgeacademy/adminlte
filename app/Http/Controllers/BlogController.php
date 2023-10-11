@@ -15,10 +15,10 @@ class BlogController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:blog-list|blog-create|blog-edit|blog-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:blog-create', ['only' => ['create','store']]);
-         $this->middleware('permission:blog-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:blog-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:blog-list|blog-create|blog-edit|blog-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:blog-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:blog-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:blog-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -36,7 +36,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
+        $category = Category::where('is_active', 1)->get();
         $tags = Tag::where('is_active', 1)->get();
         return view('blog.create', compact('category', 'tags'));
     }
