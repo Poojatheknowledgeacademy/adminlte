@@ -14,10 +14,10 @@ class CourseController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:course-list|course-create|course-edit|course-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:course-create', ['only' => ['create','store']]);
-         $this->middleware('permission:course-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:course-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:course-list|course-create|course-edit|course-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:course-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:course-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:course-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -36,7 +36,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $topic = Topic::all();
+        $topic = Topic::where('is_active', 1)->get();
         return view('course.create', compact('topic'));
     }
 
@@ -60,6 +60,7 @@ class CourseController extends Controller
             $active = '0';
         }
         $data = $request->validated();
+
 
         $course = Course::create([
             "name" => $request->name,

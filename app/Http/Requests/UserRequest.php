@@ -24,7 +24,8 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password'=>'required|min:8'
+            'password'=>'required|min:8',
+            'role'=>'required',
         ];
     }
 
@@ -33,7 +34,8 @@ class UserRequest extends FormRequest
         return [
             'email.required' => 'Email is required!',
             'name.required' => 'Name is required!',
-            'password.required' => 'Password is required!'
+            'password.required' => 'Password is required!',
+            'role.required'=> 'Role is required'
         ];
     }
 
