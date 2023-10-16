@@ -41,6 +41,7 @@
                                                 <th scope="col">Category Name</th>
                                                 <th scope="col">Logo</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">FaQ</th>
 
                                                 <th scope="col">Created Date</th>
                                                 <th scope="col">Created Time</th>
@@ -88,6 +89,19 @@
                                                             } else {
                                                                 return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                             }
+                                                        }
+                                                    },
+                                                    {
+                                                        data: 'id',
+                                                        name: 'actions',
+                                                        orderable: false,
+                                                        searchable: false,
+                                                        render: function(data, type, full, meta) {
+                                                            var editUrl = '{{ route('faq.index', ':id') }}'.replace(
+                                                                ':id',
+                                                                data);
+                                                            var action = '<a href="' + editUrl + '" class="fas fa-question-circle text-primary"></a>';
+                                                            return action;
                                                         }
                                                     },
 

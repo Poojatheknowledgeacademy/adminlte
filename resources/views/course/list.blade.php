@@ -116,15 +116,15 @@
 
                                                             if (@json($isAdmin)) {
                                                                 action += '<a href="#" class="delete-link" ' +
-                                                                    '   onclick="event.preventDefault(); document.getElementById(\'' +
+                                                                    'onclick="event.preventDefault(); document.getElementById(\'' +
                                                                     deleteFormId + '\').submit();">' +
-                                                                    '   <i class="fas fa-trash text-danger"></i>' +
+                                                                    '<i class="fas fa-trash text-danger"></i>' +
                                                                     '</a>' +
                                                                     '<form id="' + deleteFormId + '" ' +
-                                                                    '   action="' + deleteUrl +
+                                                                    'action="' + deleteUrl +
                                                                     '" method="POST" style="display: none;">' +
-                                                                    '   @csrf' +
-                                                                    '   @method('DELETE')' +
+                                                                    '@csrf' +
+                                                                    '@method('DELETE')' +
                                                                     '</form>';
                                                             }
                                                             return action;
