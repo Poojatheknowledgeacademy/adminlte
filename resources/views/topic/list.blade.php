@@ -93,11 +93,11 @@
                                                     },
                                                     {
                                                         data: 'id',
-                                                        name: 'actions',
+                                                        name: 'faq',
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('faq.index', ':id') }}'.replace(
+                                                            var editUrl = '{{ route('topic.faqs.index', ':id') }}'.replace(
                                                                 ':id',
                                                                 data);
                                                             var action = '<a href="' + editUrl + '" class="fas fa-question-circle text-primary"></a>';

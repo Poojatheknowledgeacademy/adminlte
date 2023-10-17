@@ -48,4 +48,12 @@ class Topic extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    // public function faqs()
+    // {
+    //     return $this->hasMany(FAQ::class);
+    // }
+    public function faqs()
+    {
+        return $this->hasMany(FAQ::class, 'entity_id')->where('entity_type', 'Topic');
+    }
 }

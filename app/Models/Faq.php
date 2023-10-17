@@ -32,8 +32,8 @@ class Faq extends Model
         });
     }
 
-    public function creator()
+    public function topic()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(Topic::class);
     }
 }

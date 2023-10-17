@@ -11,6 +11,7 @@ use App\Models\Slug;
 use App\Http\Requests\TopicUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Models\Faq;
 
 class TopicController extends Controller
 {

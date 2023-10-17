@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('faq.index') }}">FaQ</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index',$topic_id) }}">FaQ</a></li>
                         </ol>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">FaQ's list</h3>
                                 <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
-                                        href="{{ route('faq.create') }}"> Create New FaQ</a></div>
+                                        href="{{ route('topic.faqs.create',$topic_id) }}"> Create New FaQ</a></div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -49,7 +49,7 @@
                                             $('#table').DataTable({
                                                 processing: true,
                                                 serverSide: true,
-                                                ajax: '{{ route('faq.index') }}',
+                                                ajax: '{{ route('topic.faqs.index',$topic_id) }}',
                                                 columns: [{
                                                         data: 'question',
                                                         name: 'question'
@@ -75,9 +75,9 @@
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('faq.edit', ':id') }}'.replace(':id', data);
+                                                            var editUrl = '{{ route('topic.faqs.edit', [$topic_id,':id']) }}'.replace(':id', data);
                                                             var deleteFormId = 'delete-form-' + data;
-                                                            var deleteUrl = '{{ route('faq.destroy', ':id') }}'.replace(':id',
+                                                            var deleteUrl = '{{ route('topic.faqs.destroy', [$topic_id,':id']) }}'.replace(':id',
                                                                 data);
 
                                                             return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +

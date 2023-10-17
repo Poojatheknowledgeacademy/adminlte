@@ -11,7 +11,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\FaqController;
+use App\Http\Controllers\TopicFaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +40,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tag',          TagController::class);
     Route::resource('permission',   PermissionController::class);
     Route::resource('roles',        RoleController::class);
-    Route::resource('faq',          FaqController::class);
-    Route::get('get-topics-and-courses', [FaqController::class,'getTopicsAndCourses'])->name('get_topics_and_courses');
-
+    Route::resource('topic.faqs',   TopicFaqController::class);
 });
