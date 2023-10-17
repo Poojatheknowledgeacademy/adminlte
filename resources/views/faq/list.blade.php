@@ -7,7 +7,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
+                        @if ($segment === 'topic')
+                           <h1>Topic FAQ</h1>
+                        @else
                         <h1>Course FAQ</h1>
+                        @endif
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
