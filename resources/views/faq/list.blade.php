@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index',$topic_id) }}">FaQ</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FaQ</a></li>
                         </ol>
                     </div>
                 </div>
@@ -25,8 +25,13 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">FaQ's list</h3>
+                                @if ($segment === 'topic')
                                 <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
-                                        href="{{ route('topic.faqs.create',$topic_id) }}"> Create New FaQ</a></div>
+                                        href="{{ route('topic.faqs.create', $id) }}"> Create New FaQ</a></div>
+                                        @else
+                                        <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
+                                            href="{{ route('course.faqs.create', $id) }}"> Create New FaQ</a></div>
+                                        @endif
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -49,7 +54,11 @@
                                             $('#table').DataTable({
                                                 processing: true,
                                                 serverSide: true,
-                                                ajax: '{{ route('topic.faqs.index',$topic_id) }}',
+                                                ajax: @if ($segment === 'topic')
+                                                    '{{ route('topic.faqs.index', $id) }}'
+                                                @else
+                                                    '{{ route('course.faqs.index', $id) }}'
+                                                @endif ,
                                                 columns: [{
                                                         data: 'question',
                                                         name: 'question'
@@ -75,10 +84,19 @@
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('topic.faqs.edit', [$topic_id,':id']) }}'.replace(':id', data);
+                                                            @if ($segment === 'topic')
+                                                                var editUrl = '{{ route('topic.faqs.edit', [$id, ':id']) }}'
+                                                                    .replace(':id', data);
+                                                                var deleteUrl = '{{ route('topic.faqs.destroy', [$id, ':id']) }}'
+                                                                    .replace(':id', data);
+                                                            @else
+                                                                var editUrl = '{{ route('course.faqs.edit', [$id, ':id']) }}'
+                                                                    .replace(':id', data);
+                                                                var deleteUrl = '{{ route('course.faqs.destroy', [$id, ':id']) }}'
+                                                                    .replace(':id', data);
+                                                            @endif
+
                                                             var deleteFormId = 'delete-form-' + data;
-                                                            var deleteUrl = '{{ route('topic.faqs.destroy', [$topic_id,':id']) }}'.replace(':id',
-                                                                data);
 
                                                             return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
                                                                 '<a href="#" class="delete-link" ' +
@@ -99,6 +117,7 @@
                                         });
                                     </script>
                                 @endpush
+
                             </div>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\TopicFaqController;
+use App\Http\Controllers\FaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,6 @@ Route::post('custom-login', [AuthController::class, 'customLogin'])->name('login
 Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('dashboard',         [HomeController::class, 'index'])->name('home.index');
     Route::resource('users',        UserController::class);
     Route::resource('category',     CategoryController::class);
@@ -40,5 +39,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tag',          TagController::class);
     Route::resource('permission',   PermissionController::class);
     Route::resource('roles',        RoleController::class);
-    Route::resource('topic.faqs',   TopicFaqController::class);
+    Route::resource('topic.faqs',   FaqController::class);
+    Route::resource('course.faqs',  FaqController::class);
 });
