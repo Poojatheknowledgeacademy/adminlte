@@ -31,59 +31,43 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 @if ($segment === 'topic')
-                                    <form method="POST" action="{{ route('topic.faqs.store',$id) }}" >
-                                @else
-                                    <form method="POST" action="{{ route('course.faqs.store',$id) }}" >
+                                    <form method="POST" action="{{ route('topic.faqs.store', $id) }}">
+                                    @else
+                                        <form method="POST" action="{{ route('course.faqs.store', $id) }}">
                                 @endif
 
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Question<span class="text-danger">*</label>
-                                        <input type="text" class="form-control @error('question') is-invalid @enderror"
-                                            id="question" name="question" placeholder="Enter Question">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Question<span class="text-danger">*</label>
+                                    <input type="text" class="form-control @error('question') is-invalid @enderror"
+                                        id="question" name="question" placeholder="Enter Question">
 
-                                        @error('question')
-                                            <span class="error invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    @error('question')
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Answer<span class="text-danger">*</span></label>
+                                    <textarea id="summernote" class="summernote @error('answer') is-invalid @enderror" name="answer">{{ old('summary') }}</textarea>
+                                    @error('answer')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" name="is_active"
+                                            id="customSwitch1" checked>
+                                        <label class="custom-control-label" for="customSwitch1">Active</label>
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label>Answer<span class="text-danger">*</span></label>
-                                        <textarea id="summernote" class="summernote @error('answer') is-invalid @enderror" name="answer">{{ old('summary') }}</textarea>
-                                        @error('answer')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-{{--
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Answer<span class="text-danger">*</label>
-                                        <input type="text" class="form-control @error('answer') is-invalid @enderror"
-                                            id="answer" name="answer" placeholder="Enter slug">
-
-                                        @error('answer')
-                                            <span class="error invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div> --}}
-
-
-
-
-
-                                    <div class="form-group">
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_active"
-                                                id="customSwitch1" checked>
-                                            <label class="custom-control-label" for="customSwitch1">Active</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Create</button>
-                                    </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
                                 </form>
                             </div>
                         </div>
@@ -107,18 +91,15 @@
                 removeErrorMessages($(this));
             });
 
+            $('#summernote').summernote({
+                height: 100,
+                focus: true
+            });
 
-
-            // Function to remove error messages and reset input field's border
             function removeErrorMessages(inputField) {
-                // Find the parent element and then find the error message element
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
-
-                // Remove the error message if it exists
                 errorElement.remove();
-
-                // Remove the is-invalid class to reset the input field's border
                 inputField.removeClass('is-invalid');
             }
 

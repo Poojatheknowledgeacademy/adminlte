@@ -27,6 +27,11 @@ $(document).ready(function() {
     $('#show').on('click', function(e) {
         alert($('#pieces').val());
     });
+
+     $('#summernote').summernote({
+        height: 100,
+        focus: true
+    });
 });
 $(function () {
     $("#example1").DataTable({

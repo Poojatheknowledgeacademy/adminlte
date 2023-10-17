@@ -26,12 +26,12 @@
                             <div class="card-header">
                                 <h3 class="card-title">FaQ's list</h3>
                                 @if ($segment === 'topic')
-                                <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
-                                        href="{{ route('topic.faqs.create', $id) }}"> Create New FaQ</a></div>
-                                        @else
-                                        <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
+                                    <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
+                                            href="{{ route('topic.faqs.create', $id) }}"> Create New FaQ</a></div>
+                                @else
+                                    <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
                                             href="{{ route('course.faqs.create', $id) }}"> Create New FaQ</a></div>
-                                        @endif
+                                @endif
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -40,8 +40,8 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Question</th>
-                                                <th scope="col">Answer</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -63,10 +63,7 @@
                                                         data: 'question',
                                                         name: 'question'
                                                     },
-                                                    {
-                                                        data: 'answer',
-                                                        name: 'answer',
-                                                    },
+
                                                     {
                                                         data: 'is_active',
                                                         name: 'is_active',
@@ -77,6 +74,10 @@
                                                                 return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                             }
                                                         }
+                                                    },
+                                                    {
+                                                        data: 'creator.name',
+                                                        name: 'creator.name'
                                                     },
                                                     {
                                                         data: 'id',

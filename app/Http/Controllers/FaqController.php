@@ -16,7 +16,7 @@ class FaqController extends Controller
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         $segment =$uriSegments[1];
         if ($request->ajax()) {
-            $query = Faq::query();
+            $query = Faq::with('creator');
 
             if ( $segment ==='topic') {
                 $query->where('entity_id', $id);
