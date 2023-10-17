@@ -7,11 +7,18 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1>FaQ</h1>
+                        <h1>Course FAQ</h1>
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FaQ</a></li>
+                            @if ($segment === 'topic')
+                            <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
+                            @else
+                            <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
+                            @endif
+
                         </ol>
                     </div>
                 </div>
