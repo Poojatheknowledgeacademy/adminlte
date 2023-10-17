@@ -12,13 +12,13 @@
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
                             @if ($segment === 'topic')
-                            <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
-                            <li class="breadcrumb-item"><a href="#">Create FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="#">Create FAQ's</a></li>
                             @else
-                            <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
-                            <li class="breadcrumb-item"><a href="#">Create FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="#">Create FAQ's</a></li>
                             @endif
                         </ol>
                     </div>
@@ -60,7 +60,9 @@
                                     <label>Answer<span class="text-danger">*</span></label>
                                     <textarea id="summernote" class="summernote @error('answer') is-invalid @enderror" name="answer">{{ old('summary') }}</textarea>
                                     @error('answer')
-                                        <div class="error invalid-feedback">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
 
@@ -89,18 +91,11 @@
 @push('child-scripts')
     <script>
         $(document).ready(function() {
-            // Attach input event listeners to the input fields
-            $('#question').on('input', function() {
+            $('#question,#answer').on('input', function() {
                 removeErrorMessages($(this));
             });
-
-            $('#answer').on('input', function() {
+            $('#summernote').on('summernote.change', function(we, contents, $editable) {
                 removeErrorMessages($(this));
-            });
-
-            $('#summernote').summernote({
-                height: 100,
-                focus: true
             });
 
             function removeErrorMessages(inputField) {
@@ -109,8 +104,6 @@
                 errorElement.remove();
                 inputField.removeClass('is-invalid');
             }
-
-
         });
     </script>
 @endpush

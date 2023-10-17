@@ -162,21 +162,15 @@
             $('#pieces').select2({
                 tags: true
             });
+
             $('#show').on('click', function(e) {
                 alert($('#pieces').val());
             });
-        });
-        $(document).ready(function() {
 
             var t = $('#summernote').summernote({
                 height: 100,
                 focus: true
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-
 
             $('#blog_category,#blog_slug,#blog_tittle,#blog_description,#blog_image1,#blog_image2,#blog_authorname,#blog_date,#pieces')
                 .on('input', function() {
@@ -192,7 +186,6 @@
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
                 errorElement.remove();
-
 
                 inputField.removeClass('is-invalid');
             }

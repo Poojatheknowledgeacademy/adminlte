@@ -12,13 +12,13 @@
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
                             @if ($segment === 'topic')
-                            <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
-                            <li class="breadcrumb-item"><a href="#">Edit FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="#">Edit FAQ's</a></li>
                             @else
-                            <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
-                            <li class="breadcrumb-item"><a href="#">Edit FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="#">Edit FAQ's</a></li>
                             @endif
                         </ol>
                     </div>
@@ -38,9 +38,11 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 @if ($segment === 'topic')
-                                    <form method="POST" action="{{ route('topic.faqs.update', [$faq->entity_id, $faq->id]) }}">
-                                @else
-                                    <form method="POST" action="{{ route('course.faqs.update', [$faq->entity_id, $faq->id]) }}">
+                                    <form method="POST"
+                                        action="{{ route('topic.faqs.update', [$faq->entity_id, $faq->id]) }}">
+                                    @else
+                                        <form method="POST"
+                                            action="{{ route('course.faqs.update', [$faq->entity_id, $faq->id]) }}">
                                 @endif
                                 @csrf
                                 @method('PUT') <!-- Use the PUT method for updating -->
@@ -88,23 +90,16 @@
 @endsection
 
 
-
-
 @push('child-scripts')
     <script>
         $(document).ready(function() {
-            $('#question').on('input', function() {
+            $('#question, #answer, #entity_id').on('input', function() {
                 removeErrorMessages($(this));
             });
 
-            $('#answer').on('input', function() {
+            $('#summernote').on('summernote.change', function(we, contents, $editable) {
                 removeErrorMessages($(this));
             });
-
-            $('#entity_id').on('input', function() {
-                removeErrorMessages($(this));
-            });
-
             $('#summernote').summernote({
                 height: 100,
                 focus: true

@@ -24,7 +24,6 @@ class FaqRequest extends FormRequest
         return [
             'question'=>'required',
             'answer'=>'required',
-
         ];
     }
 }

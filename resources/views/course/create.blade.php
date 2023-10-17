@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -94,30 +93,19 @@
 @push('child-scripts')
     <script>
         $(document).ready(function() {
-            // Attach input event listeners to the input fields
-            $('#topic_name').on('input', function() {
+
+            $('#topic_name,#course_name,#course_slug,#course_logo').on('input', function() {
                 removeErrorMessages($(this));
             });
 
-            $('#course_name').on('input', function() {
-                removeErrorMessages($(this));
-            });
-            $('#course_slug').on('input', function() {
-                removeErrorMessages($(this));
-            });
-            $('#course_logo').on('input', function() {
-                removeErrorMessages($(this));
-            });
-            // Function to remove error messages and reset input field's border
+
             function removeErrorMessages(inputField) {
-                // Find the parent element and then find the error message element
+
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
 
-                // Remove the error message if it exists
                 errorElement.remove();
 
-                // Remove the is-invalid class to reset the input field's border
                 inputField.removeClass('is-invalid');
             }
         });

@@ -52,6 +52,8 @@
                                             <tr>
                                                 <th scope="col">Question</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">Created Date</th>
+                                                <th scope="col">Created Time</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -84,6 +86,25 @@
                                                             } else {
                                                                 return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                             }
+                                                        }
+                                                    },
+                                                    {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('YYYY-MM-DD');
+                                                            }
+                                                            return '';
+                                                        }
+                                                    }, {
+                                                        data: 'created_at',
+                                                        name: 'created_at',
+                                                        render: function(data, type, full, meta) {
+                                                            if (data) {
+                                                                return moment(data).format('HH:mm:ss');
+                                                            }
+                                                            return '';
                                                         }
                                                     },
                                                     {

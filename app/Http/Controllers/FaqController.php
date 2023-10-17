@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use Yajra\DataTables\Facades\Datatables;
-use Illuminate\Http\Request;
+
 use App\Models\Faq;
 use App\Models\Topic;
+use Illuminate\Http\Request;
+use App\Http\Requests\FaqRequest;
+use App\Http\Requests\EditFaqRequest;
+use Yajra\DataTables\Facades\Datatables;
 
 class FaqController extends Controller
 {
@@ -44,7 +47,7 @@ class FaqController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($id,Request $request)
+    public function store($id,FaqRequest $request)
     {
         $entity =  Topic::findOrFail($id);
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
@@ -93,7 +96,7 @@ class FaqController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($id,Request $request, Faq $faq)
+    public function update($id,EditFaqRequest $request, Faq $faq)
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
         $faq->update([
