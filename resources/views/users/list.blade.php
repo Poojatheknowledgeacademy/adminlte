@@ -38,8 +38,7 @@
                                                 <th scope="col">User Id</th>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Email</th>
-                                                <th scope="col">Created Date</th>
-                                                <th scope="col">Created Time</th>
+                                                <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
 
@@ -65,34 +64,29 @@
                                                     {
                                                         data: 'email',
                                                         name: 'email'
-                                                    }, {
+                                                    },
+                                                    {
                                                         data: 'created_at',
                                                         name: 'created_at',
                                                         render: function(data, type, full, meta) {
                                                             if (data) {
-                                                                return moment(data).format('YYYY-MM-DD');
+                                                                return moment(data).format('DD MMM YYYY [at] HH:mm:ss [GMT]');
                                                             }
                                                             return '';
                                                         }
-                                                    }, {
-                                                        data: 'created_at',
-                                                        name: 'created_at',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return moment(data).format('HH:mm:ss');
-                                                            }
-                                                            return '';
-                                                        }
-                                                    }, {
+                                                    },
+                                                    {
                                                         data: 'creator.name',
                                                         name: 'creator.name'
-                                                    }, {
+                                                    },
+                                                    {
                                                         data: 'id',
                                                         name: 'actions',
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('users.edit', ':id') }}'.replace(':id', data);
+                                                            var editUrl = '{{ route('users.edit', ':id') }}'.replace(':id',
+                                                                data);
                                                             var deleteFormId = 'delete-form-' + data;
                                                             var deleteUrl = '{{ route('users.destroy', ':id') }}'.replace(':id',
                                                                 data);
