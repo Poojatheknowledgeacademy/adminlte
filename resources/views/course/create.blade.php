@@ -37,7 +37,9 @@
                                         class="form-control @error('name') is-invalid @enderror" name="name"
                                         value="{{ old('name') }}">
                                     @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="error invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -46,7 +48,9 @@
                                         class="form-control @error('slug') is-invalid @enderror" name="slug"
                                         value="{{ old('slug') }}">
                                     @error('slug')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="error invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -59,7 +63,9 @@
                                         @endforeach
                                     </select>
                                     @error('topic_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="error invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -68,7 +74,9 @@
                                         class="form-control @error('logo') is-invalid @enderror" name="logo"
                                         value="{{ old('logo') }}">
                                     @error('logo')
-                                        <div class="error invalid-feedback d-block">{{ $message }}</div>
+                                    <span class="error invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">

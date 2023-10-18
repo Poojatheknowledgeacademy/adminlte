@@ -104,6 +104,10 @@
                 errorElement.remove();
                 inputField.removeClass('is-invalid');
             }
+            var t = $('#summernote').summernote({
+                height: 100,
+                focus: true
+            });
         });
     </script>
 @endpush
