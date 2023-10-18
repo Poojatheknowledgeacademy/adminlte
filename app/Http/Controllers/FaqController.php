@@ -7,6 +7,7 @@ use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Requests\FaqRequest;
 use App\Http\Requests\EditFaqRequest;
+use App\Models\Course;
 use Yajra\DataTables\Facades\Datatables;
 
 class FaqController extends Controller
@@ -17,21 +18,21 @@ class FaqController extends Controller
     public function index(Request $request, $id)
     {
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        $segment =$uriSegments[1];
+        $segment = $uriSegments[1];
         if ($request->ajax()) {
             $query = Faq::with('creator');
 
-            if ( $segment ==='topic') {
+            if ($segment === 'topic') {
                 $query->where('entity_id', $id);
                 $query->where('entity_type', 'Topic');
-            } elseif ( $segment === 'course') {
+            } elseif ($segment === 'course') {
                 $query->where('entity_id', $id);
                 $query->where('entity_type', 'Course');
             }
 
             return Datatables::eloquent($query)->make(true);
         }
-        return view('faq.list', compact('id','segment'));
+        return view('faq.list', compact('id', 'segment'));
     }
 
     /**
@@ -40,39 +41,44 @@ class FaqController extends Controller
     public function create($id)
     {
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        $segment =$uriSegments[1];
-        return view('faq.create', compact('id','segment'));
+        $segment = $uriSegments[1];
+        return view('faq.create', compact('id', 'segment'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store($id,FaqRequest $request)
+    public function store($id, FaqRequest $request)
     {
-        $entity =  Topic::findOrFail($id);
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        $segment =$uriSegments[1];
+        $segment = $uriSegments[1];
 
-        $entity_type = $segment == "topic" ? "Topic" : "Course";
+        if ($segment  === 'topic') {
+            $entity_type ="Topic";
+            $entity =  Topic::findOrFail($id);
+        } elseif ($segment  === 'course') {
+            $entity_type ="Course";
+            $entity =  Course::findOrFail($id);
+        }
+
         $is_active = $request->is_active == "on" ? 1 : 0;
         $faq = new FAQ([
-            'entity_type'=> $entity_type,
+            'entity_type' => $entity_type,
             'question' => $request->question,
             'answer' => $request->answer,
             'is_active' => $is_active
         ]);
         $entity->faqs()->save($faq);
         $faq->save();
-        $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        if ($uriSegments[1] === 'topic') {
-            return redirect()->route('topic.faqs.index',$id)
+
+
+        if ($segment  === 'topic') {
+            return redirect()->route('topic.faqs.index', $id)
                 ->with('success', 'Faq created successfully.');
-
-        } elseif ($uriSegments[1] === 'course') {
-            return redirect()->route('course.faqs.index',$id)
-            ->with('success', 'Faq created successfully.');
+        } elseif ($segment  === 'course') {
+            return redirect()->route('course.faqs.index', $id)
+                ->with('success', 'Faq created successfully.');
         }
-
     }
 
     /**
@@ -89,14 +95,14 @@ class FaqController extends Controller
     public function edit($id, Faq $faq)
     {
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        $segment =$uriSegments[1];
-        return view('faq.edit', compact('id', 'faq','segment'));
+        $segment = $uriSegments[1];
+        return view('faq.edit', compact('id', 'faq', 'segment'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update($id,EditFaqRequest $request, Faq $faq)
+    public function update($id, EditFaqRequest $request, Faq $faq)
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
         $faq->update([
@@ -106,12 +112,11 @@ class FaqController extends Controller
         ]);
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         if ($uriSegments[1] === 'topic') {
-            return redirect()->route('topic.faqs.index',$id)
+            return redirect()->route('topic.faqs.index', $id)
                 ->with('success', 'Faq created successfully.');
-
         } elseif ($uriSegments[1] === 'course') {
-            return redirect()->route('course.faqs.index',$id)
-            ->with('success', 'Faq created successfully.');
+            return redirect()->route('course.faqs.index', $id)
+                ->with('success', 'Faq created successfully.');
         }
     }
 
@@ -123,12 +128,11 @@ class FaqController extends Controller
         $faq->delete();
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         if ($uriSegments[1] === 'topic') {
-            return redirect()->route('topic.faqs.index',$id)
+            return redirect()->route('topic.faqs.index', $id)
                 ->with('success', 'Faq created successfully.');
-
         } elseif ($uriSegments[1] === 'course') {
-            return redirect()->route('course.faqs.index',$id)
-            ->with('success', 'Faq created successfully.');
+            return redirect()->route('course.faqs.index', $id)
+                ->with('success', 'Faq created successfully.');
         }
     }
 }

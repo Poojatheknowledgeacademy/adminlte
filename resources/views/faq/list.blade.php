@@ -8,9 +8,9 @@
                 <div class="row mb-2">
                     <div class="col-sm-12">
                         @if ($segment === 'topic')
-                            <h1>Topic FAQ</h1>
+                            <h1>Topic FAQ's</h1>
                         @else
-                            <h1>Course FAQ</h1>
+                            <h1>Course FAQ's</h1>
                         @endif
                     </div>
                     <div class="col-sm-12">
