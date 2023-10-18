@@ -39,8 +39,7 @@
                                                 <th scope="col">Topic Name</th>
                                                 <th scope="col">Active</th>
                                                 <th scope="col">FaQ</th>
-                                                <th>Created Date</th>
-                                                <th>Created Time</th>
+                                                <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -86,7 +85,8 @@
                                                             var editUrl = '{{ route('course.faqs.index', ':id') }}'.replace(
                                                                 ':id',
                                                                 data);
-                                                            var action = '<a href="' + editUrl + '" class="fas fa-question-circle text-primary"></a>';
+                                                            var action = '<a href="' + editUrl +
+                                                                '" class="fas fa-question-circle text-primary"></a>';
                                                             return action;
                                                         }
                                                     },
@@ -95,20 +95,12 @@
                                                         name: 'created_at',
                                                         render: function(data, type, full, meta) {
                                                             if (data) {
-                                                                return moment(data).format('YYYY-MM-DD');
+                                                                return moment(data).format('DD MMM YYYY [at] HH:mm:ss [GMT]');
                                                             }
                                                             return '';
                                                         }
-                                                    }, {
-                                                        data: 'created_at',
-                                                        name: 'created_at',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return moment(data).format('HH:mm:ss');
-                                                            }
-                                                            return '';
-                                                        }
-                                                    }, {
+                                                    },
+                                                    {
                                                         data: 'creator.name',
                                                         name: 'creator.name'
                                                     }, {

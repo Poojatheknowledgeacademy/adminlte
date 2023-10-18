@@ -42,8 +42,7 @@
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Created By</th>
-                                                <th scope="col">Created Date</th>
-                                                <th scope="col">Created Time</th>
+                                                <th scope="col">Created At</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -84,17 +83,7 @@
                                                         name: 'created_at',
                                                         render: function(data, type, full, meta) {
                                                             if (data) {
-                                                                return moment(data).format('YYYY-MM-DD');
-                                                            }
-                                                            return '';
-                                                        }
-                                                    },
-                                                    {
-                                                        data: 'created_at',
-                                                        name: 'created_at',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return moment(data).format('HH:mm:ss');
+                                                                return moment(data).format('DD MMM YYYY [at] HH:mm:ss [GMT]');
                                                             }
                                                             return '';
                                                         }
@@ -108,7 +97,7 @@
                                                             var editUrl = '{{ route('tag.edit', ':id') }}'.replace(':id', data);
                                                             var deleteFormId = 'delete-form-' + data;
                                                             var deleteUrl = '{{ route('tag.destroy', ':id') }}'.replace(':id',
-                                                            data);
+                                                                data);
 
                                                             return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
                                                                 '<a href="#" class="delete-link" ' +
