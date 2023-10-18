@@ -94,10 +94,21 @@
             $('#question,#answer').on('input', function() {
                 removeErrorMessages($(this));
             });
-            $('#summernote').on('summernote.change', function(we, contents, $editable) {
-                removeErrorMessages($(this));
-            });
+            $('#summernote').summernote({
+                height: 100,
+                focus: true,
 
+            });
+            if ($('#summernote').hasClass('is-invalid')) {
+                $('#summernote').next('.note-editor').css('border-color', 'red');
+            }
+            $('#summernote').on('summernote.change', function(we, contents, $editable) {
+                resetSummernoteBorder();
+            });
+            function resetSummernoteBorder() {
+                $('#summernote').removeClass('is-invalid');
+                $('#summernote').next('.note-editor').css('border-color', '');
+            }
             function removeErrorMessages(inputField) {
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');

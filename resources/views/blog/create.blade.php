@@ -40,7 +40,9 @@
                                         @endforeach
                                     </select>
                                     @error('category_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -49,7 +51,9 @@
                                         class="form-control @error('slug') is-invalid @enderror" name="slug"
                                         value="{{ old('slug') }}">
                                     @error('slug')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -58,7 +62,9 @@
                                         class="form-control @error('title') is-invalid @enderror" name="title"
                                         value="{{ old('title') }}">
                                     @error('title')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -67,14 +73,18 @@
                                         class="form-control @error('short_description') is-invalid @enderror"
                                         name="short_description" value="{{ old('short_description') }}">
                                     @error('short_description')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Summary<span class="text-danger">*</span></label>
                                     <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary') }}</textarea>
                                     @error('summary')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -83,7 +93,9 @@
                                         class="form-control @error('featured_img1') is-invalid @enderror"
                                         name="featured_img1" value="{{ old('featured_img1') }}">
                                     @error('featured_img1')
-                                        <div class="error invalid-feedback d-block">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -94,7 +106,9 @@
                                             name="featured_img2" value="{{ old('featured_img2') }}">
                                     </div>
                                     @error('featured_img2')
-                                        <div class="error invalid-feedback d-block">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -104,7 +118,9 @@
                                             class="form-control @error('author_name') is-invalid @enderror"
                                             name="author_name" value="{{ old('author_name') }}">
                                         @error('author_name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -112,23 +128,27 @@
                                     <label for="exampleInputPassword1">Date<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input id="blog_date" type="date"
-                                            class="form-control @error('added_date') is-invalid @enderror" name="added_date"
-                                            value="{{ old('added_date') }}">
+                                            class="form-control @error('added_date') is-invalid @enderror"
+                                            name="added_date" value="{{ old('added_date') }}">
                                         @error('added_date')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Tags<span class="text-danger">*</span></label>
-                                    <select class="form-control select2 @error('tags') is-invalid @enderror" name="tags[]"
-                                        multiple="multiple" style="width: 100%;" id="pieces">
+                                    <select class="form-control select2 @error('tags') is-invalid @enderror"
+                                        name="tags[]" multiple="multiple" style="width: 100%;" id="pieces">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('tags')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -162,32 +182,51 @@
             $('#pieces').select2({
                 tags: true
             });
-
-            $('#show').on('click', function(e) {
-                alert($('#pieces').val());
+            $(document).ready(function() {
+                if ($('#pieces').hasClass('is-invalid')) {
+                    $('#pieces').next('.select2-container').find('.select2-selection').css('border-color',
+                        'red');
+                }
             });
 
-            var t = $('#summernote').summernote({
+            function resetBorderColor() {
+                $('#pieces').removeClass('is-invalid');
+                $('#pieces').next('.select2-container').find('.select2-selection').css('border-color', '');
+            }
+            // $('#show').on('click', function(e) {
+            //     alert($('#pieces').val());
+            // });
+            $('#pieces').on('change', function() {
+                resetBorderColor();
+            });
+            $('#summernote').summernote({
                 height: 100,
-                focus: true
-            });
+                focus: true,
 
-            $('#blog_category,#blog_slug,#blog_tittle,#blog_description,#blog_image1,#blog_image2,#blog_authorname,#blog_date,#pieces')
+            });
+            if ($('#summernote').hasClass('is-invalid')) {
+                $('#summernote').next('.note-editor').css('border-color', 'red');
+            }
+            $('#blog_category,#blog_slug,#blog_tittle,#blog_description,#blog_image1,#blog_image2,#blog_authorname,#blog_date')
                 .on('input', function() {
                     removeErrorMessages($(this));
                 });
 
             $('#summernote').on('summernote.change', function(we, contents, $editable) {
-                removeErrorMessages($(this));
+                resetSummernoteBorder();
             });
 
             function removeErrorMessages(inputField) {
-
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
                 errorElement.remove();
 
                 inputField.removeClass('is-invalid');
+            }
+
+            function resetSummernoteBorder() {
+                $('#summernote').removeClass('is-invalid');
+                $('#summernote').next('.note-editor').css('border-color', '');
             }
         });
     </script>
