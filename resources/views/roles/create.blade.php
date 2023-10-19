@@ -84,16 +84,14 @@
                                     <b>{{ ucfirst($key) }}</b>
                                 </div>
                                 <div class="container">
-                                    @forelse($group as $permission)
+                                    @foreach($group as $permission)
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" name="permissions[]" type="checkbox"
                                                 id="inlineCheckbox1" value="{{ $permission->id }}" />
                                             <label class="form-check-label"
                                                 for="inlineCheckbox1">{{ $permission->name }}</label>
                                         </div>
-                                    @empty
-                                        {{ __('No permission in this group!') }}
-                                    @endforelse
+                                    @endforeach
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-border border-width-2"
