@@ -41,4 +41,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles',        RoleController::class);
     Route::resource('topic.faqs',   FaqController::class);
     Route::resource('course.faqs',  FaqController::class);
+    Route::get('changetopicStatus',         [TopicController::class, 'updateStatus']);
+
 });
