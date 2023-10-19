@@ -15,7 +15,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-
     public function customLogin(Request $request)
     {
         $request->validate([
@@ -27,20 +26,14 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->route('home.index')->withSuccess('Signed in');
-        }else{
+        } else {
             return redirect("login")->with('error', 'Login details are not valid');
-
         }
-
     }
-
-
-
     public function registration()
     {
         return view('auth.registration');
     }
-
 
     public function customRegistration(Request $request)
     {
@@ -66,7 +59,6 @@ class AuthController extends Controller
         ]);
     }
 
-
     public function dashboard()
     {
         if (Auth::check()) {
@@ -75,7 +67,6 @@ class AuthController extends Controller
 
         return redirect("login")->withSuccess('You are not allowed to access');
     }
-
 
     public function logout()
     {

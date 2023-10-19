@@ -8,19 +8,19 @@
                 <div class="row mb-2">
                     <div class="col-sm-12">
                         @if ($segment === 'topic')
-                           <h1>Topic FAQ</h1>
+                            <h1>Topic FAQ's</h1>
                         @else
-                        <h1>Course FAQ</h1>
+                            <h1>Course FAQ's</h1>
                         @endif
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
                             @if ($segment === 'topic')
-                            <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
                             @else
-                            <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
                             @endif
 
                         </ol>
@@ -52,8 +52,7 @@
                                             <tr>
                                                 <th scope="col">Question</th>
                                                 <th scope="col">Active</th>
-                                                <th scope="col">Created Date</th>
-                                                <th scope="col">Created Time</th>
+                                                <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -93,16 +92,7 @@
                                                         name: 'created_at',
                                                         render: function(data, type, full, meta) {
                                                             if (data) {
-                                                                return moment(data).format('YYYY-MM-DD');
-                                                            }
-                                                            return '';
-                                                        }
-                                                    }, {
-                                                        data: 'created_at',
-                                                        name: 'created_at',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return moment(data).format('HH:mm:ss');
+                                                                return moment(data).format('DD MMM YYYY [at] HH:mm:ss [GMT]');
                                                             }
                                                             return '';
                                                         }
