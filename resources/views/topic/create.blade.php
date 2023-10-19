@@ -134,6 +134,32 @@
 
                 inputField.removeClass('is-invalid');
             }
+
+            $('#topic_name, #category_id').on('input', function() {
+        removeErrorMessages($(this));
+        convertToSlug();
+    });
+
+    function removeErrorMessages(inputField) {
+        var parent = inputField.closest('.form-group');
+        var errorElement = parent.find('.error');
+        errorElement.remove();
+        inputField.removeClass('is-invalid');
+    }
+
+    function convertToSlug() {
+        var category_name = $('#category_id option:selected').text();
+        var topic_name = $('#topic_name').val();
+
+        // Replace spaces with hyphens only between spaces
+        var str = (topic_name + '-' + category_name).toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-');
+
+        $('#topic_slug').val(str);
+    }
+
+
+
+
         });
     </script>
 @endpush
