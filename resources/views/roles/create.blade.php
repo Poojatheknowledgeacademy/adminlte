@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
@@ -54,47 +55,62 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <label>Permission<span class="text-danger">*</span></label>
-                                        <select class="form-control select2  @error('permission') is-invalid @enderror"
-                                            name="permission[]" multiple="multiple" style="width: 100%;"id="pieces">
-                                            @foreach ($permission as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('permission')
-                                            <span class="error invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" name="is_active"
-                                                id="customSwitch1" checked>
-                                            <label class="custom-control-label" for="customSwitch1">Active</label>
-                                        </div>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" name="is_active"
+                                            id="customSwitch1" checked>
+                                        <label class="custom-control-label" for="customSwitch1">Active</label>
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Create</button>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Assign Permission Section -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Assign Permission</h3>
+                            </div>
+                            @foreach ($permissions as $key => $group)
+                                <div class="card-footer">
+                                    <b>{{ ucfirst($key) }}</b>
+                                </div>
+                                <div class="container">
+                                    @forelse($group as $permission)
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" name="permissions[]" type="checkbox"
+                                                id="inlineCheckbox1" value="{{ $permission->id }}" />
+                                            <label class="form-check-label"
+                                                for="inlineCheckbox1">{{ $permission->name }}</label>
+                                        </div>
+                                    @empty
+                                        {{ __('No permission in this group!') }}
+                                    @endforelse
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-border border-width-2"
+                                        id="exampleInputBorderWidth2">
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </form>
     </div>
 @endsection
-
 @push('child-scripts')
     <script>
         $(document).ready(function() {
-
             $('#name', 'description').on('input', function() {
                 removeErrorMessages($(this));
             });
@@ -103,7 +119,7 @@
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
 
-                errorElement.remove();
+                errorElement remove();
 
                 inputField.removeClass('is-invalid');
             }

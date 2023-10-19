@@ -28,8 +28,6 @@ class RoleController extends Controller
             $query = Role::query();
             return Datatables::eloquent($query)->make(true);
         }
-        // $roles = Role::all();
-        // return view('roles.index', compact('roles'));
         return view('roles.list');
     }
     /**
@@ -37,8 +35,15 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::where('is_active', 1)->get();
-        return view('roles.create', compact('permission'));
+        $role_permission = Permission::select('name', 'id')->groupBy('name', 'id')->get();
+        $custom_permission = array();
+        foreach ($role_permission as $per) {
+            $key = substr($per->name, 0, strpos($per->name, "-"));
+            if (str_starts_with($per->name, $key)) {
+                $custom_permission[$key][] = $per;
+            }
+        }
+        return view('roles.create')->with('permissions', $custom_permission);
     }
     /**
      * Store a newly created resource in storage.
@@ -46,9 +51,15 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
-        // Create a new role
-        $role = Role::create(['name' => $request->name, 'description' => $request->description, 'is_active' => $is_active]);
-        $role->syncPermissions($request->input('permission'));
+        $role = Role::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'is_active' => $is_active
+        ]);
+        if ($request->permissions) {
+            $selectedPermissions = $request->input('permissions', []);
+            $role->syncPermissions($selectedPermissions);
+        }
         return redirect()->route('roles.index')->with('success', 'Role created successfully');
     }
     /**
@@ -62,25 +73,38 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
-    {
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $role->id)
-            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
-            ->all();
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
-    }
+
+     public function edit(Role $role)
+     {
+
+         $role_permission = Permission::select('name','id')->where('is_active', 1)->groupBy('name','id')->get();
+         $custom_permission = array();
+         foreach($role_permission as $per){
+             $key = substr($per->name, 0, strpos($per->name, "-"));
+             if(str_starts_with($per->name, $key)){
+                 $custom_permission[$key][] = $per;
+             }
+
+         }
+        return view('roles.edit',compact('role'))->with('permissions', $custom_permission);
+
+     }
     /**
      * Update the specified resource in storage.
      */
     public function update(RoleUpdateRequest $request, Role $role)
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
-        // Update the role attributes
-        $role->update(['name' => $request->name, 'description' => $request->description, 'is_active' => $is_active]);
-        $role->syncPermissions($request->input('permission'));
 
+        $role->update(['name' => $request->name, 'description' => $request->description, 'is_active' => $is_active]);
+
+       // $role->syncPermissions($request->input('permission'));
+        if ($request->permissions) {
+            $selectedPermissions = $request->input('permissions', []);
+            $role->syncPermissions($selectedPermissions);
+        }
         return redirect()->route('roles.index')->with('success', 'Role updated successfully');
+        $is_active = $request->is_active == "on" ? 1 : 0;
     }
     /**
      * Remove the specified resource from storage.
@@ -88,6 +112,8 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
+        $role->permissions()->detach();
+
         session()->flash('danger', 'Role Deleted successfully.');
         return redirect()->route('roles.index');
     }

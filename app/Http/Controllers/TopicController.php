@@ -140,4 +140,18 @@ class TopicController extends Controller
         session()->flash('danger', 'Topic Deleted successfully.');
         return redirect()->route('topic.index');
     }
+    public function updateStatus(Request $request){
+        $topic = Topic::find($request->id);
+        $topic->is_active = $request->is_active;
+        $topic->save();
+        if($request->is_active==1){
+            session()->flash('success', 'Topic Activated');
+        }else{
+            session()->flash('danger', 'Topic Deactivated');
+        }
+        return response()->json([
+            'redirect' => route('topic.index'),
+        ]);
+
+    }
 }

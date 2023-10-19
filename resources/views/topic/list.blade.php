@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
@@ -15,7 +14,8 @@
                         </ol>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.container-fluid -->
         </section>
         <!-- Main content -->
         <section class="content">
@@ -32,6 +32,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
+                                <div id="success" class="alert alert-success" style="display: none;"></div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="table">
                                         <thead>
@@ -78,14 +79,17 @@
                                                                 '<i class="fas fa-times text-secondary"></i>';
                                                         }
                                                     },
+
                                                     {
                                                         data: 'is_active',
                                                         name: 'is_active',
                                                         render: function(data, type, full, meta) {
                                                             if (data) {
-                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                                return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +
+                                                                    0 + '" data-val="' + full.id + '"></i>';
                                                             } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
+                                                                    1 + '" data-val="' + full.id + '"></i>';
                                                             }
                                                         }
                                                     },
@@ -166,3 +170,29 @@
         </section>
     </div>
 @endsection
+@push('child-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#table').on('click', '.is_active', function() {
+                var activestatus = $(this).data('activestatus');
+                var dataVal = $(this).data('val');
+                var toggle = $(this);
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '/changetopicStatus',
+                    data: {
+                        'is_active': activestatus,
+                        'id': dataVal
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            window.location.href = data.redirect;
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
