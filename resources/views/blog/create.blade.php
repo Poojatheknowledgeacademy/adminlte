@@ -200,7 +200,7 @@
                 resetBorderColor();
             });
             $('#summernote').summernote({
-                height: 100,
+                height: 300,
                 focus: true,
 
             });
@@ -228,6 +228,7 @@
                 $('#summernote').removeClass('is-invalid');
                 $('#summernote').next('.note-editor').css('border-color', '');
             }
-        });
+
+});
     </script>
 @endpush

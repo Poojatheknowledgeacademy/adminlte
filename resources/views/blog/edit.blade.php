@@ -204,7 +204,7 @@
     <script>
         $(document).ready(function() {
             var t = $('#summernote').summernote({
-                height: 100,
+                height: 300,
                 focus: true
             });
         });
