@@ -95,7 +95,7 @@
                 removeErrorMessages($(this));
             });
             $('#summernote').summernote({
-                height: 100,
+                height: 300,
                 focus: true,
 
             });
@@ -116,7 +116,7 @@
                 inputField.removeClass('is-invalid');
             }
             var t = $('#summernote').summernote({
-                height: 100,
+                height: 300,
                 focus: true
             });
         });
