@@ -49,7 +49,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
+                                     {{-- <div class="form-group">
                                         <label>Permission<span class="text-danger">*</span></label>
                                         <select class="form-control select2 @error('tags') is-invalid @enderror" name="permission[]"
                                             multiple="multiple" style="width: 100%;" >
@@ -60,7 +60,7 @@
                                         @error('permission')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" name="is_active"
@@ -71,12 +71,56 @@
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
-                                </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Assign Permission</h3>
+                            </div>
+                            <div class="card-header">
+                                @foreach ($permissions as $key => $group)
+                                    <div class="card-footer">
+                                        <b>{{ ucfirst($key) }}</b>
+                                    </div>
+
+
+                                    <div class="container">
+                                        @forelse($group as $permission)
+
+                                            <div class="form-check form-check-inline">
+
+                                                <input class="form-check-input"   {{ $role->permissions->contains('id',$permission->id) ? "checked" : "" }}  name="permissions[]" type="checkbox"
+                                                    id="inlineCheckbox1" value="{{ $permission->id }}" />
+                                                <label class="form-check-label"
+                                                    for="inlineCheckbox1">{{ $permission->name }}</label>
+
+                                            </div>
+                                        @empty
+                                            {{ __('No permission in this group !') }}
+                                        @endforelse
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-border border-width-2"
+                                            id="exampleInputBorderWidth2">
+                                    </div>
+                                @endforeach
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </form>
     </div>
 @endsection
