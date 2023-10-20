@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div id="success-message" class="alert alert-success" style="display: none;"></div>
+    <div id="success-message" class="alert alert-success" style="display: none;"></div>
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -84,13 +84,12 @@
                                                         data: 'is_active',
                                                         name: 'is_active',
                                                         render: function(data, type, full, meta) {
-
                                                             if (data === 1) {
-                                                                return '<i class="fas fa-toggle-on text-primary is_active " data-activestatus="' +
-                                                                    0 + '" data-val="' + full.id + '"  ></i>';
+                                                                return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="0" data-val="' +
+                                                                    full.id + '"></i>';
                                                             } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
-                                                                    1 + '" data-val="' + full.id + '"></i>';
+                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="1" data-val="' +
+                                                                    full.id + '"></i>';
                                                             }
                                                         }
                                                     },
@@ -163,7 +162,7 @@
             $('#table').on('click', '.is_active', function() {
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
-                //var $toggle = $(this);
+                var $toggle = $(this);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -172,24 +171,17 @@
                         'is_active': activestatus,
                         'id': dataVal
                     },
-                    // beforeSend:function(){
-                    //     alert('sending');
-
-                    // },
                     success: function(data) {
-
-                       // alert('successfully done');
-                      // location.reload();
-                      $('#success-message').text(data.success).show();
+                        if (activestatus === 1) {
+                            $toggle.removeClass('text-secondary').addClass('text-primary');
+                            $toggle.data('activestatus', 0);
+                        } else {
+                            $toggle.removeClass('text-primary').addClass('text-secondary');
+                            $toggle.data('activestatus', 1);
+                        }
+                        $('#success-message').text(data.success).show();
 
                     },
-                    complete:function(){
-
-                        //alert('successfully done');
-                        location.reload();
-                    },
-
-
                 });
             });
         });

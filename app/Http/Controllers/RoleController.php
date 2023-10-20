@@ -113,4 +113,19 @@ class RoleController extends Controller
         session()->flash('danger', 'Role Deleted successfully.');
         return redirect()->route('roles.index');
     }
+    public function roleStatus(Request $request){
+        $role = Role::find($request->id);
+        $role->is_active = $request->is_active;
+        $role->save();
+        if($request->is_active==1){
+            session()->flash('success', 'Role Activated');
+        }else{
+            session()->flash('danger', 'Role Deactivated');
+        }
+        return response()->json([
+            'redirect' => route('roles.index'),
+        ]);
+
+
+    }
 }
