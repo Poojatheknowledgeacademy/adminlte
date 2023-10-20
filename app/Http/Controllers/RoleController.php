@@ -74,21 +74,19 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      */
 
-     public function edit(Role $role)
-     {
+    public function edit(Role $role)
+    {
 
-         $role_permission = Permission::select('name','id')->where('is_active', 1)->groupBy('name','id')->get();
-         $custom_permission = array();
-         foreach($role_permission as $per){
-             $key = substr($per->name, 0, strpos($per->name, "-"));
-             if(str_starts_with($per->name, $key)){
-                 $custom_permission[$key][] = $per;
-             }
-
-         }
-        return view('roles.edit',compact('role'))->with('permissions', $custom_permission);
-
-     }
+        $role_permission = Permission::select('name', 'id')->where('is_active', 1)->groupBy('name', 'id')->get();
+        $custom_permission = array();
+        foreach ($role_permission as $per) {
+            $key = substr($per->name, 0, strpos($per->name, "-"));
+            if (str_starts_with($per->name, $key)) {
+                $custom_permission[$key][] = $per;
+            }
+        }
+        return view('roles.edit', compact('role'))->with('permissions', $custom_permission);
+    }
     /**
      * Update the specified resource in storage.
      */
@@ -98,11 +96,9 @@ class RoleController extends Controller
 
         $role->update(['name' => $request->name, 'description' => $request->description, 'is_active' => $is_active]);
 
-       // $role->syncPermissions($request->input('permission'));
-        if ($request->permissions) {
-            $selectedPermissions = $request->input('permissions', []);
-            $role->syncPermissions($selectedPermissions);
-        }
+        $selectedPermissions = $request->input('permissions', []);
+        $role->syncPermissions($selectedPermissions);
+
         return redirect()->route('roles.index')->with('success', 'Role updated successfully');
         $is_active = $request->is_active == "on" ? 1 : 0;
     }
