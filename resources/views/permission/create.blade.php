@@ -31,14 +31,32 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <form method="POST" action="{{ route('permission.store') }}">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-
-
+                                    @csrf
                                     <div class="form-group">
-                                        <label for="name">Name<span class="text-danger">*</label>
-                                        <input type="name" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" placeholder="Enter name" name="name">
-                                        @error('name')
+                                        <label for="category_id">Module Name<span class="text-danger">*</label>
+                                        <select class="form-control select2bs4 @error('module_id') is-invalid @enderror"
+                                            id="module_id" name="module_id">
+                                            <option value="">Select a Module</option> <!-- Default empty option -->
+                                            @foreach ($modules as $module)
+                                                <option value="{{ $module->id }}">{{ $module->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('module_id')
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="category_id">Access<span class="text-danger">*</label>
+                                        <select class="form-control select2bs4 @error('access') is-invalid @enderror"
+                                            id="access" name="access">
+                                            <option>insert</option>
+                                            <option>update</option>
+                                            <option>delete</option>
+                                            <option>view</option>
+                                        </select>
+                                        @error('access')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

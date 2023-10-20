@@ -22,7 +22,8 @@ class PermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:permissions,name,except,id',
+            'module_id'=>'required',
+            'access' =>'required',
             'description' => 'required',
         ];
     }

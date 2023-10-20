@@ -9,16 +9,17 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\PermissionRequest;
 use Yajra\DataTables\Facades\Datatables;
 use App\Http\Requests\PermissionUpdateRequest;
+use App\Models\Module;
 
 
 class PermissionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:permission-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:permission-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
+        // $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index', 'store']]);
+        // $this->middleware('permission:permission-create', ['only' => ['create', 'store']]);
+        // $this->middleware('permission:permission-edit', ['only' => ['edit', 'update']]);
+        // $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +27,7 @@ class PermissionController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Permission::query();
+            $query = Permission::with('module');
             return Datatables::eloquent($query)->make(true);
         }
         return view('permission.list');
@@ -37,7 +38,8 @@ class PermissionController extends Controller
      */
     public function create(): View
     {
-        return view('permission.create');
+        $modules = Module::where('is_active', 1)->get();
+        return view('permission.create', compact('modules'));
     }
 
     /**
@@ -45,16 +47,13 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request): RedirectResponse
     {
-        // Permission::create($request->all());
-
         $is_active = $request->is_active == "on" ? 1 : 0;
-
         Permission::create([
-            'name' => $request->name,
+            'module_id' => $request->module_id,
+            'name' => $request->access,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,
-
         ]);
 
         return redirect()->route('permission.index')
@@ -74,7 +73,8 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission): View
     {
-        return view('permission.edit', compact('permission'));
+        $modules = Module::where('is_active', 1)->get();
+        return view('permission.edit', compact('permission','modules'));
     }
 
     /**
