@@ -64,12 +64,9 @@
     </a>
 </li>
 @endif
-{{-- @if(in_array("admin", array_column(Auth::user()->roles->toArray(), "name")))
 <li class="nav-item">
-    <a href="{{ route('faq.index') }}" class="nav-link {{ Request::is('faq') ? 'active' : '' }}">
+    <a href="{{ route('module.index') }}" class="nav-link {{ Request::is('module') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
-        <p>FaQ's</p>
+        <p>Modules</p>
     </a>
 </li>
-@endif --}}
-
