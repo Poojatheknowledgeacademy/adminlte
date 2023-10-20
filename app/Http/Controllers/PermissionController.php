@@ -85,7 +85,8 @@ class PermissionController extends Controller
         $is_active = $request->has('is_active') ? 1 : 0;
 
         $permission->update([
-            'name' => $request->name,
+            'module_id' => $request->module_id,
+            'name' => $request->access,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,

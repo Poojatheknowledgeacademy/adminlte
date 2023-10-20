@@ -37,9 +37,9 @@
                                         <label for="category_id">Module Name<span class="text-danger">*</label>
                                         <select class="form-control select2bs4 @error('module_id') is-invalid @enderror"
                                             id="module_id" name="module_id">
-                                            <option value="">Select a Module</option> <!-- Default empty option -->
+                                            <option value="" >Select a Module</option> <!-- Default empty option -->
                                             @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}">{{ $module->name }}</option>
+                                                <option value="{{ $module->id }}" {{ $permission->module_id == $module->id ? 'selected' : '' }}>{{ $module->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('module_id')
