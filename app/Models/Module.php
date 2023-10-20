@@ -13,9 +13,11 @@ class Module extends Model
 
     protected $dates = ['deleted_at'];
     protected $fillable = [
-
         'name',
         'is_active'
-
     ];
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class, 'module_id');
+    }
 }

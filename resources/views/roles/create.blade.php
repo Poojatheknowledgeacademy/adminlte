@@ -79,12 +79,12 @@
                             <div class="card-header">
                                 <h3 class="card-title">Assign Permission</h3>
                             </div>
-                            @foreach ($permissions as $key => $group)
+                            @foreach ($modulesWithPermissions as $module)
                                 <div class="card-footer">
-                                    <b>{{ ucfirst($key) }}</b>
+                                    <b>{{ $module->name }}</b>
                                 </div>
                                 <div class="container">
-                                    @foreach($group as $permission)
+                                    @foreach ($module->permissions as $permission)
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" name="permissions[]" type="checkbox"
                                                 id="inlineCheckbox1" value="{{ $permission->id }}" />
