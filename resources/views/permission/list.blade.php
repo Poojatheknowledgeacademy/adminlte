@@ -36,11 +36,11 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Permissions Id</th>
-                                                <th scope="col">Name</th>
+                                                <th scope="col">Module Name</th>
+                                                <th scope="col">Access</th>
                                                 <th scope="col">Descripation</th>
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Action</th>
-
                                             </tr>
                                         </thead>
                                     </table>
@@ -55,6 +55,10 @@
                                                 columns: [{
                                                         data: 'id',
                                                         name: 'id'
+                                                    },
+                                                    {
+                                                        data: 'module.name',
+                                                        name: 'module.name'
                                                     },
                                                     {
                                                         data: 'name',

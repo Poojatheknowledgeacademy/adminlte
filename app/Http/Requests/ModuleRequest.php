@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PermissionUpdateRequest extends FormRequest
+class ModuleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +22,7 @@ class PermissionUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'module_id'=>'required',
-            'access' =>'required',
-            'description' => 'required',
+            'name'=>'required',
         ];
     }
 }

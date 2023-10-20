@@ -12,6 +12,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ModuleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles',        RoleController::class);
     Route::resource('topic.faqs',   FaqController::class);
     Route::resource('course.faqs',  FaqController::class);
+    Route::resource('module',       ModuleController::class);
     Route::get('changetopicStatus',         [TopicController::class, 'updateStatus']);
     Route::get('changecourseStatus',         [CourseController::class, 'courseStatus']);
     Route::get('changetagStatus',         [TagController::class, 'tagStatus']);
@@ -50,6 +52,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changecategoryStatus',         [CategoryController::class, 'categoryStatus']);
     Route::get('changefaqStatus',         [FaqController::class, 'faqStatus']);
 
-
+    Route::get('changeModuleStatus',         [ModuleController::class, 'updateStatus']);
 
 });

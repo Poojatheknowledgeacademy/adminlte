@@ -16,7 +16,12 @@ class Permission extends Model
         'name',
         'description',
         'is_active',
-        'guard_name'
-
+        'guard_name',
+        'module_id'
     ];
+
+    public function module()
+    {
+        return $this->belongsTo(Module::class);
+    }
 }

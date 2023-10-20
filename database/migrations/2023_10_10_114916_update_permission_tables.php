@@ -26,15 +26,16 @@ return new class extends Migration
         // Add fields to the permissions table
         Schema::table($tableNames['permissions'], function (Blueprint $table) {
             $table->text('description')->nullable();
+            $table->integer('module_id');
             $table->boolean('is_active')->default(1);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
         });
 
         // Add fields to the roles table
         Schema::table($tableNames['roles'], function (Blueprint $table) {
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(1);
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 
@@ -45,19 +46,16 @@ return new class extends Migration
     {
         $tableNames = config('permission.table_names');
 
-        if (empty($tableNames)) {
-            throw new \Exception('Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the columns manually.');
-        }
-
-        // Remove fields from the roles table
-        Schema::table($tableNames['roles'], function (Blueprint $table) {
+        // Remove fields from the permissions table
+        Schema::table($tableNames['permissions'], function (Blueprint $table) {
             $table->dropColumn('description');
+            $table->dropColumn('module_id');
             $table->dropColumn('is_active');
             $table->dropColumn('deleted_at');
         });
 
-        // Remove fields from the permissions table
-        Schema::table($tableNames['permissions'], function (Blueprint $table) {
+        // Remove fields from the roles table
+        Schema::table($tableNames['roles'], function (Blueprint $table) {
             $table->dropColumn('description');
             $table->dropColumn('is_active');
             $table->dropColumn('deleted_at');

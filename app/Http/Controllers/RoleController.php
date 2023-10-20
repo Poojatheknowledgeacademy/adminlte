@@ -14,10 +14,10 @@ class RoleController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        // $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
+        // $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        // $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -35,6 +35,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+
         $role_permission = Permission::select('name', 'id')->groupBy('name', 'id')->get();
         $custom_permission = array();
         foreach ($role_permission as $per) {
