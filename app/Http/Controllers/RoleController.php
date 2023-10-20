@@ -36,20 +36,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        // $role_permission = Permission::select('name', 'id')->groupBy('name', 'id')->get();
-        // $custom_permission = array();
-        // foreach ($role_permission as $per) {
-        //     $key = substr($per->name, 0, strpos($per->name, "-"));
-        //     if (str_starts_with($per->name, $key)) {
-        //         $custom_permission[$key][] = $per;
-        //     }
-        // }
-        //return view('roles.create')->with('permissions', $custom_permission);
-
         $modulesWithPermissions = Module::where('is_active', 1)->with('permissions')->get();
-        // echo "<pre>";
-        // print_r($modulesWithPermissions);
-
         return view('roles.create', compact('modulesWithPermissions'));
     }
     /**
