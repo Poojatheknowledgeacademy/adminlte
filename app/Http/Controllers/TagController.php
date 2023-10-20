@@ -94,4 +94,17 @@ class TagController extends Controller
         session()->flash('danger', 'Tag Deleted successfully.');
         return redirect()->route('tag.index');
     }
+    public function tagStatus(Request $request){
+        $tag = Tag::find($request->id);
+        $tag->is_active = $request->is_active;
+        $tag->save();
+        if($request->is_active==1){
+            session()->flash('success', 'Tag Activated');
+        }else{
+            session()->flash('danger', 'tag Deactivated');
+        }
+        return response()->json([
+            'redirect' => route('tag.index'),
+        ]);
+    }
 }

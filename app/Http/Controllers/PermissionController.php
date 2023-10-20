@@ -15,10 +15,10 @@ class PermissionController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:permission-create', ['only' => ['create','store']]);
-         $this->middleware('permission:permission-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:permission-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:permission-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -51,9 +51,9 @@ class PermissionController extends Controller
 
         Permission::create([
             'name' => $request->name,
-            'guard_name'=> 'web',
-             'description' => $request->description,
-             'is_active' => $is_active,
+            'guard_name' => 'web',
+            'description' => $request->description,
+            'is_active' => $is_active,
 
         ]);
 
@@ -86,9 +86,9 @@ class PermissionController extends Controller
 
         $permission->update([
             'name' => $request->name,
-            'guard_name'=>'web',
-             'description' => $request->description,
-             'is_active' => $is_active,
+            'guard_name' => 'web',
+            'description' => $request->description,
+            'is_active' => $is_active,
 
         ]);
         return redirect()->route('permission.index')
@@ -103,5 +103,19 @@ class PermissionController extends Controller
         $permission->delete();
         session()->flash('danger', 'Permission Deleted successfully.');
         return redirect()->route('permission.index');
+    }
+    public function permissionStatus(Request $request)
+    {
+        $permission = Permission::find($request->id);
+        $permission->is_active = $request->is_active;
+        $permission->save();
+        if ($request->is_active == 1) {
+            session()->flash('success', 'permission Activated');
+        } else {
+            session()->flash('danger', 'permission Deactivated');
+        }
+        return response()->json([
+            'redirect' => route('permission.index'),
+        ]);
     }
 }

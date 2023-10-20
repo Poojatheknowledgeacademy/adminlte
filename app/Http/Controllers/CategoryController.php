@@ -178,4 +178,17 @@ class CategoryController extends Controller
         session()->flash('danger', 'Category Deleted successfully.');
         return redirect()->route('category.index');
     }
+    public function categoryStatus(Request $request){
+        $category = Category::find($request->id);
+        $category->is_active = $request->is_active;
+        $category->save();
+        if($request->is_active==1){
+            session()->flash('success', 'Category Activated');
+        }else{
+            session()->flash('danger', 'Category Deactivated');
+        }
+        return response()->json([
+            'redirect' => route('category.index'),
+        ]);
+    }
 }

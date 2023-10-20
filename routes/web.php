@@ -42,5 +42,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('topic.faqs',   FaqController::class);
     Route::resource('course.faqs',  FaqController::class);
     Route::get('changetopicStatus',         [TopicController::class, 'updateStatus']);
+    Route::get('changecourseStatus',         [CourseController::class, 'courseStatus']);
+    Route::get('changetagStatus',         [TagController::class, 'tagStatus']);
+    Route::get('changeroleStatus',         [RoleController::class, 'roleStatus']);
+    Route::get('changepermissionStatus',         [PermissionController::class, 'permissionStatus']);
+    Route::get('changeblogStatus',         [BlogController::class, 'blogStatus']);
+    Route::get('changecategoryStatus',         [CategoryController::class, 'categoryStatus']);
+    Route::get('changefaqStatus',         [FaqController::class, 'faqStatus']);
+
+
 
 });

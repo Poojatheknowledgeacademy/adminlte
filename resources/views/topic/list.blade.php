@@ -176,7 +176,6 @@
             $('#table').on('click', '.is_active', function() {
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
-                var toggle = $(this);
                 $.ajax({
                     type: "GET",
                     dataType: "json",

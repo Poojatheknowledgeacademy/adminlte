@@ -135,4 +135,24 @@ class FaqController extends Controller
                 ->with('success', 'Faq created successfully.');
         }
     }
+    public function faqStatus(Request $request){
+        $faq= Faq::find($request->id);
+        $faq->is_active = $request->is_active;
+        $faq->save();
+
+        if($request->is_active==1 && $faq->entity_type=='Topic'){
+            return response()->json(['success' => 'Topic Activated']);
+        }
+        elseif($request->is_active==1 && $faq->entity_type=='Course'){
+            return response()->json(['success' => 'course Activated']);
+
+        }
+        if($request->is_active==0 && $faq->entity_type=='Topic'){
+            return response()->json(['success' => 'Topic Deactivated']);
+        }
+        elseif($request->is_active==0 && $faq->entity_type=='Course'){
+            return response()->json(['success' => 'course  Deactivated']);
+
+        }
+    }
 }

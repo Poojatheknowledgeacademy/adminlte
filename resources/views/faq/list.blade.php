@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+  <div id="success-message" class="alert alert-success" style="display: none;"></div>
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -18,9 +19,11 @@
                             @if ($segment === 'topic')
                                 <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('topic.faqs.index', $id) }}">FAQ's</a></li>
+                                <input type="hidden" value="{{ $segment }}" class="segment">
                             @else
                                 <li class="breadcrumb-item"><a href="{{ route('course.index', $id) }}">Course</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('course.faqs.index', $id) }}">FAQ's</a></li>
+                                <input type="hidden" value="{{ $segment }}" class="segment">
                             @endif
 
                         </ol>
@@ -46,6 +49,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
+
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="table">
                                         <thead>
@@ -80,10 +84,13 @@
                                                         data: 'is_active',
                                                         name: 'is_active',
                                                         render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+
+                                                            if (data === 1) {
+                                                                return '<i class="fas fa-toggle-on text-primary is_active " data-activestatus="' +
+                                                                    0 + '" data-val="' + full.id + '"  ></i>';
                                                             } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
+                                                                    1 + '" data-val="' + full.id + '"></i>';
                                                             }
                                                         }
                                                     },
@@ -149,3 +156,42 @@
         </section>
     </div>
 @endsection
+
+@push('child-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#table').on('click', '.is_active', function() {
+                var activestatus = $(this).data('activestatus');
+                var dataVal = $(this).data('val');
+                //var $toggle = $(this);
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '/changefaqStatus',
+                    data: {
+                        'is_active': activestatus,
+                        'id': dataVal
+                    },
+                    // beforeSend:function(){
+                    //     alert('sending');
+
+                    // },
+                    success: function(data) {
+
+                       // alert('successfully done');
+                      // location.reload();
+                      $('#success-message').text(data.success).show();
+
+                    },
+                    complete:function(){
+
+                        //alert('successfully done');
+                        location.reload();
+                    },
+
+
+                });
+            });
+        });
+    </script>
+@endpush

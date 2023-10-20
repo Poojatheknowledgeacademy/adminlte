@@ -76,10 +76,12 @@
                                                         data: 'is_popular',
                                                         name: 'is_popular',
                                                         render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                            if (data === 1) {
+                                                                return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +
+                                                                    0 + '" data-val="' + full.id + '"></i>';
                                                             } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
+                                                                    1 + '" data-val="' + full.id + '"></i>';
                                                             }
                                                         }
                                                     },
@@ -88,10 +90,12 @@
                                                         data: 'is_active',
                                                         name: 'is_active',
                                                         render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                            if (data === 1) {
+                                                                return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +
+                                                                    0 + '" data-val="' + full.id + '"></i>';
                                                             } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
+                                                                    1 + '" data-val="' + full.id + '"></i>';
                                                             }
                                                         }
                                                     },
@@ -161,3 +165,28 @@
         </section>
     </div>
 @endsection
+@push('child-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#table').on('click', '.is_active', function() {
+                var activestatus = $(this).data('activestatus');
+                var dataVal = $(this).data('val');
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '/changeblogStatus',
+                    data: {
+                        'is_active': activestatus,
+                        'id': dataVal
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            window.location.href = data.redirect;
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

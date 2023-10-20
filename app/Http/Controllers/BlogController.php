@@ -196,4 +196,20 @@ class BlogController extends Controller
         $blog->delete();
         return redirect()->route('blogs.index')->with('danger', 'Blog Deleted Successfully');
     }
+    public function blogStatus(Request $request){
+        $blog = Blog::find($request->id);
+        $blog->is_active = $request->is_active;
+        $blog->save();
+        if($request->is_active==1){
+            session()->flash('success', 'Blog Activated');
+        }else{
+            session()->flash('danger', 'Blog Deactivated');
+        }
+        return response()->json([
+            'redirect' => route('blogs.index'),
+        ]);
+
+
+    }
+
 }

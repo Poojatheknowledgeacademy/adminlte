@@ -140,4 +140,18 @@ class CourseController extends Controller
         return redirect()->route('course.index')
             ->with('danger', 'Course deleted successfully');
     }
+    public function courseStatus(Request $request){
+        $course = Course::find($request->id);
+        $course->is_active = $request->is_active;
+        $course->save();
+        if($request->is_active==1){
+            session()->flash('success', 'course Activated');
+        }else{
+            session()->flash('danger', 'course Deactivated');
+        }
+        return response()->json([
+            'redirect' => route('course.index'),
+        ]);
+
+    }
 }
