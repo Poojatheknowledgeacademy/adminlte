@@ -13,6 +13,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,5 +54,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changefaqStatus',         [FaqController::class, 'faqStatus']);
 
     Route::get('changeModuleStatus',         [ModuleController::class, 'updateStatus']);
-
 });
+Route::get('/country',             [CountryController::class, 'country']);
