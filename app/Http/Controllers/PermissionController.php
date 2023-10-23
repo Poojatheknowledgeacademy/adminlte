@@ -16,10 +16,10 @@ class PermissionController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index', 'store']]);
-        // $this->middleware('permission:permission-create', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:permission-edit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:permission-list|permission-create|permission-update|permission-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:permission-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:permission-update', ['only' => ['update', 'update']]);
+        $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -48,9 +48,10 @@ class PermissionController extends Controller
     public function store(PermissionRequest $request): RedirectResponse
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
+        $module = Module::find($request->module_id);
         Permission::create([
             'module_id' => $request->module_id,
-            'name' => $request->access,
+            'name' => strtolower($module->name)."-".$request->access,$request->access,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,
@@ -83,10 +84,10 @@ class PermissionController extends Controller
     public function update(PermissionUpdateRequest $request, Permission $permission)
     {
         $is_active = $request->has('is_active') ? 1 : 0;
-
+        $module = Module::find($request->module_id);
         $permission->update([
             'module_id' => $request->module_id,
-            'name' => $request->access,
+            'name' => strtolower($module->name)."-".$request->access,$request->access,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,

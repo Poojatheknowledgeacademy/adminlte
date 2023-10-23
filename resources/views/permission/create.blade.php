@@ -51,10 +51,10 @@
                                         <label for="category_id">Access<span class="text-danger">*</label>
                                         <select class="form-control select2bs4 @error('access') is-invalid @enderror"
                                             id="access" name="access">
-                                            <option>insert</option>
-                                            <option>update</option>
-                                            <option>delete</option>
-                                            <option>view</option>
+                                            <option value ="create">insert</option>
+                                            <option value ="update">update</option>
+                                            <option value ="delete">delete</option>
+                                            <option value ="list">view</option>
                                         </select>
                                         @error('access')
                                             <span class="error invalid-feedback" role="alert">

@@ -38,6 +38,7 @@
                                                 <th scope="col">Course Name</th>
                                                 <th scope="col">Topic Name</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">Detail</th>
                                                 <th scope="col">FaQ</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
@@ -76,6 +77,20 @@
                                                                 return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
                                                                     1 + '" data-val="' + full.id + '"></i>';
                                                             }
+                                                        }
+                                                    },
+                                                    {
+                                                        data: 'id',
+                                                        name: 'detail',
+                                                        orderable: false,
+                                                        searchable: false,
+                                                        render: function(data, type, full, meta) {
+                                                            var editUrl = '{{ route('course.coursedetails.index', ':id') }}'.replace(
+                                                                ':id',
+                                                                data);
+                                                            var action = '<a href="' + editUrl +
+                                                                '" class="fas fa-list text-primary"></a>';
+                                                            return action;
                                                         }
                                                     },
                                                     {

@@ -17,10 +17,10 @@ class TopicController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:topic-list|topic-create|topic-edit|topic-delete', ['only' => ['index', 'store']]);
-        // $this->middleware('permission:topic-create', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:topic-edit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:topic-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:topic-list|topic-create|topic-update|topic-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:topic-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:topic-update', ['only' => ['update', 'update']]);
+        $this->middleware('permission:topic-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.

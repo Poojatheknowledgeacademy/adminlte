@@ -20,31 +20,44 @@ $(function () {
 
 })
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#pieces').select2({
         tags: true
     });
-    $('#show').on('click', function(e) {
+    $('#show').on('click', function (e) {
         alert($('#pieces').val());
     });
 
-     $('#summernote').summernote({
+    $('#summernote').summernote({
         height: 100,
         focus: true
     });
+    $('.summernote').each(function (i, obj) {
+        $(obj).summernote({
+            onblur: function (e) {
+                var id = $(obj).data('id');
+                var sHTML = $(obj).code();
+            },
+            height: 300,
+            focus: true,
+        });
+
+    });
+
+
 });
 $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
     });
-  });
+});

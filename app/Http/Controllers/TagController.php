@@ -13,9 +13,9 @@ class TagController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:tag-list|tag-create|tag-edit|tag-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:tag-list|tag-create|tag-update|tag-delete', ['only' => ['index','store']]);
          $this->middleware('permission:tag-create', ['only' => ['create','store']]);
-         $this->middleware('permission:tag-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:tag-update', ['only' => ['update','update']]);
          $this->middleware('permission:tag-delete', ['only' => ['destroy']]);
     }
     /**
