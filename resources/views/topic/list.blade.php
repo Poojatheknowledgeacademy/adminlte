@@ -42,6 +42,7 @@
                                                 <th scope="col">Category Name</th>
                                                 <th scope="col">Logo</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">Details</th>
                                                 <th scope="col">FaQ</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
@@ -99,6 +100,20 @@
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
+                                                            var editUrl = '{{ route('topic.topicdetails.index', ':id') }}'.replace(
+                                                                ':id',
+                                                                data);
+                                                            var action = '<a href="' + editUrl +
+                                                                '" class="fas fa-list text-primary"></a>';
+                                                            return action;
+                                                        }
+                                                    },
+                                                    {
+                                                        data: 'id',
+                                                        name: 'faq',
+                                                        orderable: false,
+                                                        searchable: false,
+                                                        render: function(data, type, full, meta) {
                                                             var editUrl = '{{ route('topic.faqs.index', ':id') }}'.replace(
                                                                 ':id',
                                                                 data);
@@ -107,6 +122,7 @@
                                                             return action;
                                                         }
                                                     },
+
 
                                                     {
                                                         data: 'created_at',

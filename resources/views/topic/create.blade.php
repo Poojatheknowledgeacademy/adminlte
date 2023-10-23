@@ -117,49 +117,37 @@
         </section>
     </div>
 @endsection
-
 @push('child-scripts')
     <script>
         $(document).ready(function() {
             $('#topic_name, #topic_slug, #category_name, #logo').on('input', function() {
                 removeErrorMessages($(this));
             });
+            var categoryField = $('#category_id');
+            var topicNameField = $('#topic_name');
+            var topicSlugField = $('#topic_slug');
+
 
             function removeErrorMessages(inputField) {
-
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
-
                 errorElement.remove();
-
                 inputField.removeClass('is-invalid');
             }
 
-            $('#topic_name, #category_id').on('input', function() {
-        removeErrorMessages($(this));
-        convertToSlug();
-    });
+            topicNameField.on('input', function() {
+                var category_name = categoryField.find('option:selected').text();
+                var topic_name = topicNameField.val();
+                var str = (topic_name + '-' + category_name).toLowerCase().replace(/[^a-z0-9\s]/g, '')
+                    .replace(/\s+/g, '-');
+                topicSlugField.val(str);
+                removeErrorMessages(topicSlugField);
 
-    function removeErrorMessages(inputField) {
-        var parent = inputField.closest('.form-group');
-        var errorElement = parent.find('.error');
-        errorElement.remove();
-        inputField.removeClass('is-invalid');
-    }
+            });
 
-    function convertToSlug() {
-        var category_name = $('#category_id option:selected').text();
-        var topic_name = $('#topic_name').val();
-
-        // Replace spaces with hyphens only between spaces
-        var str = (topic_name + '-' + category_name).toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-');
-
-        $('#topic_slug').val(str);
-    }
-
-
-
-
+            topicSlugField.on('input', function() {
+                removeErrorMessages(topicSlugField);
+            });
         });
     </script>
 @endpush
