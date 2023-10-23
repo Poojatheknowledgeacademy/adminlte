@@ -67,7 +67,7 @@
 
                                 <div class="form-group">
                                     <label>Heading<span class="text-danger">*</span></label>
-                                    <input type="text" id="heading"class="form-control @error('heading') is-invalid @enderror" name="heading"value="{{ old('heading') }}">
+                                    <textarea class="form-control @error('heading') is-invalid @enderror" id="heading" rows="5" name="heading">{{ old('heading') }}</textarea>
                                     @error('heading')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -77,8 +77,7 @@
 
                                 <div class="form-group">
                                     <label>Summary<span class="text-danger">*</span></label>
-                                    <input type="text" id="summary"class="form-control @error('summary') is-invalid @enderror" name="summary"value="{{ old('summary') }}">
-
+                                    <textarea id="summary" class="form-control @error('summary') is-invalid @enderror" rows="5"name="summary">{{ old('summary') }}</textarea>
                                     @error('summary')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -87,8 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Detail<span class="text-danger">*</span></label>
-                                    <input type="text" id="detail"class="form-control @error('detail') is-invalid @enderror" name="detail"value="{{ old('detail') }}">
-
+                                    <textarea id="detail" class="form-control @error('detail') is-invalid @enderror" rows="5"name="detail">{{ old('detail') }}</textarea>
                                     @error('detail')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -184,7 +182,7 @@
     <script>
         $(document).ready(function() {
 
-            $('#course_id, #country_id, #heading, #summary,#detail, #meta_title, #meta_keywords, #meta_description').on(
+            $('#course_id, #country_id, #heading, #summary, #meta_title, #meta_keywords, #meta_description').on(
                 'input',
                 function() {
                     removeErrorMessages($(this));
