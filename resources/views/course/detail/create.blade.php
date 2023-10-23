@@ -67,7 +67,7 @@
 
                                 <div class="form-group">
                                     <label>Heading<span class="text-danger">*</span></label>
-                                    <textarea class="form-control @error('heading') is-invalid @enderror" rows="5" name="heading">{{ old('heading') }}</textarea>
+                                    <input type="text" id="heading"class="form-control @error('heading') is-invalid @enderror" name="heading"value="{{ old('heading') }}">
                                     @error('heading')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -77,7 +77,8 @@
 
                                 <div class="form-group">
                                     <label>Summary<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary') }}</textarea>
+                                    <input type="text" id="summary"class="form-control @error('summary') is-invalid @enderror" name="summary"value="{{ old('summary') }}">
+
                                     @error('summary')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -86,7 +87,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Detail<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('detail') is-invalid @enderror" name="detail">{{ old('detail') }}</textarea>
+                                    <input type="text" id="detail"class="form-control @error('detail') is-invalid @enderror" name="detail"value="{{ old('detail') }}">
+
                                     @error('detail')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -178,12 +180,12 @@
         </div>
     </section>
 @endsection
-
 @push('child-scripts')
     <script>
         $(document).ready(function() {
 
-            $('#course_id,#country_id,#heading,#summary,#meta_title,#meta_keywords,#meta_description').on('input',
+            $('#course_id, #country_id, #heading, #summary,#detail, #meta_title, #meta_keywords, #meta_description').on(
+                'input',
                 function() {
                     removeErrorMessages($(this));
                 });
@@ -203,6 +205,7 @@
             if ($('#summernote').hasClass('is-invalid')) {
                 $('#summernote').next('.note-editor').css('border-color', 'red');
             }
+
             $('#summernote').on('summernote.change', function(we, contents, $editable) {
                 resetSummernoteBorder();
             });

@@ -10,7 +10,8 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('course.index') }}">Course</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('course.coursedetails.index',$id) }}">Course Detail</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('course.coursedetails.index', $id) }}">Course Detail</a>
+                        </li>
                         <li class="breadcrumb-item active"><a href="#">Edit Course Detail</a></li>
                     </ol>
                 </div>
@@ -29,17 +30,18 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form method="POST" action="{{ route('course.coursedetails.update', [$coursedetail->course_id, $coursedetail->id]) }}"
-
+                            <form method="POST"
+                                action="{{ route('course.coursedetails.update', [$coursedetail->course_id, $coursedetail->id]) }}"
                                 enctype="multipart/form-data">
-                              @csrf
+                                @csrf
                                 @method('PUT')
                                 <div class="form-group">
                                     <label>Course Name<span class="text-danger">*</span></label>
                                     <select name="course_id" id="topic_name"
                                         class="form-control select2bs4 @error('course_id') is-invalid @enderror">
                                         @foreach ($courses as $course)
-                                            <option value="{{ $course->id }}" {{ $course->id == $coursedetail->course_id ? 'selected' : '' }}>
+                                            <option value="{{ $course->id }}"
+                                                {{ $course->id == $coursedetail->course_id ? 'selected' : '' }}>
                                                 {{ $course->name }}</option>
                                         @endforeach
                                     </select>
@@ -55,7 +57,8 @@
                                         class="form-control select2bs4 @error('country_id') is-invalid @enderror">
                                         <option value="">Select a country</option>
                                         @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}"{{ $country->id == $coursedetail->country_id ? 'selected' : '' }}>
+                                            <option
+                                                value="{{ $country->id }}"{{ $country->id == $coursedetail->country_id ? 'selected' : '' }}>
                                                 {{ $country->name }}</option>
                                         @endforeach
                                     </select>
@@ -68,7 +71,9 @@
 
                                 <div class="form-group">
                                     <label>Heading<span class="text-danger">*</span></label>
-                                    <textarea class="form-control" rows="5" name="heading">{{ old('heading',$coursedetail->heading) }}</textarea>
+                                    <input type="text"
+                                        id="heading"class="form-control @error('heading') is-invalid @enderror"
+                                        name="heading"value="{{ old('heading', $coursedetail->heading) }}">
                                     @error('heading')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -78,7 +83,10 @@
 
                                 <div class="form-group">
                                     <label>Summary<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary',$coursedetail->summary) }}</textarea>
+                                    <input type="text"
+                                        id="summary"class="form-control @error('summary') is-invalid @enderror"
+                                        name="summary"value="{{ old('summary', $coursedetail->summary) }}">
+
                                     @error('summary')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -87,7 +95,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Detail<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('detail') is-invalid @enderror" name="detail">{{ old('detail',$coursedetail->detail) }}</textarea>
+                                    <input type="text"
+                                        id="detail"class="form-control @error('detail') is-invalid @enderror"
+                                        name="detail"value="{{ old('detail', $coursedetail->detail) }}">
                                     @error('detail')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -96,7 +106,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Overview<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('overview') is-invalid @enderror" name="overview">{{ old('overview',$coursedetail->overview) }}</textarea>
+                                    <textarea id="summernote" class="summernote @error('overview') is-invalid @enderror" name="overview">{{ old('overview', $coursedetail->overview) }}</textarea>
                                     @error('overview')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -106,7 +116,7 @@
 
                                 <div class="form-group">
                                     <label>What's included<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('whats_included') is-invalid @enderror" name="whats_included">{{ old('whats_included',$coursedetail->whats_included) }}</textarea>
+                                    <textarea id="summernote" class="summernote @error('whats_included') is-invalid @enderror" name="whats_included">{{ old('whats_included', $coursedetail->whats_included) }}</textarea>
                                     @error('whats_included')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -116,7 +126,7 @@
 
                                 <div class="form-group">
                                     <label>Pre-requisite<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('pre_requisite') is-invalid @enderror" name="pre_requisite">{{ old('pre_requisite',$coursedetail->pre_requisite) }}</textarea>
+                                    <textarea id="summernote" class="summernote @error('pre_requisite') is-invalid @enderror" name="pre_requisite">{{ old('pre_requisite', $coursedetail->pre_requisite) }}</textarea>
                                     @error('pre_requisite')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -126,7 +136,7 @@
 
                                 <div class="form-group">
                                     <label>Who should Attend<span class="text-danger">*</span></label>
-                                    <textarea id="summernote" class="summernote @error('who_should_attend') is-invalid @enderror" name="who_should_attend">{{ old('who_should_attend',$coursedetail->who_should_attend) }}</textarea>
+                                    <textarea id="summernote" class="summernote @error('who_should_attend') is-invalid @enderror" name="who_should_attend">{{ old('who_should_attend', $coursedetail->who_should_attend) }}</textarea>
                                     @error('who_should_attend')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -138,7 +148,7 @@
                                     <label>Meta Title<span class="text-danger">*</span></label>
                                     <input type="text" id="meta_title"
                                         class="form-control @error('meta_title') is-invalid @enderror" name="meta_title"
-                                        value="{{ old('meta_title',$coursedetail->meta_title) }}">
+                                        value="{{ old('meta_title', $coursedetail->meta_title) }}">
                                     @error('meta_title')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -149,7 +159,8 @@
                                     <label>Meta Keywords<span class="text-danger">*</span></label>
                                     <input type="text" id="meta_keywords"
                                         class="form-control @error('meta_keywords') is-invalid @enderror"
-                                        name="meta_keywords" value="{{ old('meta_keywords',$coursedetail->meta_keywords) }}">
+                                        name="meta_keywords"
+                                        value="{{ old('meta_keywords', $coursedetail->meta_keywords) }}">
                                     @error('meta_keywords')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -160,7 +171,8 @@
                                     <label>Meta Description<span class="text-danger">*</span></label>
                                     <input type="text" id="meta_description"
                                         class="form-control @error('meta_description') is-invalid @enderror"
-                                        name="meta_description" value="{{ old('meta_description',$coursedetail->meta_description) }}">
+                                        name="meta_description"
+                                        value="{{ old('meta_description', $coursedetail->meta_description) }}">
                                     @error('meta_description')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -180,5 +192,13 @@
         </div>
     </section>
 @endsection
-
-
+@push('child-scripts')
+<script>
+    $(document).ready(function() {
+        $("#summernote").summernote({
+            height: 300,
+            focus: true,
+        });
+    });
+</script>
+@endpush

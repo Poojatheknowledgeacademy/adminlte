@@ -101,7 +101,7 @@ class CoursedetailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Coursedetail $coursedetail)
+    public function destroy($id,Coursedetail $coursedetail)
     {
          $coursedetail->delete();
          return redirect()->route('course.coursedetails.index',$coursedetail->course_id)

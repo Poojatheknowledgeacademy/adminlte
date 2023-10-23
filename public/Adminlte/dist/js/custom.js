@@ -29,9 +29,10 @@ $(document).ready(function () {
     });
 
     $('#summernote').summernote({
-        height: 100,
+        height: 300,
         focus: true
     });
+
     $('.summernote').each(function (i, obj) {
         $(obj).summernote({
             onblur: function (e) {
@@ -42,9 +43,17 @@ $(document).ready(function () {
             focus: true,
         });
 
+        if ($(obj).hasClass('is-invalid')) {
+            $(obj).next('.note-editor').css('border-color', 'red');
+        }
+        $(obj).on('summernote.change', function (we, contents, $editable) {
+            resetSummernoteBorder(obj);
+        });
     });
-
-
+    function resetSummernoteBorder(obj) {
+        $(obj).removeClass('is-invalid');
+        $(obj).next('.note-editor').css('border-color', '');
+    }
 });
 $(function () {
     $("#example1").DataTable({
