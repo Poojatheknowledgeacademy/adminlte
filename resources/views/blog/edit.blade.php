@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('content')
     <!-- Content Header (Page header) -->
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -74,9 +83,17 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label>Summary</label>
-                                    <textarea id="summernote" class="summernote @error('summary') is-invalid @enderror" name="summary">{{ old('summary', $blog->summary ?? '') }}</textarea>
-                                    @error('summary')
+                                    <label>Country</label>
+                                    <select name="country_id"
+                                        class="form-control select2bs4 @error('country_id') is-invalid @enderror">
+                                        <option value="">Select a Country</option>
+                                        @foreach ($country as $countries)
+                                            <option value="{{ $countries->id }}"
+                                                {{ $countries->id == $blog->country_id ? 'selected' : '' }}>
+                                                {{ $countries->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('country_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

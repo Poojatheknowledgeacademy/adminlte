@@ -11,7 +11,6 @@ class CountryController extends Controller
     {
 
         $json_data = file_get_contents('https://www.theknowledgeacademy.com/_engine/scripts/get-country-location-continent-region.php');
-
         $data = json_decode($json_data);
         if ($data->success = 1) {
             $this->storeContinents($data->continent);
@@ -33,7 +32,7 @@ class CountryController extends Controller
     public function storeCountries($countries)
     {
         foreach ($countries as $tkaid => $country) {
-            $object = Country::Create([
+            $object = Country::updateOrCreate([
                 'country_code' => $country->countryCode,
                 'tka_id' => $tkaid
             ]);

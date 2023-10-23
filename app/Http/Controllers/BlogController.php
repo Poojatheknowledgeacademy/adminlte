@@ -9,6 +9,7 @@ use App\Http\Requests\EditBlogRequest;
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\Country;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -37,8 +38,9 @@ class BlogController extends Controller
     public function create()
     {
         $category = Category::where('is_active', 1)->get();
+        $country=Country::all();
         $tags = Tag::where('is_active', 1)->get();
-        return view('blog.create', compact('category', 'tags'));
+        return view('blog.create', compact('category', 'tags','country'));
     }
     /**
      * Store a newly created resource in storage.
@@ -63,14 +65,10 @@ class BlogController extends Controller
         } else {
             $popular = '0';
         }
-
-
-
         $blog = Blog::create([
             "category_id" => $request->category_id,
             "title" => $request->title,
             "short_description" => $request->short_description,
-            "summary" => $request->summary,
             "featured_img1" => $filepath1,
             "featured_img2" => $filepath2,
             "author_name" => $request->author_name,
@@ -80,6 +78,7 @@ class BlogController extends Controller
             "added_date" => $request->added_date,
             "created_by" => $id,
             "is_active" => $request->is_active,
+            "country_id" => $request->country_id,
         ]);
         $blog->slugs()->create(['slug' => $request->slug,]);
 
@@ -116,10 +115,12 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
+
         $tags = Tag::all();
         $category = category::all();
+        $country = Country::all();
         $slug = $blog->slugs()->first();
-        return view('blog.edit', compact('blog', 'category', 'slug', 'tags'));
+        return view('blog.edit', compact('blog', 'category', 'slug', 'tags','country'));
     }
     /**
      * Update the specified resource in storage.
@@ -135,7 +136,7 @@ class BlogController extends Controller
         $blog->is_popular = $popular;
         $blog->title = $request->title;
         $blog->short_description = $request->short_description;
-        $blog->summary = $request->summary;
+        $blog->country_id = $request->country_id;
         $blog->author_name = $request->author_name;
         $blog->added_date = $request->added_date;
         $blog->slugs()->updateOrCreate(['slug' => $request->slug]);

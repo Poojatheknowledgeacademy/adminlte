@@ -16,7 +16,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TopicDetailController;
 use App\Http\Controllers\CoursedetailController;
-
+use App\Http\Controllers\BlogDetailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,18 +49,20 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('module',           ModuleController::class);
     Route::resource('course.coursedetails',     CoursedetailController::class);
     Route::resource('topic.topicdetails',             TopicDetailController::class);
+    Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
 
-    Route::get('changetopicStatus',         [TopicController::class, 'updateStatus']);
-    Route::get('changecourseStatus',         [CourseController::class, 'courseStatus']);
+
+    Route::get('changetopicStatus',       [TopicController::class, 'updateStatus']);
+    Route::get('changecourseStatus',      [CourseController::class, 'courseStatus']);
     Route::get('changetagStatus',         [TagController::class, 'tagStatus']);
-    Route::get('changeroleStatus',         [RoleController::class, 'roleStatus']);
-    Route::get('changepermissionStatus',         [PermissionController::class, 'permissionStatus']);
-    Route::get('changeblogStatus',         [BlogController::class, 'blogStatus']);
-    Route::get('changecategoryStatus',         [CategoryController::class, 'categoryStatus']);
+    Route::get('changeroleStatus',        [RoleController::class, 'roleStatus']);
+    Route::get('changepermissionStatus',  [PermissionController::class, 'permissionStatus']);
+    Route::get('changeblogStatus',        [BlogController::class, 'blogStatus']);
+    Route::get('changecategoryStatus',    [CategoryController::class, 'categoryStatus']);
     Route::get('changefaqStatus',         [FaqController::class, 'faqStatus']);
-    Route::get('changeModuleStatus',         [ModuleController::class, 'updateStatus']);
-
+    Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
+    Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 });
 
 Route::get('/country',             [CountryController::class, 'country']);

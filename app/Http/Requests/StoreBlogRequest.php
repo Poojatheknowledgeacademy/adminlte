@@ -26,7 +26,7 @@ class StoreBlogRequest extends FormRequest
             'slug'=>'required',
             'title'=>'required|string|min:3|max:100',
             'short_description'=>'required|string|min:10|max:200',
-            'summary'=>'required',
+            'country_id'=>'required|integer',
             'featured_img1'=>'required',
             'featured_img2'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'author_name'=>'required|string|min:2|max:50',

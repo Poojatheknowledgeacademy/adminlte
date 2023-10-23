@@ -27,7 +27,6 @@
                                         New Blog</a>
                                 </div>
                             </div>
-
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="table">
@@ -39,6 +38,7 @@
                                                 <th scope="col">Author Name</th>
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">Blog Detils</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Created At</th>
@@ -47,7 +47,6 @@
                                         </thead>
                                     </table>
                                 </div>
-
                                 @push('child-scripts')
                                     <script>
                                         $(function() {
@@ -98,6 +97,33 @@
                                                                     1 + '" data-val="' + full.id + '"></i>';
                                                             }
                                                         }
+                                                    },
+                                                    {
+
+                                                        data: 'id',
+
+                                                        name: 'faq',
+
+                                                        orderable: false,
+
+                                                        searchable: false,
+
+                                                        render: function(data, type, full, meta) {
+
+                                                            var editUrl = '{{ route('blogs.blogDetail.index', ':id') }}'.replace(
+
+                                                                ':id',
+
+                                                                data);
+
+                                                            var action = '<a href="' + editUrl +
+
+                                                                '" class="fas fa-list text-primary"></a>';
+
+                                                            return action;
+
+                                                        }
+
                                                     },
                                                     {
                                                         data: 'added_date',
