@@ -6,6 +6,7 @@ use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Http\Request;
 use App\Http\Requests\RoleRequest;
 use App\Http\Requests\RoleUpdateRequest;
+use App\Models\Module;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
@@ -35,16 +36,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-
-        $role_permission = Permission::select('name', 'id')->groupBy('name', 'id')->get();
-        $custom_permission = array();
-        foreach ($role_permission as $per) {
-            $key = substr($per->name, 0, strpos($per->name, "-"));
-            if (str_starts_with($per->name, $key)) {
-                $custom_permission[$key][] = $per;
-            }
-        }
-        return view('roles.create')->with('permissions', $custom_permission);
+        $modulesWithPermissions = Module::where('is_active', 1)->with('permissions')->get();
+        return view('roles.create', compact('modulesWithPermissions'));
     }
     /**
      * Store a newly created resource in storage.
@@ -78,15 +71,8 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
 
-        $role_permission = Permission::select('name', 'id')->where('is_active', 1)->groupBy('name', 'id')->get();
-        $custom_permission = array();
-        foreach ($role_permission as $per) {
-            $key = substr($per->name, 0, strpos($per->name, "-"));
-            if (str_starts_with($per->name, $key)) {
-                $custom_permission[$key][] = $per;
-            }
-        }
-        return view('roles.edit', compact('role'))->with('permissions', $custom_permission);
+        $modulesWithPermissions = Module::where('is_active', 1)->with('permissions')->get();
+        return view('roles.edit', compact('role','modulesWithPermissions'));
     }
     /**
      * Update the specified resource in storage.
