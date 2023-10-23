@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('module',           ModuleController::class);
     Route::resource('course.coursedetails',     CoursedetailController::class);
     Route::resource('topic.topicdetails',             TopicDetailController::class);
-    Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
+    Route::resource('blogs.blogDetail',       BlogDetailController::class);
 
 
 
