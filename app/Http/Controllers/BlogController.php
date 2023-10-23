@@ -16,8 +16,8 @@ class BlogController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:blog-list|blog-create|blog-update|blog-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:blog-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:blog-list|blog-insert|blog-update|blog-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:blog-insert', ['only' => ['insert', 'store']]);
         $this->middleware('permission:blog-update', ['only' => ['update', 'update']]);
         $this->middleware('permission:blog-delete', ['only' => ['destroy']]);
     }

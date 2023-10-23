@@ -14,10 +14,10 @@ class CategoryController extends Controller
 {
     function __construct()
     {
-        //  $this->middleware('permission:category-list|category-create|category-update|category-delete', ['only' => ['index','show']]);
-        //  $this->middleware('permission:category-create', ['only' => ['create','store']]);
-        //  $this->middleware('permission:category-update', ['only' => ['update','update']]);
-        //  $this->middleware('permission:category-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:category-list|category-insert|category-update|category-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:category-insert', ['only' => ['insert','store']]);
+         $this->middleware('permission:category-update', ['only' => ['update','update']]);
+         $this->middleware('permission:category-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.

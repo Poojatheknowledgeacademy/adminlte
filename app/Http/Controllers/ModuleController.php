@@ -13,8 +13,8 @@ class ModuleController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:module-list|module-create|module-update|module-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:module-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:module-list|module-insert|module-update|module-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:module-insert', ['only' => ['insert', 'store']]);
         $this->middleware('permission:module-update', ['only' => ['update', 'update']]);
         $this->middleware('permission:module-delete', ['only' => ['destroy']]);
     }
