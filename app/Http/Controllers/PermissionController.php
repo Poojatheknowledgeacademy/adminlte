@@ -115,7 +115,7 @@ class PermissionController extends Controller
 
         $permission->update([
             'module_id' => $request->module_id,
-            'name' => strtolower($module->name) . "-" . $request->name,
+            'name' => strtolower($module->name) . "-" . $request->access,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,

@@ -66,8 +66,8 @@
                                     @endphp
                                     <div class="form-group">
                                         <label for="category_id">Access<span class="text-danger">*</label>
-                                        <select class="form-control select2bs4 @error('name') is-invalid @enderror"
-                                            id="access" name="name">
+                                        <select class="form-control select2bs4 @error('access') is-invalid @enderror"
+                                            id="access" name="access">
                                             <option value="insert" {{ $selectedValue === 'insert' ? 'selected' : '' }}>
                                                 insert</option>
                                             <option value="update" {{ $selectedValue === 'update' ? 'selected' : '' }}>
@@ -77,7 +77,7 @@
                                             <option value="list" {{ $selectedValue === 'list' ? 'selected' : '' }}>view
                                             </option>
                                         </select>
-                                        @error('name')
+                                        @error('access')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
