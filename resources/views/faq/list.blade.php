@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="success-message" class="alert alert-success" style="display: none;"></div>
+    {{-- <div id="success-message" class="alert alert-success" style="display: none;"></div> --}}
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -175,12 +175,13 @@
                         if (activestatus === 1) {
                             $toggle.removeClass('text-secondary').addClass('text-primary');
                             $toggle.data('activestatus', 0);
+                            $('#success-message').text(data.success).show();
                         } else {
                             $toggle.removeClass('text-primary').addClass('text-secondary');
                             $toggle.data('activestatus', 1);
-                        }
-                        $('#success-message').text(data.success).show();
+                            $('#danger-message').text(data.success).show();
 
+                        }
                     },
                 });
             });
