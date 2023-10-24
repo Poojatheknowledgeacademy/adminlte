@@ -75,8 +75,10 @@
                                             @endforeach
                                         </select>
                                         @error('roles')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Create</button>

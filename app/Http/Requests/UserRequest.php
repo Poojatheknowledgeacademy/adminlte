@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password'=>'required|min:8',
-            'role'=>'required',
+            'roles' =>'required'
         ];
     }
 
@@ -35,7 +35,8 @@ class UserRequest extends FormRequest
             'email.required' => 'Email is required!',
             'name.required' => 'Name is required!',
             'password.required' => 'Password is required!',
-            'role.required'=> 'Role is required'
+            'roles.required' =>'Roles is required!'
+
         ];
     }
 
