@@ -47,7 +47,7 @@
                                         <label for="category_id">Module Name<span class="text-danger">*</label>
                                         <select class="form-control select2bs4 @error('module_id') is-invalid @enderror"
                                             id="module_id" name="module_id">
-                                            <option value="">Select a Module</option> <!-- Default empty option -->
+                                            <option value="">Select a Module</option>
                                             @foreach ($modules as $module)
                                                 <option value="{{ $module->id }}"
                                                     {{ $permission->module_id == $module->id ? 'selected' : '' }}>
@@ -60,16 +60,24 @@
                                             </span>
                                         @enderror
                                     </div>
+                                    @php
+                                        $permissionNameParts = explode('-', $permission->name);
+                                        $selectedValue = end($permissionNameParts);
+                                    @endphp
                                     <div class="form-group">
                                         <label for="category_id">Access<span class="text-danger">*</label>
-                                        <select class="form-control select2bs4 @error('access') is-invalid @enderror"
-                                            id="access" name="access">
-                                            <option>insert</option>
-                                            <option>update</option>
-                                            <option>delete</option>
-                                            <option>view</option>
+                                        <select class="form-control select2bs4 @error('name') is-invalid @enderror"
+                                            id="access" name="name">
+                                            <option value="insert" {{ $selectedValue === 'insert' ? 'selected' : '' }}>
+                                                insert</option>
+                                            <option value="update" {{ $selectedValue === 'update' ? 'selected' : '' }}>
+                                                update</option>
+                                            <option value="delete" {{ $selectedValue === 'delete' ? 'selected' : '' }}>
+                                                delete</option>
+                                            <option value="list" {{ $selectedValue === 'list' ? 'selected' : '' }}>view
+                                            </option>
                                         </select>
-                                        @error('access')
+                                        @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

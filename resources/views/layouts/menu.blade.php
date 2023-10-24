@@ -65,9 +65,11 @@
     </a>
 </li>
 @endif
+@if(in_array("Admin", array_column(Auth::user()->roles->toArray(), "name")))
 <li class="nav-item">
     <a href="{{ route('module.index') }}" class="nav-link {{ Request::is('module') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Modules</p>
     </a>
 </li>
+@endif
