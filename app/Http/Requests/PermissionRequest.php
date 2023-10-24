@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PermissionRequest extends FormRequest
 {
@@ -23,8 +24,8 @@ class PermissionRequest extends FormRequest
     {
         return [
             'module_id'=>'required',
-            'access' =>'required',
-            'description' => 'required',
+            'name' =>'required',
+            'description' => 'required'
         ];
     }
 }

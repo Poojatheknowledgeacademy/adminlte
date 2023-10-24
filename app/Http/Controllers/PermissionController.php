@@ -16,7 +16,7 @@ class PermissionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:permission-list|permission-insert|permission-update|permission-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:list|permission-insert|permission-update|permission-delete', ['only' => ['index', 'store']]);
         $this->middleware('permission:permission-insert', ['only' => ['insert', 'store']]);
         $this->middleware('permission:permission-update', ['only' => ['update', 'update']]);
         $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
@@ -49,9 +49,12 @@ class PermissionController extends Controller
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
         $module = Module::find($request->module_id);
+
+
+
         Permission::create([
             'module_id' => $request->module_id,
-            'name' => strtolower($module->name)."-".$request->access,$request->access,
+            'name' => strtolower($module->name)."-".$request->name,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,
@@ -83,11 +86,12 @@ class PermissionController extends Controller
      */
     public function update(PermissionUpdateRequest $request, Permission $permission)
     {
+
         $is_active = $request->has('is_active') ? 1 : 0;
         $module = Module::find($request->module_id);
         $permission->update([
             'module_id' => $request->module_id,
-            'name' => strtolower($module->name)."-".$request->access,$request->access,
+            'name' => strtolower($module->name)."-".$request->name,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,

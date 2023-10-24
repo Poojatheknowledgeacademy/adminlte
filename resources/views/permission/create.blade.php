@@ -49,14 +49,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Access<span class="text-danger">*</label>
-                                        <select class="form-control select2bs4 @error('access') is-invalid @enderror"
-                                            id="access" name="access">
-                                            <option value ="create">insert</option>
+                                        <select class="form-control select2bs4 @error('name') is-invalid @enderror"
+                                            id="access" name="name">
+                                            <option value ="insert">insert</option>
                                             <option value ="update">update</option>
                                             <option value ="delete">delete</option>
                                             <option value ="list">view</option>
                                         </select>
-                                        @error('access')
+                                        @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
