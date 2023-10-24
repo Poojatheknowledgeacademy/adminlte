@@ -134,10 +134,10 @@
                     </button>
                 </div>
             @endif
+            <div id="success-message" class="alert alert-success" role="alert" style="display: none;"></div>
+            <div id="danger-message" class="alert alert-danger" role="alert" style="display: none;"></div>
             @yield('content')
         </div>
-
-
         <footer class="main-footer">
             <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
             All rights reserved.
