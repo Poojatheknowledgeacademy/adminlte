@@ -44,22 +44,22 @@
                                     </table>
                                 </div>
                                 @push('child-scripts')
-                                <script>
-                                    $(function() {
-                                        $('#table').DataTable({
-                                            processing: true,
-                                            serverSide: true,
-                                            ajax: '{{ route('module.index') }}',
-                                            columns: [{
-                                                    data: 'id',
-                                                    name: 'id'
-                                                },
-                                                {
-                                                    data: 'name',
-                                                    name: 'name'
-                                                },
+                                    <script>
+                                        $(function() {
+                                            $('#table').DataTable({
+                                                processing: true,
+                                                serverSide: true,
+                                                ajax: '{{ route('module.index') }}',
+                                                columns: [{
+                                                        data: 'id',
+                                                        name: 'id'
+                                                    },
+                                                    {
+                                                        data: 'name',
+                                                        name: 'name'
+                                                    },
 
-                                                {
+                                                    {
                                                         data: 'is_active',
                                                         name: 'is_active',
                                                         render: function(data, type, full, meta) {
@@ -72,38 +72,40 @@
                                                             }
                                                         }
                                                     },
-                                                {
-                                                    data: 'id',
-                                                    name: 'actions',
-                                                    orderable: false,
-                                                    searchable: false,
-                                                    render: function(data, type, full, meta) {
-                                                        var editUrl = '{{ route('module.edit', ':id') }}'.replace(':id',
-                                                            data);
-                                                        var deleteFormId = 'delete-form-' + data;
-                                                        var deleteUrl = '{{ route('module.destroy', ':id') }}'.replace(
-                                                            ':id',
-                                                            data);
-
-                                                        return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
-                                                            '<a href="#" class="delete-link" ' +
-                                                            '   onclick="event.preventDefault(); document.getElementById(\'' +
-                                                            deleteFormId + '\').submit();">' +
-                                                            '   <i class="fas fa-trash text-danger"></i>' +
-                                                            '</a>' +
-                                                            '<form id="' + deleteFormId + '" ' +
-                                                            '   action="' + deleteUrl +
-                                                            '" method="POST" style="display: none;">' +
-                                                            '   @csrf' +
-                                                            '   @method('DELETE')' +
-                                                            '</form>';
-                                                    }
-                                                },
-                                            ]
+                                                    {
+                                                        data: 'id',
+                                                        name: 'actions',
+                                                        orderable: false,
+                                                        searchable: false,
+                                                        render: function(data, type, full, meta) {
+                                                            var editUrl = '{{ route('module.edit', ':id') }}'.replace(':id',
+                                                                data);
+                                                            var deleteFormId = 'delete-form-' + data;
+                                                            var deleteUrl = '{{ route('module.destroy', ':id') }}'.replace(
+                                                                ':id',
+                                                                data);
+                                                            @php
+                                                                $isAdmin = in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name'));
+                                                            @endphp
+                                                            return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
+                                                                '<a href="#" class="delete-link" ' +
+                                                                '   onclick="event.preventDefault(); document.getElementById(\'' +
+                                                                deleteFormId + '\').submit();">' +
+                                                                '   <i class="fas fa-trash text-danger"></i>' +
+                                                                '</a>' +
+                                                                '<form id="' + deleteFormId + '" ' +
+                                                                '   action="' + deleteUrl +
+                                                                '" method="POST" style="display: none;">' +
+                                                                '   @csrf' +
+                                                                '   @method('DELETE')' +
+                                                                '</form>';
+                                                        }
+                                                    },
+                                                ]
+                                            });
                                         });
-                                    });
-                                </script>
-                            @endpush
+                                    </script>
+                                @endpush
 
                             </div>
                         </div>

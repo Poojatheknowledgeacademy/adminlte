@@ -152,7 +152,7 @@
                                                                 ':id',
                                                                 data);
                                                             @php
-                                                                $isAdmin = in_array('admin', array_column(Auth::user()->roles->toArray(), 'name'));
+                                                                $isAdmin = in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name'));
                                                             @endphp
 
                                                             var action = '<a href="' + editUrl + '" class="fas fa-edit"></a>';

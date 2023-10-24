@@ -131,38 +131,28 @@
                 removeErrorMessages($(this));
             });
 
-            function removeErrorMessages(inputField) {
+            var nameField = $('#name');
+            var slugField = $('#slug');
 
+            function removeErrorMessages(inputField) {
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
                 errorElement.remove();
                 inputField.removeClass('is-invalid');
             }
 
-            $('#name').on('input', function() {
-                removeErrorMessages($(this));
-                convertToSlug();
+            nameField.on('input', function() {
+                var category_name = nameField.val();
+                var str = category_name;
+                str = str.toLowerCase().replace(/\s+/g, '-');
+                str = str.replace(/[^a-z0-9-]/g, '');
+                slugField.val(str);
+                removeErrorMessages(slugField);
             });
 
-            function removeErrorMessages(inputField) {
-                var parent = inputField.closest('.form-group');
-                var errorElement = parent.find('.error');
-                errorElement.remove();
-                inputField.removeClass('is-invalid');
-            }
-
-            function convertToSlug() {
-                var category_name = $('#name').val();
-                var str = category_name;
-
-                // Replace spaces with hyphens
-                str = str.toLowerCase().replace(/\s+/g, '-');
-
-                // Remove any other special characters
-                str = str.replace(/[^a-z0-9-]/g, '');
-
-                $('#slug').val(str);
-            }
+            slugField.on('input', function() {
+                removeErrorMessages(slugField);
+            });
         });
     </script>
 @endpush

@@ -27,8 +27,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
-
         if ($request->ajax()) {
             $query = User::with('creator');
             return Datatables::eloquent($query)->make(true);

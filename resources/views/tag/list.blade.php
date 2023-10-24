@@ -16,7 +16,7 @@
                         </ol>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
 
         <!-- Main content -->
@@ -64,8 +64,8 @@
                                                         name: 'name'
                                                     },
                                                     {
-                                                        data: 'is_active', // Add the 'is_active' column
-                                                        name: 'is_active', // Name it 'is_active'
+                                                        data: 'is_active',
+                                                        name: 'is_active', 
                                                         render: function(data, type, full, meta) {
                                                             if (data) {
                                                                 return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +

@@ -132,7 +132,7 @@
                                                             var deleteUrl = '{{ route('course.destroy', ':id') }}'.replace(':id',
                                                                 data);
                                                             @php
-                                                                $isAdmin = in_array('admin', array_column(Auth::user()->roles->toArray(), 'name'));
+                                                                $isAdmin = in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name'));
                                                             @endphp
 
                                                             var action = '<a href="' + editUrl + '" class="fas fa-edit"></a>';
@@ -166,7 +166,7 @@
         </section>
     </div>
 @endsection
-{{-- <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script> --}}
+
 @push('child-scripts')
     <script>
         $(document).ready(function() {

@@ -37,9 +37,9 @@
                                         class="form-control @error('name') is-invalid @enderror" name="name"
                                         value="{{ old('name') }}">
                                     @error('name')
-                                    <span class="error invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -48,9 +48,9 @@
                                         class="form-control @error('slug') is-invalid @enderror" name="slug"
                                         value="{{ old('slug') }}">
                                     @error('slug')
-                                    <span class="error invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -63,9 +63,9 @@
                                         @endforeach
                                     </select>
                                     @error('topic_id')
-                                    <span class="error invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -74,9 +74,9 @@
                                         class="form-control @error('logo') is-invalid @enderror" name="logo"
                                         value="{{ old('logo') }}">
                                     @error('logo')
-                                    <span class="error invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="error invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -97,7 +97,6 @@
         </div>
     </section>
 @endsection
-
 @push('child-scripts')
     <script>
         $(document).ready(function() {
@@ -105,44 +104,26 @@
             $('#topic_name,#course_name,#course_slug,#course_logo').on('input', function() {
                 removeErrorMessages($(this));
             });
-
+            var courseNameField = $('#course_name');
+            var courseSlugField = $('#course_slug');
 
             function removeErrorMessages(inputField) {
-
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
-
                 errorElement.remove();
-
                 inputField.removeClass('is-invalid');
             }
 
-            $('#course_name').on('input', function() {
-                removeErrorMessages($(this));
-                convertToSlug();
+            courseNameField.on('input', function() {
+                var courseName = courseNameField.val();
+                var slug = courseName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                courseSlugField.val(slug);
+                removeErrorMessages(courseSlugField);
             });
 
-            function removeErrorMessages(inputField) {
-                var parent = inputField.closest('.form-group');
-                var errorElement = parent.find('.error');
-                errorElement.remove();
-                inputField.removeClass('is-invalid');
-            }
-
-            function convertToSlug() {
-                var course_name = $('#course_name').val();
-                var str = course_name;
-
-                // Replace spaces with hyphens
-                str = str.toLowerCase().replace(/\s+/g, '-');
-
-                // Remove any other special characters
-                str = str.replace(/[^a-z0-9-]/g, '');
-
-                $('#course_slug').val(str);
-            }
-
-
+            courseSlugField.on('input', function() {
+                removeErrorMessages(courseSlugField);
+            });
         });
     </script>
 @endpush
