@@ -22,10 +22,11 @@ class PermissionRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'module_id'=>'required',
-            'name' =>'required',
-            'description' => 'required'
+            'module_id' => 'required',
+            'access' => 'required',
+            'description' => 'required',
         ];
     }
 }

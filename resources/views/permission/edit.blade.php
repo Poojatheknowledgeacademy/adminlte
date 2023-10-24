@@ -27,6 +27,16 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Edit Permission</h3>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -37,9 +47,11 @@
                                         <label for="category_id">Module Name<span class="text-danger">*</label>
                                         <select class="form-control select2bs4 @error('module_id') is-invalid @enderror"
                                             id="module_id" name="module_id">
-                                            <option value="" >Select a Module</option> <!-- Default empty option -->
+                                            <option value="">Select a Module</option> <!-- Default empty option -->
                                             @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}" {{ $permission->module_id == $module->id ? 'selected' : '' }}>{{ $module->name }}</option>
+                                                <option value="{{ $module->id }}"
+                                                    {{ $permission->module_id == $module->id ? 'selected' : '' }}>
+                                                    {{ $module->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('module_id')
@@ -50,14 +62,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Access<span class="text-danger">*</label>
-                                        <select class="form-control select2bs4 @error('name') is-invalid @enderror"
-                                            id="access" name="name">
+                                        <select class="form-control select2bs4 @error('access') is-invalid @enderror"
+                                            id="access" name="access">
                                             <option>insert</option>
                                             <option>update</option>
                                             <option>delete</option>
                                             <option>view</option>
                                         </select>
-                                        @error('name')
+                                        @error('access')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
