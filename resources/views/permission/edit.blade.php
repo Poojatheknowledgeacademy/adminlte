@@ -50,14 +50,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Access<span class="text-danger">*</label>
-                                        <select class="form-control select2bs4 @error('access') is-invalid @enderror"
-                                            id="access" name="access">
+                                        <select class="form-control select2bs4 @error('name') is-invalid @enderror"
+                                            id="access" name="name">
                                             <option>insert</option>
                                             <option>update</option>
                                             <option>delete</option>
                                             <option>view</option>
                                         </select>
-                                        @error('access')
+                                        @error('name')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
