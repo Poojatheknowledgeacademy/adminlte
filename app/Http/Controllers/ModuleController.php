@@ -99,12 +99,9 @@ class ModuleController extends Controller
         $module->is_active = $request->is_active;
         $module->save();
         if ($request->is_active == 1) {
-            session()->flash('success', 'Module Activated');
+           return response()->json(['success' => 'Module Activated']);
         } else {
-            session()->flash('danger', 'Module Deactivated');
+            return response()->json(['success' => 'Module Activated']);
         }
-        return response()->json([
-            'redirect' => route('module.index'),
-        ]);
     }
 }

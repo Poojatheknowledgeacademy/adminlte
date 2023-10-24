@@ -145,13 +145,9 @@ class TopicController extends Controller
         $topic->is_active = $request->is_active;
         $topic->save();
         if($request->is_active==1){
-            session()->flash('success', 'Topic Activated');
+            return response()->json(['success' => 'Topic Activated']);
         }else{
-            session()->flash('danger', 'Topic Deactivated');
+            return response()->json(['success' => 'Topic Deactivated']);
         }
-        return response()->json([
-            'redirect' => route('topic.index'),
-        ]);
-
     }
 }

@@ -202,15 +202,10 @@ class BlogController extends Controller
         $blog->is_active = $request->is_active;
         $blog->save();
         if($request->is_active==1){
-            session()->flash('success', 'Blog Activated');
+           return response()->json(['success' => 'Blog Activated']);
         }else{
-            session()->flash('danger', 'Blog Deactivated');
+            return response()->json(['success' => 'Blog Deactivated']);
         }
-        return response()->json([
-            'redirect' => route('blogs.index'),
-        ]);
-
-
     }
 
 }

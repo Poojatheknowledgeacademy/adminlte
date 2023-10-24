@@ -99,12 +99,9 @@ class TagController extends Controller
         $tag->is_active = $request->is_active;
         $tag->save();
         if($request->is_active==1){
-            session()->flash('success', 'Tag Activated');
+            return response()->json(['success' => 'Tag Activated']);
         }else{
-            session()->flash('danger', 'tag Deactivated');
+            return response()->json(['success' => 'Tag Activated']);
         }
-        return response()->json([
-            'redirect' => route('tag.index'),
-        ]);
     }
 }

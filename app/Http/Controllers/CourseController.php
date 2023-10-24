@@ -145,13 +145,9 @@ class CourseController extends Controller
         $course->is_active = $request->is_active;
         $course->save();
         if($request->is_active==1){
-            session()->flash('success', 'course Activated');
+           return response()->json(['success' => 'course Activated']);
         }else{
-            session()->flash('danger', 'course Deactivated');
+            return response()->json(['success' => 'course Deactivated']);
         }
-        return response()->json([
-            'redirect' => route('course.index'),
-        ]);
-
     }
 }

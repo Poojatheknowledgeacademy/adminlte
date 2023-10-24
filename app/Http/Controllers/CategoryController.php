@@ -181,12 +181,10 @@ class CategoryController extends Controller
         $category->is_active = $request->is_active;
         $category->save();
         if($request->is_active==1){
-            session()->flash('success', 'Category Activated');
+           return response()->json(['success' => 'Category Activated']);
         }else{
-            session()->flash('danger', 'Category Deactivated');
+            return response()->json(['success' => 'Category Deactivated']);
         }
-        return response()->json([
-            'redirect' => route('category.index'),
-        ]);
+
     }
 }
