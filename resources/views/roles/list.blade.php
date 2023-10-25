@@ -120,6 +120,7 @@
             $('#table').on('click', '.is_active', function() {
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
+                var $toggle = $(this);
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -129,10 +130,18 @@
                         'id': dataVal
                     },
                     success: function(data) {
-                        setTimeout(function() {
-                            window.location.href = data.redirect;
-                        });
+                        if (activestatus === 1) {
+                            $toggle.removeClass('text-secondary').addClass('text-primary');
+                            $toggle.data('activestatus', 0);
+                            $('#success-message').text(data.success).show();
+                            $('#danger-message').text(data.success).hide();
+                        } else {
+                            $toggle.removeClass('text-primary').addClass('text-secondary');
+                            $toggle.data('activestatus', 1);
+                            $('#danger-message').text(data.success).show();
+                            $('#success-message').text(data.success).hide();
 
+                        }
                     }
                 });
             });

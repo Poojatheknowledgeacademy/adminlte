@@ -140,12 +140,9 @@ class PermissionController extends Controller
         $permission->is_active = $request->is_active;
         $permission->save();
         if ($request->is_active == 1) {
-            session()->flash('success', 'permission Activated');
+            return response()->json(['success' => 'permission Activated']);
         } else {
-            session()->flash('danger', 'permission Deactivated');
+            return response()->json(['success' => 'permission Deactivated']);
         }
-        return response()->json([
-            'redirect' => route('permission.index'),
-        ]);
     }
 }

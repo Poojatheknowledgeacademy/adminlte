@@ -105,14 +105,9 @@ class RoleController extends Controller
         $role->is_active = $request->is_active;
         $role->save();
         if($request->is_active==1){
-            session()->flash('success', 'Role Activated');
+            return response()->json(['success' => 'Role Activated']);
         }else{
-            session()->flash('danger', 'Role Deactivated');
+            return response()->json(['success' => 'Role Deactivated']);
         }
-        return response()->json([
-            'redirect' => route('roles.index'),
-        ]);
-
-
     }
 }
