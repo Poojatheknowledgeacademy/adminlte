@@ -58,8 +58,8 @@
                                     <select name="topic_id" id="topic_name"
                                         class="form-control select2bs4 @error('topic_id') is-invalid @enderror">
                                         <option value="">Select a Topic</option>
-                                        @foreach ($topic as $topics)
-                                            <option value="{{ $topics->id }}">{{ $topics->name }}</option>
+                                        @foreach ($topics as $topic)
+                                            <option value="{{ $topic->id }}">{{ $topic->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('topic_id')

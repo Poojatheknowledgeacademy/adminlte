@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Slug;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,5 +42,9 @@ class Category extends Model
     public function slugs()
     {
         return $this->morphMany(Slug::class, 'entity');
+    }
+    public function topics()
+    {
+        return $this->hasMany(Topic::class, 'category_id');
     }
 }

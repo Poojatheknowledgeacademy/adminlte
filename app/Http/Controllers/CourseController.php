@@ -36,8 +36,10 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $topic = Topic::where('is_active', 1)->get();
-        return view('course.create', compact('topic'));
+        $topics = Topic::whereHas('category', function ($query) {
+            $query->where('is_active', 1);
+        })->get();
+        return view('course.create', compact('topics'));
     }
 
     /**
@@ -89,9 +91,11 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        $topic = Topic::all();
+        $topics = Topic::whereHas('category', function ($query) {
+            $query->where('is_active', 1);
+        })->get();
         $slug = $course->slugs()->first();
-        return view('course.edit', compact('course', 'topic', 'slug'));
+        return view('course.edit', compact('course', 'topics', 'slug'));
     }
     /**
      * Update the specified resource in storage.

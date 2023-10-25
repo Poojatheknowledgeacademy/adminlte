@@ -46,11 +46,12 @@ class Topic extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
-   
+
     public function faqs()
     {
         return $this->hasMany(FAQ::class, 'entity_id')->where('entity_type', 'Topic');
     }
+
 }

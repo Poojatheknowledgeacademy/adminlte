@@ -38,14 +38,14 @@
 <li class="nav-item">
     <a href="{{ route('blogs.index') }}" class="nav-link {{ Request::is('blogs') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
-        <p>Blogs</p>
+        <p>Blog</p>
     </a>
 </li>
 @if(in_array("Admin", array_column(Auth::user()->roles->toArray(), "name")))
 <li class="nav-item">
     <a href="{{ route('tag.index') }}" class="nav-link {{ Request::is('tag') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
-        <p>Tags</p>
+        <p>Tag</p>
     </a>
 </li>
 @endif
@@ -53,7 +53,7 @@
 <li class="nav-item">
     <a href="{{ route('roles.index') }}" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
-        <p>Roles</p>
+        <p>Role</p>
     </a>
 </li>
 @endif
@@ -61,7 +61,7 @@
 <li class="nav-item">
     <a href="{{ route('permission.index') }}" class="nav-link {{ Request::is('permission') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
-        <p>Permissions</p>
+        <p>Permission</p>
     </a>
 </li>
 @endif
@@ -69,7 +69,7 @@
 <li class="nav-item">
     <a href="{{ route('module.index') }}" class="nav-link {{ Request::is('module') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
-        <p>Modules</p>
+        <p>Module</p>
     </a>
 </li>
 @endif
