@@ -117,7 +117,7 @@ class BlogController extends Controller
     {
 
         $tags = Tag::all();
-        $category = category::all();
+        $category = category::where('is_active',1)->get();
         $country = Country::all();
         $slug = $blog->slugs()->first();
         return view('blog.edit', compact('blog', 'category', 'slug', 'tags','country'));
