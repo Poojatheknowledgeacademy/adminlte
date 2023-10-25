@@ -25,7 +25,7 @@ class StoreBlogdetailsRequest extends FormRequest
 
             'keywords'=>'required',
             'tittle'=>'required|string|min:3|max:100',
-            'description'=>'required|string|min:5|max:200',
+            'description'=>'required|string|min:5',
             'summary'=>'required',
 
         ];
