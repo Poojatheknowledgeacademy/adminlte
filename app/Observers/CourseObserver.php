@@ -12,7 +12,7 @@ class CourseObserver
      */
     public function created(Course $course): void
     {
-       LogActivity::addToLog('Course created'-$course->name);
+       LogActivity::addToLog('Course created -'.$course->name);
     }
 
     /**
