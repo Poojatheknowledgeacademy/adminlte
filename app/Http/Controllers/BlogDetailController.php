@@ -17,6 +17,7 @@ class BlogDetailController extends Controller
     {
         if ($request->ajax()) {
             $query = BlogDetail::with('creator', 'blog');
+            $query->where('blog_id', $id);
             return Datatables::eloquent($query)->make(true);
         }
         return view('blog.details.list', compact('id'));
@@ -27,8 +28,8 @@ class BlogDetailController extends Controller
      */
     public function create($id)
     {
-
-        return view('blog.details.create', compact('id'));
+        $blogs = Blog::where('is_active', 1)->get();
+        return view('blog.details.create', compact('id','blogs'));
     }
 
     /**
@@ -36,18 +37,17 @@ class BlogDetailController extends Controller
      */
     public function store($id, StoreBlogdetailsRequest $request)
     {
-        $blog_id =  Blog::findOrFail($id);
         $is_active = $request->is_active == "on" ? 1 : 0;
         $blogdetail = new BlogDetail([
+            'blog_id'=>$request->blog_id,
             'meta_title' => $request->tittle,
             'meta_keywords' => $request->keywords,
             'meta_description' => $request->description,
             'summary' => $request->summary,
             'is_active' => $is_active
         ]);
-        $blog_id->blogid()->save($blogdetail);
         $blogdetail->save();
-        return redirect()->route('blogs.blogDetail.index', $id)
+        return redirect()->route('blogs.blogDetail.index', $request->blog_id)
             ->with('success', 'Blogdetails created successfully.');
     }
 
@@ -64,8 +64,8 @@ class BlogDetailController extends Controller
      */
     public function edit($id, BlogDetail $blogDetail)
     {
-
-        return view('blog.details.edit', compact('id', 'blogDetail'));
+        $blogs = Blog::where('is_active', 1)->get();
+        return view('blog.details.edit', compact('id', 'blogDetail','blogs'));
     }
 
     /**
@@ -76,14 +76,15 @@ class BlogDetailController extends Controller
 
         $is_active = $request->is_active == "on" ? 1 : 0;
         $blogDetail->update([
+            'blog_id' => $request->blog_id,
             'meta_title' => $request->title,
             'meta_keywords' => $request->keywords,
             'meta_description' => $request->description,
             'summary' => $request->summary,
             'is_active' => $is_active
         ]);
-        return redirect()->route('blogs.blogDetail.index', $id)
-            ->with('success', 'Blogdetails created successfully.');
+        return redirect()->route('blogs.blogDetail.index', $request->blog_id)
+            ->with('success', 'Blogdetails updated successfully.');
     }
 
     /**

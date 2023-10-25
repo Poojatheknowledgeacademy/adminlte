@@ -23,6 +23,7 @@ class StoreBlogdetailsRequest extends FormRequest
     {
         return [
 
+            'blog_id'=>'required',
             'keywords'=>'required',
             'tittle'=>'required|string|min:3|max:100',
             'description'=>'required|string|min:5',
