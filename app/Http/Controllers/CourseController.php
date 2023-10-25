@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\EditcourseRequest;
 use App\Models\Course;
 use App\Models\Topic;
+use App\Helpers\LogActivity;
 
 
 class CourseController extends Controller
@@ -144,13 +145,14 @@ class CourseController extends Controller
         return redirect()->route('course.index')
             ->with('danger', 'Course deleted successfully');
     }
-    public function courseStatus(Request $request){
+    public function courseStatus(Request $request)
+    {
         $course = Course::find($request->id);
         $course->is_active = $request->is_active;
         $course->save();
-        if($request->is_active==1){
-           return response()->json(['success' => 'course Activated']);
-        }else{
+        if ($request->is_active == 1) {
+            return response()->json(['success' => 'course Activated']);
+        } else {
             return response()->json(['success' => 'course Deactivated']);
         }
     }
