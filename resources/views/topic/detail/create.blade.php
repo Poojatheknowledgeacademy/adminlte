@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('topic.index', $id) }}">Topic</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('topic.topicdetails.index', $id) }}">Details</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">Create Detail</a></li>
+                            <li class="breadcrumb-item active">Create Detail</li>
                         </ol>
                     </div>
                 </div>
@@ -38,7 +38,8 @@
                                     <div class="form-group">
                                         <label>Topic Name<span class="text-danger">*</span></label>
                                         <select name="topic_id" id="topic_id"
-                                            class="form-control select2bs4 @error('topic_id') is-invalid @enderror" style="width: 100%;">
+                                            class="form-control select2bs4 @error('topic_id') is-invalid @enderror"
+                                            style="width: 100%;">
                                             @foreach ($topics as $topic)
                                                 <option value="{{ $topic->id }}"
                                                     {{ $topic->id == $id ? 'selected' : '' }}>
@@ -54,8 +55,8 @@
 
                                     <div class="form-group">
                                         <label for="country">Country<span class="text-danger">*</label>
-                                        <select class="form-control select2bs4 @error('country') is-invalid @enderror" style="width: 100%;"
-                                            id="country" name="country">
+                                        <select class="form-control select2bs4 @error('country') is-invalid @enderror"
+                                            style="width: 100%;" id="country" name="country">
                                             <option value="">Select a Country</option>
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -140,8 +141,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="meta_title">Meta_title<span class="text-danger">*</label>
-                                        <input type="text" class="form-control @error('meta_title') is-invalid @enderror"
-                                            id="meta_title" name="meta_title" placeholder="Enter meta_title"
+                                        <input type="text"
+                                            class="form-control @error('meta_title') is-invalid @enderror" id="meta_title"
+                                            name="meta_title" placeholder="Enter meta_title"
                                             value="{{ old('meta_title') }}">
 
                                         @error('meta_title')

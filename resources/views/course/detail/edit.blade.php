@@ -11,7 +11,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('course.index') }}">Course</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('course.coursedetails.index',$id) }}">Course Detail</a></li>
-                        <li class="breadcrumb-item active"><a href="#">Edit Course Detail</a></li>
+                        <li class="breadcrumb-item active">Edit Course Detail</li>
                     </ol>
                 </div>
             </div>
