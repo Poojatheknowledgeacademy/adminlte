@@ -24,12 +24,6 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('blogs.index') }}" class="nav-link {{ Request::is('blogs') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-th"></i>
-        <p>Blogs</p>
-    </a>
-</li>
-<li class="nav-item">
     <a href="{{ route('topic.index') }}" class="nav-link {{ Request::is('topic') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Topic</p>
@@ -39,6 +33,12 @@
     <a href="{{ route('course.index') }}" class="nav-link {{ Request::is('course') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Course</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('blogs.index') }}" class="nav-link {{ Request::is('blogs') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Blogs</p>
     </a>
 </li>
 @if(in_array("Admin", array_column(Auth::user()->roles->toArray(), "name")))
