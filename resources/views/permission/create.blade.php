@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Access<span class="text-danger">*</label>
-                                            <select class="form-control select2bs4 @error('access') is-invalid @enderror"
+                                        <select class="form-control select2bs4 @error('access') is-invalid @enderror"
                                             id="access" name="access">
                                             <option value ="">select Access</option>
                                             <option value ="insert">insert</option>
@@ -99,7 +99,7 @@
     <script>
         $(document).ready(function() {
 
-            $('#name', '#description').on('input', function() {
+            $('#module_id, #access,#description').on('input', function() {
                 removeErrorMessages($(this));
             });
 

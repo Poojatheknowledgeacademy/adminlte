@@ -9,10 +9,10 @@
                 </div>
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('topic.index') }}">topic</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('topic.topicdetails.index', $id) }}">topic Detail</a>
+                        <li class="breadcrumb-item"><a href="{{ route('topic.index') }}">Topic</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('topic.topicdetails.index', $id) }}">Topic Detail</a>
                         </li>
-                        <li class="breadcrumb-item active"><a href="#">Edit topic Detail</a></li>
+                        <li class="breadcrumb-item active">Edit Topic Detail</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit topic</h3>
+                            <h3 class="card-title">Edit Topic Details</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -69,23 +69,18 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="heading">Heading<span class="text-danger">*</label>
-                                    <input type="text" class="form-control @error('heading') is-invalid @enderror"
-                                        id="heading" name="heading" placeholder="Enter Heading"
-                                        value="{{ old('heading', $topicdetail->heading) }}">
-
+                                    <label>Heading<span class="text-danger">*</span></label>
+                                    <textarea class="form-control" rows="5" name="heading">{{ old('heading',$topicdetail->heading) }}</textarea>
                                     @error('heading')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="summary">Summary<span class="text-danger">*</label>
-                                    <input type="text" class="form-control @error('summary') is-invalid @enderror"
-                                        id="summary" name="summary" placeholder="Enter Summary"
-                                        value="{{ old('summary', $topicdetail->summary) }}">
 
+                                <div class="form-group">
+                                    <label>Summary<span class="text-danger">*</span></label>
+                                    <textarea id="summary" class="form-control @error('summary') is-invalid @enderror" rows="5"name="summary">{{ old('summary',$topicdetail->summary) }}</textarea>
                                     @error('summary')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -93,12 +88,8 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="detail">Details<span class="text-danger">*</label>
-                                    <input type="text" class="form-control @error('detail') is-invalid @enderror"
-                                        id="detail" name="detail" placeholder="Enter Detail"
-                                        value="{{ old('detail', $topicdetail->detail) }}">
-
-
+                                    <label>Detail<span class="text-danger">*</span></label>
+                                    <textarea id="detail" class="form-control @error('detail') is-invalid @enderror" rows="5"name="detail">{{ old('detail',$topicdetail->detail) }}</textarea>
                                     @error('detail')
                                         <span class="error invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -204,9 +195,7 @@
         $('#summernote').summernote({
                 height: 300,
                 focus: true,
-
             });
-
         });
     </script>
 @endpush
