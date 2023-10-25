@@ -11,12 +11,9 @@
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-
                             <li class="breadcrumb-item"><a href="{{ route('blogs.index', $id) }}">Blog</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('blogs.blogDetail.index', $id) }}">Blogdetails</a></li>
                             <li class="breadcrumb-item"><a href="#">Create Blogdetails</a></li>
-
-
                         </ol>
                     </div>
                 </div>
@@ -74,14 +71,13 @@
 
                                     <div class="form-group">
                                         <label>Summary<span class="text-danger">*</span></label>
-                                        <textarea id="summary-text" class="form-control @error('summary') is-invalid @enderror" name="summary" value="{{ old('summary') }}">{{ old('summary') }}</textarea>
+                                        <textarea id="summary-text" class="form-control @error('summary') is-invalid @enderror" rows="5" name="summary" value="{{ old('summary') }}">{{ old('summary') }}</textarea>
                                         @error('summary')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" name="is_active"
