@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\Facades\Datatables;
-use Illuminate\Http\Request;
-use App\Http\Requests\TopicRequest;
+use App\Models\Faq;
+use App\Models\Slug;
 use App\Models\Topic;
 use App\Models\Category;
-use App\Models\Slug;
-use App\Http\Requests\TopicUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use App\Models\Faq;
+use App\Models\LogActivity;
+use Illuminate\Http\Request;
+use App\Http\Requests\TopicRequest;
+use Illuminate\Http\RedirectResponse;
+use Yajra\DataTables\Facades\Datatables;
+use App\Http\Requests\TopicUpdateRequest;
 
 class TopicController extends Controller
 {
@@ -21,6 +22,11 @@ class TopicController extends Controller
         $this->middleware('permission:topic-insert', ['only' => ['insert', 'store']]);
         $this->middleware('permission:topic-update', ['only' => ['update', 'update']]);
         $this->middleware('permission:topic-delete', ['only' => ['destroy']]);
+    }
+    public function myTestAddToLog()
+    {
+        LogActivity::addToLog('My Testing Add To Log.');
+        dd('log insert successfully.');
     }
     /**
      * Display a listing of the resource.

@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Topic;
+use App\Models\Course;
+use App\Observers\CourseObserver;
+use App\Observers\TopicObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use App\Observers\CourseObserver;
-use App\Models\Course;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,8 +29,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // parent::boot();
-         Course::observe(CourseObserver::class);
+        Topic::observe(TopicObserver::class);
+        Course::observe(CourseObserver::class);
     }
 
     /**

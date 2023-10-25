@@ -26,7 +26,9 @@
                             <div class="card-header">
                                 <h3 class="card-title">Category list</h3>
                                 <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
-                                        href="{{ route('category.create') }}"> Create New category</a></div>
+                                        href="{{ route('category.create') }}"> Create New category</a>
+                                    <i class="fas fa-toggle-on text-primary">Active</i>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
