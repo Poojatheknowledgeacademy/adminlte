@@ -89,15 +89,24 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Details<span class="text-danger">*</span></label>
-                                        <textarea class="form-control @error('details') is-invalid @enderror" id="details" rows="5" name="details"
-                                            placeholder="Enter Details">{{ old('heading') }}</textarea>
-                                        @error('details')
+                                        <textarea class="form-control @error('detail') is-invalid @enderror" id="detail" rows="5" name="detail"
+                                            placeholder="Enter Details">{{ old('detail') }}</textarea>
+                                        @error('detail')
                                             <span class="error invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-
+                                    <div class="form-group">
+                                        <label>Overview<span class="text-danger">*</span></label>
+                                        <textarea id="summernote" class="summernote @error('overview') is-invalid @enderror" name="overview">
+                                            {{ old('overview') }}</textarea>
+                                        @error('overview')
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
                                         <label>whats's Included<span class="text-danger">*</span></label>
                                         <textarea id="summernote" class="summernote @error('whats_included') is-invalid @enderror" name="whats_included">

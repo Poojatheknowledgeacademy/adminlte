@@ -16,7 +16,7 @@ class PermissionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:list|permission-insert|permission-update|permission-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:permission-list|permission-insert|permission-update|permission-delete', ['only' => ['index', 'store']]);
         $this->middleware('permission:permission-insert', ['only' => ['insert', 'store']]);
         $this->middleware('permission:permission-update', ['only' => ['update', 'update']]);
         $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
@@ -49,12 +49,22 @@ class PermissionController extends Controller
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
         $module = Module::find($request->module_id);
+        $name = strtolower($module->name) . "-" . $request->access;
 
+        $haspermission = Permission::query()
+            ->where('name', $name)
+            ->where('module_id', $request->input('module_id'))
+            ->exists();
 
+        if ($haspermission) {
+            return back()->withErrors([
+                'access' => 'Access already exits.'
+            ]);
+        }
 
         Permission::create([
             'module_id' => $request->module_id,
-            'name' => strtolower($module->name)."-".$request->name,
+            'name' => $name,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,
@@ -78,7 +88,7 @@ class PermissionController extends Controller
     public function edit(Permission $permission): View
     {
         $modules = Module::where('is_active', 1)->get();
-        return view('permission.edit', compact('permission','modules'));
+        return view('permission.edit', compact('permission', 'modules'));
     }
 
     /**
@@ -89,9 +99,23 @@ class PermissionController extends Controller
 
         $is_active = $request->has('is_active') ? 1 : 0;
         $module = Module::find($request->module_id);
+        $name = strtolower($module->name) . "-" . $request->access;
+
+        $haspermission = Permission::query()
+            ->where('name', $name)
+            ->where('module_id', $request->input('module_id'))
+            ->where('id', '!=', $permission->id)
+            ->exists();
+
+        if ($haspermission) {
+            return back()->withErrors([
+                'access' => 'Access already exits.'
+            ]);
+        }
+
         $permission->update([
             'module_id' => $request->module_id,
-            'name' => strtolower($module->name)."-".$request->name,
+            'name' => strtolower($module->name) . "-" . $request->access,
             'guard_name' => 'web',
             'description' => $request->description,
             'is_active' => $is_active,

@@ -24,7 +24,7 @@ class PermissionUpdateRequest extends FormRequest
     {
         return [
             'module_id'=>'required',
-            'name' =>'required',
+            'access' =>'required',
             'description' => 'required',
         ];
     }
