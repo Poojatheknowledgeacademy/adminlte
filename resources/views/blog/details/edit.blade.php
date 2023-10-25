@@ -36,6 +36,21 @@
                                     @csrf
                                     @method('PUT') <!-- Use the PUT method for updating -->
                                     <div class="form-group">
+                                        <label>Blog Name<span class="text-danger">*</span></label>
+                                        <select name="blog_id" id="blog_id"
+                                            class="form-control select2bs4 @error('blog_id') is-invalid @enderror">
+                                            @foreach ($blogs as $blog)
+                                                <option value="{{ $blog->id }}" {{ $blog->id == $blogDetail->blog_id ? 'selected' : '' }}>
+                                                    {{ $blog->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('blog_id')
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
                                         <label for="meta_tittle">Meta Title<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('title') is-invalid @enderror"
                                             id="meta_title" name="title"
@@ -97,7 +112,7 @@
 @push('child-scripts')
     <script>
         $(document).ready(function() {
-            $('#meta_title, #meta_keyword, #meta_description,#summery-text').on('input', function() {
+            $('#meta_title, #meta_keyword, #meta_description,#summery-text,#blog_id').on('input', function() {
                 removeErrorMessages($(this));
             });
             function removeErrorMessages(inputField) {

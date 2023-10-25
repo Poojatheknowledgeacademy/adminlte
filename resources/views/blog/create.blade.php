@@ -219,23 +219,15 @@
                 resetSummernoteBorder();
             });
 
-            function removeErrorMessages(inputField) {
-                var parent = inputField.closest(".form-group");
-                var errorElement = parent.find(".error");
-                errorElement.remove();
-
-                inputField.removeClass("is-invalid");
-            }
-
             function resetSummernoteBorder() {
                 $("#summernote").removeClass("is-invalid");
                 $("#summernote").next(".note-editor").css("border-color", "");
             }
-            $("#blog_category").on("input", function() {
+            $("#blog_tittle").on("input", function() {
                 removeErrorMessages($(this));
                 convertToSlug();
             });
-            var categorySelect = $("#blog_category");
+            var blogtitle = $("#blog_tittle");
             var slugField = $("#blog_slug");
 
             function removeErrorMessages(inputField) {
@@ -245,7 +237,7 @@
                 inputField.removeClass('is-invalid');
             }
 
-            categorySelect.on('change', function() {
+            blogtitle.on('change', function() {
                 convertToSlug();
                 removeErrorMessages(slugField);
             });
@@ -253,10 +245,8 @@
             slugField.on('input', function() {
                 removeErrorMessages(slugField);
             });
-
-
             function convertToSlug() {
-                var category_name = $("#blog_category option:selected").text();
+                var category_name = $("#blog_tittle ").val();
                 var str = category_name;
 
                 str = str

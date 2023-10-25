@@ -39,7 +39,6 @@
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Blog Detils</th>
-                                                <th scope="col">Date</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Action</th>
@@ -111,10 +110,6 @@
                                                                 '" class="fas fa-list text-primary"></a>';
                                                             return action;
                                                         }
-                                                    },
-                                                    {
-                                                        data: 'added_date',
-                                                        name: 'added_date'
                                                     },
                                                     {
                                                         data: 'creator.name',

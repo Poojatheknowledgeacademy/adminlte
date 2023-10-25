@@ -22,6 +22,7 @@ class UpdateBlogdetailRequest extends FormRequest
     public function rules()
     {
         return [
+            'blog_id'=>'required',
             'keywords'=>'required',
             'title'=>'required|string|min:3|max:100',
             'description'=>'required|string|min:5|max:200',
