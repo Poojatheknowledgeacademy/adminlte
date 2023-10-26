@@ -74,12 +74,10 @@
                                                         data: 'is_popular',
                                                         name: 'is_popular',
                                                         render: function(data, type, full, meta) {
-                                                            if (data === 1) {
-                                                                return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +
-                                                                    0 + '" data-val="' + full.id + '"></i>';
+                                                            if (data) {
+                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
                                                             } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
-                                                                    1 + '" data-val="' + full.id + '"></i>';
+                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                             }
                                                         }
                                                     },
