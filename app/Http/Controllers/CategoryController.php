@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -14,10 +15,10 @@ class CategoryController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:category-list|category-insert|category-update|category-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:category-insert', ['only' => ['insert','store']]);
-         $this->middleware('permission:category-update', ['only' => ['update','update']]);
-         $this->middleware('permission:category-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:category-list|category-insert|category-update|category-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:category-insert', ['only' => ['insert', 'store']]);
+        $this->middleware('permission:category-update', ['only' => ['update', 'update']]);
+        $this->middleware('permission:category-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -105,7 +106,7 @@ class CategoryController extends Controller
     public function edit(Category $category): View
     {
         $slug = $category->slugs()->first();
-        return view('category.edit', compact('category','slug'));
+        return view('category.edit', compact('category', 'slug'));
     }
 
     /**
@@ -161,7 +162,7 @@ class CategoryController extends Controller
             'is_technical' => $is_technical
         ]);
 
-        $category->slugs()->update(['slug'=>$request->slug]);
+        $category->slugs()->update(['slug' => $request->slug]);
 
         session()->flash('success', 'Category updated successfully.');
         return redirect()->route('category.index');
@@ -176,15 +177,22 @@ class CategoryController extends Controller
         session()->flash('danger', 'Category Deleted successfully.');
         return redirect()->route('category.index');
     }
-    public function categoryStatus(Request $request){
+    public function categoryStatus(Request $request)
+    {
         $category = Category::find($request->id);
         $category->is_active = $request->is_active;
         $category->save();
-        if($request->is_active==1){
-           return response()->json(['success' => 'Category Activated']);
-        }else{
+        if ($request->is_active == 1) {
+            return response()->json(['success' => 'Category Activated']);
+        } else {
             return response()->json(['success' => 'Category Deactivated']);
         }
-
+    }
+    public function getActiveCategories()
+    {
+        //$activeCategories = Category::where('is_active', 1)->get();
+        $query = Category::where('is_active', 1)->with('creator');
+        return Datatables::eloquent($query)->make(true);
+        //return response()->json($activeCategories);
     }
 }

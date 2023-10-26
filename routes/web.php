@@ -62,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changefaqStatus',         [FaqController::class, 'faqStatus']);
     Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
     Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
+
+    Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
 });
 
 Route::get('/country',             [CountryController::class, 'country']);

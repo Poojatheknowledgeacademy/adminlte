@@ -25,10 +25,18 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Category list</h3>
-                                <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
-                                        href="{{ route('category.create') }}"> Create New category</a>
-                                    <i class="fas fa-toggle-on text-primary">Active</i>
+                                <div class="float-right">
+                                    <a class="btn btn-block btn-sm btn-success mb-2"
+                                        href="{{ route('category.create') }}">Create New Category</a>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                        </div>
+                                        <div class="text-center mt-1">Active</div>
+                                    </div>
                                 </div>
+
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -54,86 +62,83 @@
 
                                 @push('child-scripts')
                                     <script>
-                                        $(function() {
-                                            $('#table').DataTable({
-                                                processing: true,
-                                                serverSide: true,
-                                                ajax: '{{ route('category.index') }}',
-                                                columns: [{
-                                                        data: 'id',
-                                                        name: 'id'
-                                                    },
-                                                    {
-                                                        data: 'name',
-                                                        name: 'name'
-                                                    },
-                                                    {
-                                                        data: 'icon',
-                                                        name: 'icon',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return '<i class="fas fa-check text-primary"></i>';
-                                                            } else {
-                                                                return '<i class="fas fa-times text-secondary"></i>';
-                                                            }
-                                                        }
-                                                    }, {
-                                                        data: 'logo',
-                                                        name: 'logo',
-                                                        render: function(data, type, full, meta) {
-                                                            console.log(data);
-                                                            if (data) {
-                                                                return '<i class="fas fa-check text-primary"></i>';
-                                                            } else {
-                                                                return '<i class="fas fa-times text-secondary"></i>';
-                                                            }
-                                                        }
-                                                    }, {
-                                                        data: 'is_active',
-                                                        name: 'is_active',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +
-                                                                    0 + '" data-val="' + full.id + '"></i>';
-                                                            } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
-                                                                    1 + '" data-val="' + full.id + '"></i>';
-                                                            }
-                                                        }
-                                                    },
-                                                    {
-                                                        data: 'is_popular',
-                                                        name: 'is_popular',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
-                                                            } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
-                                                            }
-                                                        }
-                                                    }, {
-                                                        data: 'is_technical',
-                                                        name: 'is_technical',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return '<i class="fas fa-toggle-on text-primary"></i>';
-                                                            } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary"></i>';
-                                                            }
-                                                        }
-                                                    }, {
-                                                        data: 'created_at',
-                                                        name: 'created_at',
-                                                        render: function(data, type, full, meta) {
-                                                            if (data) {
-                                                                return moment(data).format('DD MMM YYYY [at] HH:mm:ss [GMT]');
-                                                            }
-                                                            return '';
-                                                        }
-                                                    }, {
-                                                        data: 'creator.name',
-                                                        name: 'creator.name'
-                                                    }, {
+                                        var columnStructure = [{
+                                                data: 'id',
+                                                name: 'id'
+                                            },
+                                            {
+                                                data: 'name',
+                                                name: 'name'
+                                            },
+                                            {
+                                                data: 'icon',
+                                                name: 'icon',
+                                                render: function(data, type, full, meta) {
+                                                    if (data) {
+                                                        return '<i class="fas fa-check text-primary"></i>';
+                                                    } else {
+                                                        return '<i class="fas fa-times text-secondary"></i>';
+                                                    }
+                                                }
+                                            }, {
+                                                data: 'logo',
+                                                name: 'logo',
+                                                render: function(data, type, full, meta) {
+                                                    console.log(data);
+                                                    if (data) {
+                                                        return '<i class="fas fa-check text-primary"></i>';
+                                                    } else {
+                                                        return '<i class="fas fa-times text-secondary"></i>';
+                                                    }
+                                                }
+                                            }, {
+                                                data: 'is_active',
+                                                name: 'is_active',
+                                                render: function(data, type, full, meta) {
+                                                    if (data) {
+                                                        return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +
+                                                            0 + '" data-val="' + full.id + '"></i>';
+                                                    } else {
+                                                        return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
+                                                            1 + '" data-val="' + full.id + '"></i>';
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                data: 'is_popular',
+                                                name: 'is_popular',
+                                                render: function(data, type, full, meta) {
+                                                    if (data) {
+                                                        return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                    } else {
+                                                        return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                    }
+                                                }
+                                            }, {
+                                                data: 'is_technical',
+                                                name: 'is_technical',
+                                                render: function(data, type, full, meta) {
+                                                    if (data) {
+                                                        return '<i class="fas fa-toggle-on text-primary"></i>';
+                                                    } else {
+                                                        return '<i class="fas fa-toggle-on text-secondary"></i>';
+                                                    }
+                                                }
+                                            }, {
+                                                data: 'created_at',
+                                                name: 'created_at',
+                                                render: function(data, type, full, meta) {
+                                                    if (data) {
+                                                        return moment(data).format('DD MMM YYYY [at] HH:mm:ss [GMT]');
+                                                    }
+                                                    return '';
+                                                }
+                                            },
+                                            {
+                                                data: 'creator.name',
+                                                name: 'creator.name'
+                                            },
+                                            {
                                                         data: 'id',
                                                         name: 'actions',
                                                         orderable: false,
@@ -152,24 +157,23 @@
 
                                                             if (@json($isAdmin)) {
                                                                 action += '<a href="#" class="delete-link" ' +
-                                                                    '   onclick="event.preventDefault(); document.getElementById(\'' +
+                                                                    'onclick="event.preventDefault(); document.getElementById(\'' +
                                                                     deleteFormId + '\').submit();">' +
-                                                                    '   <i class="fas fa-trash text-danger"></i>' +
-                                                                    '</a>'
-                                                                '<form id="' + deleteFormId + '" ' +
-                                                                    '   action="' + deleteUrl +
+                                                                    '<i class="fas fa-trash text-danger"></i>' +
+                                                                    '</a>' +
+                                                                    '<form id="' + deleteFormId + '" ' +
+                                                                    'action="' + deleteUrl +
                                                                     '" method="POST" style="display: none;">' +
-                                                                    '   @csrf' +
-                                                                    '   @method('DELETE')' +
-                                                                    '</form';
-
+                                                                    '@csrf' +
+                                                                    '@method('DELETE')' +
+                                                                    '</form>';
                                                             }
                                                             return action;
                                                         }
                                                     },
-                                                ]
-                                            });
-                                        });
+                                        ]
+                                        loadAllData();
+
                                     </script>
                                 @endpush
                             </div>
@@ -182,6 +186,23 @@
 @endsection
 @push('child-scripts')
     <script>
+        function loadAllData() {
+            $('#table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('category.index') }}',
+                columns: columnStructure
+            });
+        }
+
+        function loadActiveData() {
+            $('#table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('getActiveCategories') }}',
+                columns: columnStructure
+            });
+        }
         $(document).ready(function() {
             $('#table').on('click', '.is_active', function() {
                 var activestatus = $(this).data('activestatus');
@@ -206,11 +227,20 @@
                             $toggle.data('activestatus', 1);
                             $('#danger-message').text(data.success).show();
                             $('#success-message').text(data.success).hide();
-
                         }
                     }
                 });
             });
+            $('#customSwitch1').on('change', function() {
+                var isChecked = $(this).prop('checked');
+                $('#table').DataTable().destroy();
+                if (isChecked) {
+                    loadActiveData();
+                } else {
+                    loadAllData();
+                }
+            });
+            loadAllData();
         });
     </script>
 @endpush
