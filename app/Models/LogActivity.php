@@ -9,7 +9,7 @@ class LogActivity extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'subject', 'url', 'method', 'ip', 'agent', 'user_id'
+        'subject', 'url', 'method', 'ip', 'agent', 'user_id','module','module_ref_id'
     ];
 
 

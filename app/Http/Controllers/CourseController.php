@@ -64,7 +64,6 @@ class CourseController extends Controller
         }
         $data = $request->validated();
 
-
         $course = Course::create([
             "name" => $request->name,
             "topic_id" => $request->topic_id,
