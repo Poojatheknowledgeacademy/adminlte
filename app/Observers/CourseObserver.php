@@ -14,7 +14,7 @@ class CourseObserver
     public function created(Course $course): void
     {
         $module = "course";
-        LogActivity::addToLog('Course created -' . $course->name, $module, $course->id);
+        LogActivity::addToLog('Created ' . $course->name, $module, $course->id);
     }
 
     /**
@@ -38,13 +38,17 @@ class CourseObserver
         }
 
         if (!empty($changedFields)) {
-            $logMessage = 'Course updated. Changed fields:';
+            $logMessage = 'update ';
             foreach ($changedFields as $field => $values) {
-                $logMessage .= " $field (from: {$values['old']}, to: {$values['new']}) updated.";
+                $logMessage .= "$field From {$values['old']} to {$values['new']} ,";
             }
+            $logMessage = rtrim($logMessage, ',') . '.';
+
+
+
             $module = "course";
             $module_ref_id = $course->id;
-                LogActivity::addToLog($logMessage, $module, $module_ref_id);
+            LogActivity::addToLog(nl2br($logMessage), $module, $module_ref_id);
         }
     }
 

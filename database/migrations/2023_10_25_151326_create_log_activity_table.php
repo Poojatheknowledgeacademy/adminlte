@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('log_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('subject');
-            $table->string('url');
-            $table->string('method');
-            $table->string('ip');
-            $table->string('agent')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->string('module_type');
+            $table->integer('module_id');
+            $table->text('activity');
+            $table->integer('created_by');
             $table->timestamps();
         });
     }
