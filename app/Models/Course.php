@@ -36,4 +36,8 @@ class Course extends Model
     {
         return $this->hasMany(FAQ::class, 'entity_id')->where('entity_type', 'Course');
     }
+    public function logActivities()
+    {
+        return $this->hasMany(LogActivity::class, 'module_ref_id')->where('module', 'course');
+    }
 }

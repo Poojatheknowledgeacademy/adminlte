@@ -9,7 +9,7 @@ use App\Http\Requests\EditcourseRequest;
 use App\Models\Course;
 use App\Models\Topic;
 use App\Helpers\LogActivity;
-
+use App\Models\LogActivity as ModelsLogActivity;
 
 class CourseController extends Controller
 {
@@ -94,6 +94,7 @@ class CourseController extends Controller
         $topics = Topic::whereHas('category', function ($query) {
             $query->where('is_active', 1);
         })->get();
+        //$courseHistory = $course->logActivities->load('user');
         $slug = $course->slugs()->first();
         return view('course.edit', compact('course', 'topics', 'slug'));
     }
