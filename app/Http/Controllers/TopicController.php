@@ -23,11 +23,6 @@ class TopicController extends Controller
         $this->middleware('permission:topic-update', ['only' => ['update', 'update']]);
         $this->middleware('permission:topic-delete', ['only' => ['destroy']]);
     }
-    public function myTestAddToLog()
-    {
-        LogActivity::addToLog('My Testing Add To Log.');
-        dd('log insert successfully.');
-    }
     /**
      * Display a listing of the resource.
      */
@@ -95,9 +90,15 @@ class TopicController extends Controller
 
     public function edit(Topic $topic): View
     {
+        $log = LogActivity::where('module', 'topic')
+        ->where('module_ref_id', $topic->id)
+        ->get();
+       // $log = LogActivity::where('module','topic')->get();
+        // print_r($log);
+        // die;
         $categories = Category::where('is_active', 1)->get();
         $slug = $topic->slugs()->first();
-        return view('topic.edit', compact('topic', 'categories', 'slug'));
+        return view('topic.edit', compact('topic', 'categories', 'slug','log'));
     }
     public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse
     {
@@ -146,13 +147,14 @@ class TopicController extends Controller
         session()->flash('danger', 'Topic Deleted successfully.');
         return redirect()->route('topic.index');
     }
-    public function updateStatus(Request $request){
+    public function updateStatus(Request $request)
+    {
         $topic = Topic::find($request->id);
         $topic->is_active = $request->is_active;
         $topic->save();
-        if($request->is_active==1){
+        if ($request->is_active == 1) {
             return response()->json(['success' => 'Topic Activated']);
-        }else{
+        } else {
             return response()->json(['success' => 'Topic Deactivated']);
         }
     }

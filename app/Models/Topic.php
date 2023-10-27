@@ -41,7 +41,7 @@ class Topic extends Model
 
     public function slugs()
     {
-        return $this->morphMany(Slug::class, 'entity');
+        return $this->morphOne(Slug::class, 'entity');
     }
 
     public function category()
@@ -53,5 +53,6 @@ class Topic extends Model
     {
         return $this->hasMany(FAQ::class, 'entity_id')->where('entity_type', 'Topic');
     }
+
 
 }
