@@ -7,12 +7,14 @@ use App\Helpers\LogActivity;
 
 class CourseObserver
 {
+
     /**
      * Handle the Course "created" event.
      */
     public function created(Course $course): void
     {
-       LogActivity::addToLog('Course created -'.$course->name);
+        $module = "course";
+        LogActivity::addToLog('Course created -' . $course->name, $module, $course->id);
     }
 
     /**
@@ -24,6 +26,9 @@ class CourseObserver
         $changedFields = [];
         foreach ($originalAttributes as $attribute => $originalValue) {
             $currentValue = $course->$attribute;
+            if ($attribute === 'updated_at' && $originalValue != $currentValue) {
+                continue;
+            }
             if ($originalValue != $currentValue) {
                 $changedFields[$attribute] = [
                     'old' => $originalValue,
@@ -37,7 +42,9 @@ class CourseObserver
             foreach ($changedFields as $field => $values) {
                 $logMessage .= " $field (from: {$values['old']}, to: {$values['new']}) updated.";
             }
-            LogActivity::addToLog($logMessage);
+            $module = "course";
+            $module_ref_id = $course->id;
+                LogActivity::addToLog($logMessage, $module, $module_ref_id);
         }
     }
 
