@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\RoleObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model
-
 {
     use HasFactory;
     use SoftDeletes;
@@ -18,6 +18,11 @@ class Role extends Model
         'is_active',
         'created_by',
     ];
+    public static function boot()
+    {
+        parent::boot();
+        Role::observe(RoleObserver::class);
+    }
 
     public function creator()
     {
@@ -26,5 +31,9 @@ class Role extends Model
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
+    }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
     }
 }

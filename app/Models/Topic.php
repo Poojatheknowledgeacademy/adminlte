@@ -52,6 +52,9 @@ class Topic extends Model
     {
         return $this->morphMany(Faq::class, 'entity');
     }
-
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 
 }

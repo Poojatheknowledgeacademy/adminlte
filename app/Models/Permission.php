@@ -24,6 +24,8 @@ class Permission extends Model
     {
         return $this->belongsTo(Module::class);
     }
-
-
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 }

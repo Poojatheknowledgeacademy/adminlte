@@ -48,4 +48,8 @@ class Topicdetail extends Model
     {
         return $this->belongsTo(Country::class);
     }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 }

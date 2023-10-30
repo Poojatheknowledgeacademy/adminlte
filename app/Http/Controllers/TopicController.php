@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faq;
-use App\Models\Slug;
 use App\Models\Topic;
 use App\Models\Category;
 use Illuminate\View\View;
-use App\Models\LogActivity;
 use Illuminate\Http\Request;
 use App\Http\Requests\TopicRequest;
 use Illuminate\Http\RedirectResponse;
@@ -41,7 +38,6 @@ class TopicController extends Controller
     public function create()
     {
         $categories = Category::where('is_active', 1)->get();
-
         return view('topic.create', ['categories' => $categories]);
     }
 
@@ -50,29 +46,21 @@ class TopicController extends Controller
      */
     public function store(TopicRequest $request): RedirectResponse
     {
-
         if ($request->file('logo')) {
-
             $logo = $request->file('logo');
             $logo_name = time() . '_' . $logo->getClientOriginalName();
-
-            // File upload location
             $logo_location = 'Images/logo/';
-
-            // Upload file
             $logo->move($logo_location, $logo_name);
         }
 
         $category_id = $request->category_id;
-
         $is_active = $request->is_active == "on" ? 1 : 0;
 
         $topic = Topic::create([
             'name' => $request->name,
             'category_id' => $category_id,
             'logo' => $logo_location . $logo_name,
-            'is_active' => $is_active,
-
+            'is_active' => $is_active
         ]);
 
         $topic->slugs()->create([
@@ -90,27 +78,19 @@ class TopicController extends Controller
 
     public function edit(Topic $topic): View
     {
-        $log = LogActivity::where('module', 'topic')
-        ->where('module_ref_id', $topic->id)
-        ->get();
-       // $log = LogActivity::where('module','topic')->get();
-        // print_r($log);
-        // die;
         $categories = Category::where('is_active', 1)->get();
         $slug = $topic->slugs()->first();
-        return view('topic.edit', compact('topic', 'categories', 'slug','log'));
+        return view('topic.edit', compact('topic', 'categories', 'slug'));
     }
     public function update(TopicUpdateRequest $request, Topic $topic): RedirectResponse
     {
         if ($request->hasFile('logo')) {
             $logo_location = 'Images/logo/';
 
-            // Remove old file
             if (!empty($topic->logo)) {
                 unlink(public_path($topic->logo));
             }
 
-            // Upload new file
             $logo = $request->file('logo');
             $logo_name = time() . '_' . $logo->getClientOriginalName();
             $logo->move($logo_location, $logo_name);

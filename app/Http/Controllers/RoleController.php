@@ -45,11 +45,18 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
-        $role = Role::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'is_active' => $is_active
-        ]);
+        // $role = Role::create([
+        //     'name' => $request->name,
+        //     'description' => $request->description,
+        //     'is_active' => $is_active
+        // ]);
+        $role = new Role();
+        $role->name = $request->name;
+        $role->description = $request->description;
+        $role->is_active = $is_active;
+        $role->save();
+       // dd($role);
+
         if ($request->permissions) {
             $selectedPermissions = $request->input('permissions', []);
             $role->syncPermissions($selectedPermissions);
@@ -72,7 +79,7 @@ class RoleController extends Controller
     {
 
         $modulesWithPermissions = Module::where('is_active', 1)->with('permissions')->get();
-        return view('roles.edit', compact('role','modulesWithPermissions'));
+        return view('roles.edit', compact('role', 'modulesWithPermissions'));
     }
     /**
      * Update the specified resource in storage.
@@ -100,13 +107,14 @@ class RoleController extends Controller
         session()->flash('danger', 'Role Deleted successfully.');
         return redirect()->route('roles.index');
     }
-    public function roleStatus(Request $request){
+    public function roleStatus(Request $request)
+    {
         $role = Role::find($request->id);
         $role->is_active = $request->is_active;
         $role->save();
-        if($request->is_active==1){
+        if ($request->is_active == 1) {
             return response()->json(['success' => 'Role Activated']);
-        }else{
+        } else {
             return response()->json(['success' => 'Role Deactivated']);
         }
     }

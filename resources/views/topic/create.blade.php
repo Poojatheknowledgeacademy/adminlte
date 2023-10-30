@@ -45,7 +45,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="topic_slug">slug<span class="text-danger">*</label>
+                                        <label for="topic_slug">Slug<span class="text-danger">*</label>
                                         <input type="text" class="form-control @error('slug') is-invalid @enderror"
                                             id="topic_slug" name="slug" placeholder="Enter slug">
                                         @error('slug')
@@ -54,24 +54,12 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label>Category<span class="text-danger">*</span></label>
-                                        <select id="blog_category" name="category_id"
-                                            class="form-control select2bs4 @error('category_id') is-invalid @enderror">
-                                            <option value="">Select a category</option>
-                                            @foreach ($category as $categories)
-                                                <option value="{{ $categories->id }}">{{ $categories->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('category_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div> --}}
+
                                     <div class="form-group">
                                         <label for="category_id">Category Name<span class="text-danger">*</label>
                                         <select class="form-control select2bs4 @error('category_id') is-invalid @enderror"
                                             id="category_name" name="category_id">
-                                            <option value="">Select a category</option> <!-- Default empty option -->
+                                            <option value="">Select a category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
@@ -85,7 +73,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputFile">logo<span class="text-danger">*</label>
+                                        <label for="exampleInputFile">Logo<span class="text-danger">*</label>
                                         <div class="input-group">
                                             <input type="file" class="form-control @error('logo') is-invalid @enderror"
                                                 id="logo" name="logo">
