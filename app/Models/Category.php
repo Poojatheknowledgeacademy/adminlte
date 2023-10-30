@@ -47,4 +47,13 @@ class Category extends Model
     {
         return $this->hasMany(Topic::class, 'category_id');
     }
+    public function faqs()
+    {
+        return $this->hasMany(FAQ::class, 'entity_id')->where('entity_type', 'Course');
+    }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
+
 }

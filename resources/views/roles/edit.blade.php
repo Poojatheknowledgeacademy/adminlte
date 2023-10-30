@@ -22,7 +22,39 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Activity</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- The time line -->
+                                <div class="timeline">
+                                    <!-- timeline time label -->
+                                    @foreach ($role->logActivities as $activity)
+                                        <div class="time-label">
+                                            <span class="bg-red">{{ $activity->created_at }}</span>
+                                        </div>
+
+                                        <div>
+                                            <i class="fas fa-solid fa-pen bg-blue"></i>
+                                            <div class="timeline-item">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">{{ $activity->creator->name }}</h3>
+                                                </div>
+                                                <h3 class="timeline-header no-border"> {{ $activity->activity }} </a></h3>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                    <div>
+                                        <i class="fas fa-clock bg-gray"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Edit Role</h3>
@@ -49,18 +81,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                     {{-- <div class="form-group">
-                                        <label>Permission<span class="text-danger">*</span></label>
-                                        <select class="form-control select2 @error('tags') is-invalid @enderror" name="permission[]"
-                                            multiple="multiple" style="width: 100%;" >
-                                            @foreach ($permission as $value)
-                                                <option value="{{ $value->id }}" {{in_array($value->id, $rolePermissions) ? 'selected' : ''}}>{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('permission')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div> --}}
+
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" name="is_active"

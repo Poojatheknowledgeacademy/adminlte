@@ -20,4 +20,8 @@ class Module extends Model
     {
         return $this->hasMany(Permission::class, 'module_id');
     }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 }

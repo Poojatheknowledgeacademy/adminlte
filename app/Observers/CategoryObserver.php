@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Category;
 use App\Helpers\LogActivity;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryObserver
 {
@@ -12,7 +13,10 @@ class CategoryObserver
      */
     public function created(Category $category): void
     {
-        LogActivity::addToLog('Category created - ' . $category->name);
+        $category->logActivities()->create([
+            'activity' => $category->name . ' created',
+            'created_by' => Auth::user()->id,
+        ]);
     }
 
     /**
@@ -20,24 +24,23 @@ class CategoryObserver
      */
     public function updated(Category $category): void
     {
+
         $originalAttributes = $category->getOriginal();
-        $changedFields = [];
+
         foreach ($originalAttributes as $attribute => $originalValue) {
             $currentValue = $category->$attribute;
-            if ($originalValue != $currentValue) {
-                $changedFields[$attribute] = [
-                    'old' => $originalValue,
-                    'new' => $currentValue,
-                ];
-            }
-        }
 
-        if (!empty($changedFields)) {
-            $logMessage = 'Category updated. Changed fields:';
-            foreach ($changedFields as $field => $values) {
-                $logMessage .= " $field (from: {$values['old']}, to: {$values['new']}) updated.";
+            if ($attribute === 'updated_at' && $originalValue != $currentValue) {
+                continue;
             }
-            LogActivity::addToLog($logMessage);
+
+            if ($attribute == 'name' && $originalValue != $currentValue) {
+                $category->logActivities()->create([
+                    'activity' => "Category Name updated from {$originalValue} to {$currentValue}",
+                    'created_by' => Auth::user()->id,
+                ]);
+            }
+            // Add more conditionals for other attributes as needed
         }
     }
 
@@ -46,7 +49,7 @@ class CategoryObserver
      */
     public function deleted(Category $category): void
     {
-        LogActivity::addToLog('Category deleted - ' . $category->name);
+        // You can add log entries for deletions here if needed.
     }
 
     /**
@@ -54,7 +57,7 @@ class CategoryObserver
      */
     public function restored(Category $category): void
     {
-        LogActivity::addToLog('Category restored - ' . $category->name);
+        // You can add log entries for restorations here if needed.
     }
 
     /**
@@ -62,6 +65,6 @@ class CategoryObserver
      */
     public function forceDeleted(Category $category): void
     {
-        LogActivity::addToLog('Category force deleted - ' . $category->name);
+        // You can add log entries for force deletions here if needed.
     }
 }
