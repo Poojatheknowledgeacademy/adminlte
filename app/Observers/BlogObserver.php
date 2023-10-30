@@ -1,21 +1,24 @@
 <?php
 
 namespace App\Observers;
+
 use App\Models\Blog;
 use App\Helpers\LogActivity;
 
 class BlogObserver
 {
+
     /**
-     * Handle the Course "created" event.
+     * Handle the Blog "created" event.
      */
     public function created(Blog $blog): void
     {
-       LogActivity::addToLog('Blog created -'.$blog->title);
+        $module = "blog";
+        LogActivity::addToLog('Created ' . $blog->title, $module, $blog->id);
     }
 
     /**
-     * Handle the Course "updated" event.
+     * Handle the Blog "updated" event.
      */
     public function updated(Blog $blog): void
     {
@@ -23,6 +26,9 @@ class BlogObserver
         $changedFields = [];
         foreach ($originalAttributes as $attribute => $originalValue) {
             $currentValue = $blog->$attribute;
+            if ($attribute === 'updated_at' && $originalValue != $currentValue) {
+                continue;
+            }
             if ($originalValue != $currentValue) {
                 $changedFields[$attribute] = [
                     'old' => $originalValue,
@@ -32,36 +38,39 @@ class BlogObserver
         }
 
         if (!empty($changedFields)) {
-            $logMessage = 'Blog updated. Changed fields:';
+            $logMessage = 'update ';
             foreach ($changedFields as $field => $values) {
-                $logMessage .= " $field (from: {$values['old']}, to: {$values['new']}) updated.";
+                $logMessage .= "$field From {$values['old']} to {$values['new']} ,";
             }
-            LogActivity::addToLog($logMessage);
+            $logMessage = rtrim($logMessage, ',') . '.';
+
+            $module = "blog";
+            $module_ref_id = $blog->id;
+            LogActivity::addToLog(nl2br($logMessage), $module, $module_ref_id);
         }
     }
 
     /**
-     * Handle the Course "deleted" event.
+     * Handle the Blog "deleted" event.
      */
-    public function deleted(Blog $course): void
+    public function deleted(Blog $blog): void
     {
-        //
+        // You can add log entries for deletions here if needed.
     }
 
     /**
-     * Handle the Course "restored" event.
+     * Handle the Blog "restored" event.
      */
-    public function restored(Blog $course): void
+    public function restored(Blog $blog): void
     {
-        //
+        // You can add log entries for restorations here if needed.
     }
 
     /**
-     * Handle the Course "force deleted" event.
+     * Handle the Blog "force deleted" event.
      */
-    public function forceDeleted(Blog $course): void
+    public function forceDeleted(Blog $blog): void
     {
-        //
+        // You can add log entries for force deletions here if needed.
     }
-
 }

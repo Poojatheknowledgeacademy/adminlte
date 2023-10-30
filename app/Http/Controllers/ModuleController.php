@@ -102,6 +102,6 @@ class ModuleController extends Controller
            return response()->json(['success' => 'Module Activated']);
         } else {
             return response()->json(['success' => 'Module Activated']);
-        }
+    }
     }
 }

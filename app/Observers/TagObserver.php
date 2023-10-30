@@ -11,6 +11,7 @@ class TagObserver
      */
     public function created(Tag $tag): void
     {
+
         $tag->logActivities()->create([
             'activity' => 'Tag '.$tag->name.' created'
         ]);
