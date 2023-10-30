@@ -10,12 +10,15 @@ class LogActivity extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'subject', 'url', 'method', 'ip', 'agent', 'user_id','module','module_ref_id'
+        'module_type', 'module_id', 'activity', 'created_by'
     ];
     public function creator()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'created_by');
     }
-
+    public function module()
+    {
+        return $this->morphTo();
+    }
 
 }

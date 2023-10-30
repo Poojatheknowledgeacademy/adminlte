@@ -94,9 +94,7 @@ class CourseController extends Controller
         $topics = Topic::whereHas('category', function ($query) {
             $query->where('is_active', 1);
         })->get();
-        //$courseHistory = $course->logActivities->load('user');
-        $slug = $course->slugs()->first();
-        return view('course.edit', compact('course', 'topics', 'slug'));
+        return view('course.edit', compact('course', 'topics'));
     }
     /**
      * Update the specified resource in storage.

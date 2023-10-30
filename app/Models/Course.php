@@ -30,7 +30,7 @@ class Course extends Model
     }
     public function slugs()
     {
-        return $this->morphMany(Slug::class, 'entity');
+        return $this->morphOne(Slug::class, 'entity');
     }
     public function faqs()
     {
@@ -38,6 +38,7 @@ class Course extends Model
     }
     public function logActivities()
     {
-        return $this->hasMany(LogActivity::class, 'module_ref_id')->where('module', 'course');
+        return $this->morphMany(LogActivity::class, 'module');
     }
+
 }

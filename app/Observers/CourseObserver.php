@@ -4,6 +4,8 @@ namespace App\Observers;
 
 use App\Models\Course;
 use App\Helpers\LogActivity;
+use App\Models\Topic;
+use Illuminate\Support\Facades\Auth;
 
 class CourseObserver
 {
@@ -13,8 +15,10 @@ class CourseObserver
      */
     public function created(Course $course): void
     {
-        $module = "course";
-        LogActivity::addToLog('Created ' . $course->name, $module, $course->id);
+        $course->logActivities()->create([
+            'activity' => $course->name.' created',
+            'created_by'=>Auth::user()->id
+        ]);
     }
 
     /**
@@ -23,32 +27,38 @@ class CourseObserver
     public function updated(Course $course): void
     {
         $originalAttributes = $course->getOriginal();
-        $changedFields = [];
+
         foreach ($originalAttributes as $attribute => $originalValue) {
             $currentValue = $course->$attribute;
             if ($attribute === 'updated_at' && $originalValue != $currentValue) {
                 continue;
             }
-            if ($originalValue != $currentValue) {
-                $changedFields[$attribute] = [
-                    'old' => $originalValue,
-                    'new' => $currentValue,
-                ];
+            if ($attribute == 'name' && $originalValue != $currentValue) {
+                $course->logActivities()->create([
+                    'activity' =>"Course Name updated from {$originalValue} to {$currentValue}",
+                    'created_by'=>Auth::user()->id
+                ]);
             }
-        }
-
-        if (!empty($changedFields)) {
-            $logMessage = 'update ';
-            foreach ($changedFields as $field => $values) {
-                $logMessage .= "$field From {$values['old']} to {$values['new']} ,";
+            if ($attribute == 'topic_id' && $originalValue != $currentValue) {
+                $oldTopicName = Topic::find($originalValue)->name;
+                $newTopicName = Topic::find($currentValue)->name;
+                $course->logActivities()->create([
+                    'activity' =>"Topic updated from {$oldTopicName} to {$newTopicName}",
+                    'created_by'=>Auth::user()->id
+                ]);
             }
-            $logMessage = rtrim($logMessage, ',') . '.';
-
-
-
-            $module = "course";
-            $module_ref_id = $course->id;
-            LogActivity::addToLog(nl2br($logMessage), $module, $module_ref_id);
+            if ($attribute == 'logo' && $originalValue != $currentValue) {
+                $course->logActivities()->create([
+                    'activity' =>"Course Logo Updated",
+                    'created_by'=>Auth::user()->id
+                ]);
+            }
+            if ($attribute == 'is_active' && $originalValue != $currentValue) {
+                $course->logActivities()->create([
+                    'activity' =>  "Activity Updated",
+                    'created_by'=>Auth::user()->id
+                ]);
+            }
         }
     }
 

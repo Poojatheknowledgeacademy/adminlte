@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('log_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('module_type');
-            $table->integer('module_id');
+            $table->morphs('module');
             $table->text('activity');
             $table->integer('created_by');
             $table->timestamps();

@@ -17,34 +17,40 @@
         </div>
         <!-- /.container-fluid -->
     </section>
-    {{-- @php
-        echo '<pre>';
-        print_r($course->logActivities);
-    @endphp --}}
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <!-- The time line -->
-                    <div class="timeline">
-                        <!-- timeline time label -->
-                        @foreach ($course->logActivities as $activity)
-                        <div class="time-label">
-                            <span class="bg-green">{{ $activity->created_at->format('m/d/Y')}}</span>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Activity</h3>
                         </div>
-                        <!-- timeline item -->
-                        <div>
-                            <i class="fas fa-edit bg-blue"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fas fa-clock"></i>  {{ $activity->created_at->format('H:i:s') }}</span>
-                                    <h3 class="timeline-header no-border"><a href="#">{{$activity->creator->name}}</a> {{ $activity->subject }}</h3>
+                        <div class="card-body">
+                            <!-- The time line -->
+                            <div class="timeline">
+                                <!-- timeline time label -->
+                                @foreach ($course->logActivities as $activity)
+                                    <div class="time-label">
+                                        <span class="bg-red">{{ $activity->created_at }}</span>
+                                    </div>
+
+                                    <div>
+                                        <i class="fas fa-solid fa-pen bg-blue"></i>
+                                        <div class="timeline-item">
+                                            <div class="card-header">
+                                                <h3 class="card-title">{{ $activity->creator->name }}</h3>
+                                            </div>
+                                            <h3 class="timeline-header no-border"> {{ $activity->activity }} </a></h3>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                <div>
+                                    <i class="fas fa-clock bg-gray"></i>
                                 </div>
                             </div>
-                            @endforeach
-
-                        <div>
-                            <i class="fas fa-clock bg-gray"></i>
                         </div>
                     </div>
                 </div>
@@ -73,7 +79,7 @@
                                 <div class="form-group">
                                     <label>Slug<span class="text-danger">*</label>
                                     <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                        name="slug" value="{{ $slug ? $slug->slug : '' }}">
+                                        name="slug" value="{{ $course->slugs->slug ? $course->slugs->slug : '' }}">
                                     @error('slug')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
