@@ -27,8 +27,6 @@ class TagController extends Controller
             $query = Tag::with('creator');
             return Datatables::eloquent($query)->make(true);
         }
-        // $tags = Tag::paginate(5);
-        // return view('tag.list', compact('tags'));
         return view('tag.list');
     }
 

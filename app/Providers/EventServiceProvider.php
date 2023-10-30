@@ -10,9 +10,17 @@ use App\Observers\BlogObserver;
 use App\Observers\TopicObserver;
 use App\Observers\CourseObserver;
 use App\Observers\CategoryObserver;
+use App\Observers\TagObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Models\Tag;
+use App\Models\Coursedetail;
+use App\Observers\CoursedetailObserver;
+use App\Models\Faq;
+use App\Observers\FaqObserver;
+use App\Models\Role;
+use App\Observers\RoleObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -36,6 +44,10 @@ class EventServiceProvider extends ServiceProvider
         Course::observe(CourseObserver::class);
         Blog::observe(BlogObserver::class);
         Category::observe(CategoryObserver::class);
+        Tag::observe(TagObserver::class);
+        Coursedetail::observe(CoursedetailObserver::class);
+        Faq::observe(FaqObserver::class);
+        Role::observe(RoleObserver::class);
     }
 
     /**

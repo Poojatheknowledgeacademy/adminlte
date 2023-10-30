@@ -45,4 +45,8 @@ class Faq extends Model
     {
         return $this->morphTo();
     }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 }

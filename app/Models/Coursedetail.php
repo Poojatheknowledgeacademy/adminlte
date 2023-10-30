@@ -47,4 +47,8 @@ class Coursedetail extends Model
     {
         return $this->belongsTo(Country::class, 'country_id');
     }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 }

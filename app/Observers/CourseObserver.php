@@ -14,7 +14,7 @@ class CourseObserver
     public function created(Course $course): void
     {
         $course->logActivities()->create([
-            'activity' => $course->name.' created'
+            'activity' => 'Course '.$course->name.' created'
         ]);
     }
 
@@ -49,7 +49,7 @@ class CourseObserver
             }
             if ($attribute == 'is_active' && $originalValue != $currentValue) {
                 $course->logActivities()->create([
-                    'activity' =>  "Activity Updated",
+                    'activity' =>  "Course Activity Updated",
                 ]);
             }
         }

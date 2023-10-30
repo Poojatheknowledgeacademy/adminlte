@@ -27,4 +27,8 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 }
