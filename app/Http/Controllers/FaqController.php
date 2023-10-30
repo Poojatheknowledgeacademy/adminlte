@@ -24,10 +24,10 @@ class FaqController extends Controller
 
             if ($segment === 'topic') {
                 $query->where('entity_id', $id);
-                $query->where('entity_type', 'Topic');
+                $query->where('entity_type', 'App\Models\Topic');
             } elseif ($segment === 'course') {
                 $query->where('entity_id', $id);
-                $query->where('entity_type', 'Course');
+                $query->where('entity_type', 'App\Models\Course');
             }
 
             return Datatables::eloquent($query)->make(true);
@@ -54,23 +54,17 @@ class FaqController extends Controller
         $segment = $uriSegments[1];
 
         if ($segment  === 'topic') {
-            $entity_type ="Topic";
             $entity =  Topic::findOrFail($id);
         } elseif ($segment  === 'course') {
-            $entity_type ="Course";
             $entity =  Course::findOrFail($id);
         }
 
         $is_active = $request->is_active == "on" ? 1 : 0;
-        $faq = new FAQ([
-            'entity_type' => $entity_type,
+        $entity->faqs()->create([
             'question' => $request->question,
             'answer' => $request->answer,
             'is_active' => $is_active
         ]);
-        $entity->faqs()->save($faq);
-        $faq->save();
-
 
         if ($segment  === 'topic') {
             return redirect()->route('topic.faqs.index', $id)

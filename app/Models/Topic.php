@@ -48,10 +48,9 @@ class Topic extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
-
     public function faqs()
     {
-        return $this->hasMany(FAQ::class, 'entity_id')->where('entity_type', 'Topic');
+        return $this->morphMany(Faq::class, 'entity');
     }
 
 

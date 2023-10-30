@@ -34,7 +34,7 @@ class Course extends Model
     }
     public function faqs()
     {
-        return $this->hasMany(FAQ::class, 'entity_id')->where('entity_type', 'Course');
+        return $this->morphMany(Faq::class, 'entity');
     }
     public function logActivities()
     {

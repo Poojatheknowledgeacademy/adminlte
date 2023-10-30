@@ -41,4 +41,8 @@ class Faq extends Model
     {
         return $this->belongsTo(Topic::class);
     }
+    public function entity()
+    {
+        return $this->morphTo();
+    }
 }

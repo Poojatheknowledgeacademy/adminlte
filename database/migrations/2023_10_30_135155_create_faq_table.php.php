@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->enum('entity_type', ['Course', 'Topic']);
-            $table->unsignedBigInteger('entity_id');
+            $table->morphs('entity');
             $table->text('question');
             $table->text('answer');
             $table->boolean('is_active')->default(1);
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('faqs');
+        //
     }
 };
