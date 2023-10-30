@@ -28,5 +28,4 @@ class LogActivity extends Model
     {
         return $this->morphTo();
     }
-
 }
