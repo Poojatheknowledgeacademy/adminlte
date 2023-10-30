@@ -3,9 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Course;
-use App\Helpers\LogActivity;
 use App\Models\Topic;
-use Illuminate\Support\Facades\Auth;
 
 class CourseObserver
 {
@@ -16,8 +14,7 @@ class CourseObserver
     public function created(Course $course): void
     {
         $course->logActivities()->create([
-            'activity' => $course->name.' created',
-            'created_by'=>Auth::user()->id
+            'activity' => $course->name.' created'
         ]);
     }
 
@@ -36,7 +33,6 @@ class CourseObserver
             if ($attribute == 'name' && $originalValue != $currentValue) {
                 $course->logActivities()->create([
                     'activity' =>"Course Name updated from {$originalValue} to {$currentValue}",
-                    'created_by'=>Auth::user()->id
                 ]);
             }
             if ($attribute == 'topic_id' && $originalValue != $currentValue) {
@@ -44,19 +40,16 @@ class CourseObserver
                 $newTopicName = Topic::find($currentValue)->name;
                 $course->logActivities()->create([
                     'activity' =>"Topic updated from {$oldTopicName} to {$newTopicName}",
-                    'created_by'=>Auth::user()->id
                 ]);
             }
             if ($attribute == 'logo' && $originalValue != $currentValue) {
                 $course->logActivities()->create([
                     'activity' =>"Course Logo Updated",
-                    'created_by'=>Auth::user()->id
                 ]);
             }
             if ($attribute == 'is_active' && $originalValue != $currentValue) {
                 $course->logActivities()->create([
                     'activity' =>  "Activity Updated",
-                    'created_by'=>Auth::user()->id
                 ]);
             }
         }

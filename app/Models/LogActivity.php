@@ -12,6 +12,14 @@ class LogActivity extends Model
     protected $fillable = [
         'module_type', 'module_id', 'activity', 'created_by'
     ];
+    public static function boot()
+    {
+        parent::boot();
+        // create a event  on saving
+        static::saving(function ($log) {
+                $log->created_by = Auth::user()->id;
+        });
+    }
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
