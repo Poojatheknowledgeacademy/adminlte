@@ -37,9 +37,15 @@ class TagObserver
 
 
             if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $tag->logActivities()->create([
-                    'activity' =>  "Tag Activity Updated",
-                ]);
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $tag->logActivities()->create([
+                        'activity' => 'Tag status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $tag->logActivities()->create([
+                        'activity' => 'Tag status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }

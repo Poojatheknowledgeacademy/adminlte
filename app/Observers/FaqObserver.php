@@ -39,9 +39,15 @@ class FaqObserver
                 ]);
             }
             if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $faq->logActivities()->create([
-                    'activity' =>  "Role Activity Updated",
-                ]);
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $faq->logActivities()->create([
+                        'activity' => 'Faq status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $faq->logActivities()->create([
+                        'activity' => 'Faq status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }
