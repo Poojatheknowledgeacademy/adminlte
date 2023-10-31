@@ -36,10 +36,16 @@ class CategoryObserver
                 ]);
             }
 
-            if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $category->logActivities()->create([
-                    'activity' => "Category Activity Updated",
-                ]);
+            if ($attribute === 'is_active') {
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $category->logActivities()->create([
+                        'activity' => 'Blog status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $category->logActivities()->create([
+                        'activity' => 'Blog status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }

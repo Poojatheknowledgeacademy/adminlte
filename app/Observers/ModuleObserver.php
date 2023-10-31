@@ -36,14 +36,19 @@ class ModuleObserver
                 ]);
             }
 
-            if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $module->logActivities()->create([
-                    'activity' => "Module Activity Updated",
-                ]);
+            if ($attribute === 'is_active') {
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $module->logActivities()->create([
+                        'activity' => 'Blog status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $module->logActivities()->create([
+                        'activity' => 'Blog status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }
-
     /**
      * Handle the Module "deleted" event.
      */
