@@ -41,7 +41,7 @@
                                     <!-- timeline time label -->
                                     @foreach ($faq->logActivities as $activity)
                                         <div class="time-label">
-                                            <span class="bg-red">{{ $activity->created_at }}</span>
+                                            <span class="bg-red">{{ $activity->created_at->format('d-M-Y h:i A')  }}</span>
                                         </div>
 
                                         <div>
