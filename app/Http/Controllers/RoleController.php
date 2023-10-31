@@ -8,8 +8,6 @@ use App\Http\Requests\RoleRequest;
 use App\Http\Requests\RoleUpdateRequest;
 use App\Models\Module;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -45,17 +43,11 @@ class RoleController extends Controller
     public function store(RoleRequest $request)
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
-        // $role = Role::create([
-        //     'name' => $request->name,
-        //     'description' => $request->description,
-        //     'is_active' => $is_active
-        // ]);
-        $role = new Role();
-        $role->name = $request->name;
-        $role->description = $request->description;
-        $role->is_active = $is_active;
-        $role->save();
-       // dd($role);
+        $role = Role::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'is_active' => $is_active
+        ]);
 
         if ($request->permissions) {
             $selectedPermissions = $request->input('permissions', []);
@@ -87,12 +79,9 @@ class RoleController extends Controller
     public function update(RoleUpdateRequest $request, Role $role)
     {
         $is_active = $request->is_active == "on" ? 1 : 0;
-
         $role->update(['name' => $request->name, 'description' => $request->description, 'is_active' => $is_active]);
-
         $selectedPermissions = $request->input('permissions', []);
         $role->syncPermissions($selectedPermissions);
-
         return redirect()->route('roles.index')->with('success', 'Role updated successfully');
         $is_active = $request->is_active == "on" ? 1 : 0;
     }
@@ -103,7 +92,6 @@ class RoleController extends Controller
     {
         $role->delete();
         $role->permissions()->detach();
-
         session()->flash('danger', 'Role Deleted successfully.');
         return redirect()->route('roles.index');
     }
