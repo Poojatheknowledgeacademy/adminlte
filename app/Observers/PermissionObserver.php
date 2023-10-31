@@ -30,7 +30,7 @@ class PermissionObserver
             }
             if ($attribute == 'name' && $originalValue != $currentValue) {
                 $permission->logActivities()->create([
-                    'activity' => "Permission Name updated from {$originalValue} to {$currentValue}",
+                    'activity' => "Permission Module Name updated.",
                 ]);
             }
             if ($attribute == 'description' && $originalValue != $currentValue) {
