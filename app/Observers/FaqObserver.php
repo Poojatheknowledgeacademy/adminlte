@@ -28,20 +28,26 @@ class FaqObserver
             if ($attribute === 'updated_at' && $originalValue != $currentValue) {
                 continue;
             }
-            if ($attribute == 'name' && $originalValue != $currentValue) {
+            if ($attribute == 'question' && $originalValue != $currentValue) {
                 $faq->logActivities()->create([
-                    'activity' =>"Role Name updated from {$originalValue} to {$currentValue}",
+                    'activity' =>"Question updated from {$originalValue} to {$currentValue}",
                 ]);
             }
-            if ($attribute == 'description' && $originalValue != $currentValue) {
+            if ($attribute == 'answer' && $originalValue != $currentValue) {
                 $faq->logActivities()->create([
-                    'activity' =>  "Role Description Updated from {$originalValue} to {$currentValue}",
+                    'activity' =>  "Answer Updated from {$originalValue} to {$currentValue}",
                 ]);
             }
             if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $faq->logActivities()->create([
-                    'activity' =>  "Role Activity Updated",
-                ]);
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $faq->logActivities()->create([
+                        'activity' => 'Faq status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $faq->logActivities()->create([
+                        'activity' => 'Faq status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }
