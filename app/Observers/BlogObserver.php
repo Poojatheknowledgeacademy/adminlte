@@ -16,7 +16,7 @@ class BlogObserver
     public function created(Blog $blog): void
     {
         $blog->logActivities()->create([
-            'activity' => $blog->title . ' created'
+            'activity' => 'Blog'.$blog->title . ' created'
         ]);
     }
     /**

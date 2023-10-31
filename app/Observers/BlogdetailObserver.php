@@ -13,7 +13,7 @@ class BlogdetailObserver
     public function created(BlogDetail $blogDetail): void
     {
         $blogDetail->logActivities()->create([
-            'activity' => $blogDetail->meta_title.' created'
+            'activity' => 'Blogdetails'.$blogDetail->meta_title.' created'
         ]);
     }
 
