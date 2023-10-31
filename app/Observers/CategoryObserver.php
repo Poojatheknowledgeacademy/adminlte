@@ -3,8 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Category;
-use App\Helpers\LogActivity;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryObserver
 {
@@ -14,8 +12,7 @@ class CategoryObserver
     public function created(Category $category): void
     {
         $category->logActivities()->create([
-            'activity' => $category->name . ' created',
-            'created_by' => Auth::user()->id,
+            'activity' => 'Category ' . $category->name . ' created',
         ]);
     }
 
@@ -24,7 +21,6 @@ class CategoryObserver
      */
     public function updated(Category $category): void
     {
-
         $originalAttributes = $category->getOriginal();
 
         foreach ($originalAttributes as $attribute => $originalValue) {
@@ -37,10 +33,14 @@ class CategoryObserver
             if ($attribute == 'name' && $originalValue != $currentValue) {
                 $category->logActivities()->create([
                     'activity' => "Category Name updated from {$originalValue} to {$currentValue}",
-                    'created_by' => Auth::user()->id,
                 ]);
             }
-            // Add more conditionals for other attributes as needed
+
+            if ($attribute == 'is_active' && $originalValue != $currentValue) {
+                $category->logActivities()->create([
+                    'activity' => "Category Activity Updated",
+                ]);
+            }
         }
     }
 
@@ -49,7 +49,7 @@ class CategoryObserver
      */
     public function deleted(Category $category): void
     {
-        // You can add log entries for deletions here if needed.
+        // You can add code here to handle the "deleted" event.
     }
 
     /**
@@ -57,7 +57,7 @@ class CategoryObserver
      */
     public function restored(Category $category): void
     {
-        // You can add log entries for restorations here if needed.
+        // You can add code here to handle the "restored" event.
     }
 
     /**
@@ -65,6 +65,6 @@ class CategoryObserver
      */
     public function forceDeleted(Category $category): void
     {
-        // You can add log entries for force deletions here if needed.
+        // You can add code here to handle the "force deleted" event.
     }
 }
