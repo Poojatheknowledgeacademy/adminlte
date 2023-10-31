@@ -100,9 +100,15 @@ class CoursedetailObserver
             }
 
             if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $coursedetail->logActivities()->create([
-                    'activity' =>  "Course Activity Updated",
-                ]);
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $coursedetail->logActivities()->create([
+                        'activity' => 'CourseDetail status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $coursedetail->logActivities()->create([
+                        'activity' => 'CourseDetail status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }

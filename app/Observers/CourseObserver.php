@@ -39,7 +39,7 @@ class CourseObserver
                 $oldTopicName = Topic::find($originalValue)->name;
                 $newTopicName = Topic::find($currentValue)->name;
                 $course->logActivities()->create([
-                    'activity' =>"Topic updated from {$oldTopicName} to {$newTopicName}",
+                    'activity' =>"Course Topic updated from {$oldTopicName} to {$newTopicName}",
                 ]);
             }
             if ($attribute == 'logo' && $originalValue != $currentValue) {
@@ -48,9 +48,15 @@ class CourseObserver
                 ]);
             }
             if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $course->logActivities()->create([
-                    'activity' =>  "Course Activity Updated",
-                ]);
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $course->logActivities()->create([
+                        'activity' => 'Course status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $course->logActivities()->create([
+                        'activity' => 'Course status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }
