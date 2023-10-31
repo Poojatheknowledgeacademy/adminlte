@@ -40,9 +40,9 @@ class BlogDetail extends Model
     {
         return $this->belongsTo(Blog::class,'blog_id');
     }
-    // public function blogname()
-    // {
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
+    }
 
-    //     return $this->belongsTo(Blog::class);
-    // }
 }

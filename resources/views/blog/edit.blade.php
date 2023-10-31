@@ -21,8 +21,41 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+
+                <div class="col-md-6">
                     <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Activity</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- The time line -->
+                            <div class="timeline">
+                                <!-- timeline time label -->
+                                @foreach ($blog->logActivities as $activity)
+                                    <div class="time-label">
+                                        <span class="bg-red">{{ $activity->created_at->format('d-M-Y h:i A') }}</span>
+                                    </div>
+
+                                    <div>
+                                        <i class="fas fa-solid fa-pen bg-blue"></i>
+                                        <div class="timeline-item">
+                                            <div class="card-header">
+                                                <h3 class="card-title">{{ $activity->creator->name }}</h3>
+                                            </div>
+                                            <h3 class="timeline-header no-border"> {{ $activity->activity }} </a></h3>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                <div>
+                                    <i class="fas fa-clock bg-gray"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Edit Blog</h3>
                         </div>
@@ -88,7 +121,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="form-group">
                                     <label for="icon">Featured image1</label>
                                     <div class="input-group">
@@ -116,7 +148,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="icon">Featured image2</label>
                                     <div class="input-group">
@@ -128,11 +159,13 @@
                                         </div>
                                         @if ($blog->featured_img2)
                                             <div class="col-md-3">
-                                                <img src="{{ asset($blog->featured_img2) }}" alt="Current feature image 2"
-                                                    class="img-thumbnail" height="50" width="50" id="fimg2">
+                                                <img src="{{ asset($blog->featured_img2) }}"
+                                                    alt="Current feature image 2" class="img-thumbnail" height="50"
+                                                    width="50" id="fimg2">
                                                 <i class="fas fa-trash text-danger" id="removefeatureimage2"
                                                     onClick="removefeatureimage2()"></i>
-                                                <input type="hidden"id="removefeature2txt" name="removefeature2txt" value>
+                                                <input type="hidden"id="removefeature2txt" name="removefeature2txt"
+                                                    value>
                                                 <i class="fas fa-undo text-danger" id="undoremovefimage2"
                                                     onClick="undofeatureimage2()" style="display: none";></i>
                                             </div>
@@ -145,8 +178,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label>Author Name</label>
                                     <div class="input-group">
@@ -178,15 +209,14 @@
                                                 {{ $blog->tags->contains('id', $tag->id) ? 'selected' : '' }}>
                                                 {{ $tag->name }}
                                             </option>
-                                            {{-- <option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTagIds) ? 'selected' : '' }}>{{ $tag->name }}</option> --}}
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch"
                                             name="is_popular" {{ $blog->is_popular ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="customSwitch1">Popular</label>
+                                        <label class="custom-control-label" for="customSwitch">Popular</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -202,9 +232,9 @@
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </div>
     </section>
 @endsection
 

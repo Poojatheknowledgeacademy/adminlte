@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Topic;
 use App\Models\Course;
 use App\Models\Category;
+use App\Models\BlogDetail;
 use App\Models\Permission;
 use App\Models\Topicdetail;
 use App\Observers\BlogObserver;
@@ -16,6 +17,7 @@ use App\Observers\UserObserver;
 use App\Observers\TopicObserver;
 use App\Observers\CourseObserver;
 use App\Observers\CategoryObserver;
+use App\Observers\BlogdetailObserver;
 use App\Observers\PermissionObserver;
 use App\Observers\TopicdetailObserver;
 use Illuminate\Auth\Events\Registered;
@@ -47,6 +49,7 @@ class EventServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Topicdetail::observe(TopicdetailObserver::class);
         Permission::observe(PermissionObserver::class);
+        BlogDetail::observe(BlogdetailObserver::class);
     }
 
     /**

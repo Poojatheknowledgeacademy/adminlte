@@ -166,7 +166,7 @@
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="customSwitch2"
-                                            name="is_active" checked />
+                                            name="is_active2" checked />
                                         <label class="custom-control-label" for="customSwitch2">Active</label>
                                     </div>
                                 </div>

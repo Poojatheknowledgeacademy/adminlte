@@ -10,6 +10,7 @@ use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\LogActivity;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -65,6 +66,7 @@ class BlogController extends Controller
         } else {
             $popular = '0';
         }
+        $is_active = $request->is_active == "on" ? 1 : 0;
         $blog = Blog::create([
             "category_id" => $request->category_id,
             "title" => $request->title,
@@ -77,7 +79,7 @@ class BlogController extends Controller
             "order_sequence" => $request->order_sequence,
             "added_date" => $request->added_date,
             "created_by" => $id,
-            "is_active" => $request->is_active,
+            "is_active" => $is_active,
             "country_id" => $request->country_id,
         ]);
         $blog->slugs()->create(['slug' => $request->slug,]);
@@ -115,11 +117,11 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-
         $tags = Tag::all();
         $category = category::where('is_active',1)->get();
         $country = Country::all();
         $slug = $blog->slugs()->first();
+
         return view('blog.edit', compact('blog', 'category', 'slug', 'tags','country'));
     }
     /**
@@ -132,6 +134,8 @@ class BlogController extends Controller
         } else {
             $popular = '0';
         }
+        $is_active = $request->is_active == "on" ? 1 : 0;
+        $blog->is_active = $is_active;
         $blog->category_id = $request->category_id;
         $blog->is_popular = $popular;
         $blog->title = $request->title;
@@ -167,6 +171,7 @@ class BlogController extends Controller
             $blog->featured_img2 = null;
         }
 
+
         $tags = $request->tags;
         if (!empty($tags)) {
             $tagIds = [];
@@ -187,6 +192,7 @@ class BlogController extends Controller
 
         $blog->save();
         $blog->slugs()->update(['slug' => $request->slug]);
+
         return redirect()->route('blogs.index')->with('success', 'Blog Updated Successfully');
     }
     /**

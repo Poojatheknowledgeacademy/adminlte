@@ -21,6 +21,7 @@ class Blog extends Model
         'author_name',
         'is_popular',
         'views_count',
+        'is_active',
         'order_sequence',
         'added_date',
         'created_by',
@@ -43,7 +44,7 @@ class Blog extends Model
     public function slugs()
     {
 
-        return $this->morphMany(Slug::class, 'entity');
+        return $this->morphOne(Slug::class, 'entity');
     }
 
     public function tags()
@@ -53,5 +54,9 @@ class Blog extends Model
     public function blogid()
     {
         return $this->hasMany(BlogDetail::class, 'blog_id');
+    }
+    public function logActivities()
+    {
+        return $this->morphMany(LogActivity::class, 'module');
     }
 }
