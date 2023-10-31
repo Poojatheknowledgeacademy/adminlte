@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Blog;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 use App\Models\User;
 use App\Models\Topic;
 use App\Models\Course;
@@ -14,6 +14,7 @@ use App\Models\Topicdetail;
 use App\Models\Coursedetail;
 use App\Models\Tag;
 use App\Models\Faq;
+use App\Models\Module;
 
 use App\Observers\BlogObserver;
 use App\Observers\RoleObserver;
@@ -27,6 +28,7 @@ use App\Observers\TopicdetailObserver;
 use App\Observers\TagObserver;
 use App\Observers\CoursedetailObserver;
 use App\Observers\FaqObserver;
+use App\Observers\ModuleObserver;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -63,6 +65,7 @@ class EventServiceProvider extends ServiceProvider
         Coursedetail::observe(CoursedetailObserver::class);
         Faq::observe(FaqObserver::class);
         Role::observe(RoleObserver::class);
+        Module::observe(ModuleObserver::class);
     }
 
     /**

@@ -18,11 +18,6 @@ class Role extends Model
         'is_active',
         'created_by',
     ];
-    public static function boot()
-    {
-        parent::boot();
-        Role::observe(RoleObserver::class);
-    }
 
     public function creator()
     {
@@ -32,8 +27,5 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
-    public function logActivities()
-    {
-        return $this->morphMany(LogActivity::class, 'module');
-    }
+   
 }

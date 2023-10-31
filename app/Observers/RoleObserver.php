@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Observers;
-
-use App\Models\Role;
-
+use Spatie\Permission\Models\Role;
 class RoleObserver
 {
     /**
@@ -12,10 +10,9 @@ class RoleObserver
     public function created(Role $role): void
     {
         $role->logActivities()->create([
-            'activity' => 'Role '.$role->name.' created'
+            'activity' => 'Role ' . $role->name . ' created'
         ]);
     }
-
     /**
      * Handle the Role "updated" event.
      */
@@ -30,7 +27,7 @@ class RoleObserver
             }
             if ($attribute == 'name' && $originalValue != $currentValue) {
                 $role->logActivities()->create([
-                    'activity' =>"Role Name updated from {$originalValue} to {$currentValue}",
+                    'activity' => "Role Name updated from {$originalValue} to {$currentValue}",
                 ]);
             }
             if ($attribute == 'description' && $originalValue != $currentValue) {
