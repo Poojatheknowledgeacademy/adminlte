@@ -11,6 +11,10 @@ use App\Models\Category;
 use App\Models\BlogDetail;
 use App\Models\Permission;
 use App\Models\Topicdetail;
+use App\Models\Coursedetail;
+use App\Models\Tag;
+use App\Models\Faq;
+
 use App\Observers\BlogObserver;
 use App\Observers\RoleObserver;
 use App\Observers\UserObserver;
@@ -20,9 +24,14 @@ use App\Observers\CategoryObserver;
 use App\Observers\BlogdetailObserver;
 use App\Observers\PermissionObserver;
 use App\Observers\TopicdetailObserver;
+use App\Observers\TagObserver;
+use App\Observers\CoursedetailObserver;
+use App\Observers\FaqObserver;
+
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -50,6 +59,10 @@ class EventServiceProvider extends ServiceProvider
         Topicdetail::observe(TopicdetailObserver::class);
         Permission::observe(PermissionObserver::class);
         BlogDetail::observe(BlogdetailObserver::class);
+        Tag::observe(TagObserver::class);
+        Coursedetail::observe(CoursedetailObserver::class);
+        Faq::observe(FaqObserver::class);
+        Role::observe(RoleObserver::class);
     }
 
     /**
