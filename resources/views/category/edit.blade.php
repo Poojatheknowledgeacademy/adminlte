@@ -58,7 +58,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Edit Course</h3>
+                    <h3 class="card-title">Edit Category</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
