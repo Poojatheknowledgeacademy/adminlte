@@ -1,26 +1,25 @@
 @extends('layouts.app')
-
 @section('content')
-    <div class="container-fluid">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-12">
-                        <h1>Category</h1>
-                    </div>
-                    <div class="col-sm-12">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('category.index') }}">Category</a></li>
-                            <li class="breadcrumb-item active">Edit Category</li>
-                        </ol>
-                    </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1>Category</h1>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('category.index') }}">Course</a></li>
+                        <li class="breadcrumb-item active">Edit Category</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
 
-<!--Timeline code-->
-<section class="content">
+  <!-- Main content -->
+  <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
@@ -29,6 +28,7 @@
                         <h3 class="card-title">Activity</h3>
                     </div>
                     <div class="card-body">
+                        <!-- The time line -->
                         <div class="timeline">
                             <!-- timeline time label -->
                             @foreach ($category->logActivities as $activity)
@@ -37,16 +37,15 @@
                                 </div>
 
                                 <div>
-                                    <i class="fas fa-pen bg-blue"></i>
+                                    <i class="fas fa-solid fa-pen bg-blue"></i>
                                     <div class="timeline-item">
                                         <div class="card-header">
                                             <h3 class="card-title">{{ $activity->creator->name }}</h3>
                                         </div>
-                                        <h3 class="timeline-header no-border"> {{ $activity->activity }} </h3>
+                                        <h3 class="timeline-header no-border"> {{ $activity->activity }} </a></h3>
                                     </div>
                                 </div>
                             @endforeach
-
                             <div>
                                 <i class="fas fa-clock bg-gray"></i>
                             </div>
@@ -54,18 +53,15 @@
                     </div>
                 </div>
             </div>
-
+            <!-- /.col -->
         <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Edit Category</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Course</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
                                 <form method="POST" action="{{ route('category.update', $category->id) }}"
                                     enctype="multipart/form-data">
                                     @csrf
