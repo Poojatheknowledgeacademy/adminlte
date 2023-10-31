@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserLoginRequest;
 
 class AuthController extends Controller
 {
@@ -15,13 +16,13 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function customLogin(Request $request)
+    public function customLogin(UserLoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+        // $request->validate([
+        //     'email' => 'required',
+        //     'password' => 'required',
 
-        ]);
+        // ]);
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
