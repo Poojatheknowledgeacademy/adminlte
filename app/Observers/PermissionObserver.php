@@ -38,10 +38,16 @@ class PermissionObserver
                     'activity' => "Description updated from {$originalValue} to {$currentValue}",
                 ]);
             }
-            if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $permission->logActivities()->create([
-                    'activity' =>  "Activity Updated",
-                ]);
+            if ($attribute === 'is_active') {
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $permission->logActivities()->create([
+                        'activity' => 'Permission status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $permission->logActivities()->create([
+                        'activity' => 'Permission status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }

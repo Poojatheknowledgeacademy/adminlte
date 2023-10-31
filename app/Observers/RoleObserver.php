@@ -35,10 +35,16 @@ class RoleObserver
                     'activity' =>  "Role Description Updated from {$originalValue} to {$currentValue}",
                 ]);
             }
-            if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $role->logActivities()->create([
-                    'activity' =>  "Role Activity Updated",
-                ]);
+            if ($attribute === 'is_active') {
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $role->logActivities()->create([
+                        'activity' => 'Role status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $role->logActivities()->create([
+                        'activity' => 'Role status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }
