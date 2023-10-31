@@ -18,6 +18,7 @@ class BlogDetail extends Model
         'meta_keywords',
         'meta_description',
         'summary',
+        'is_active',
         'created_by',
 
     ];
