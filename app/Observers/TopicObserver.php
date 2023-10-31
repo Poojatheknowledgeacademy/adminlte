@@ -28,11 +28,11 @@ class TopicObserver
                     'activity' => "Topic Name updated from {$originalValue} to {$currentValue}",
                 ]);
             }
-            if ($attribute == 'topic_id' && $originalValue != $currentValue) {
+            if ($attribute == 'category_id' && $originalValue != $currentValue) {
                 $oldCategoryName = Category::find($originalValue)->name;
                 $newCategoryName = Category::find($currentValue)->name;
                 $topic->logActivities()->create([
-                    'activity' => "Topic updated from {$oldCategoryName} to {$newCategoryName}",
+                    'activity' => "Topic category updated from {$oldCategoryName} to {$newCategoryName}",
                 ]);
             }
             if ($attribute == 'logo' && $originalValue != $currentValue) {
@@ -40,10 +40,16 @@ class TopicObserver
                     'activity' => "Topic Logo Updated",
                 ]);
             }
-            if ($attribute == 'is_active' && $originalValue != $currentValue) {
-                $topic->logActivities()->create([
-                    'activity' =>  "Activity Updated",
-                ]);
+            if ($attribute === 'is_active') {
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $topic->logActivities()->create([
+                        'activity' => 'Topic status Deactivate to Activated',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $topic->logActivities()->create([
+                        'activity' => 'Topic status Activate to Deactivated',
+                    ]);
+                }
             }
         }
     }
