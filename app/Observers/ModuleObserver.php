@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Module;
-use App\Models\Topic;
 
 class ModuleObserver
 {
@@ -11,10 +10,9 @@ class ModuleObserver
      * Handle the Module "created" event.
      */
     public function created(Module $module): void
-
     {
         $module->logActivities()->create([
-            'activity' => $module->name . ' created'
+            'activity' => 'Module ' . $module->name . ' created',
         ]);
     }
 
@@ -27,15 +25,22 @@ class ModuleObserver
 
         foreach ($originalAttributes as $attribute => $originalValue) {
             $currentValue = $module->$attribute;
+
             if ($attribute === 'updated_at' && $originalValue != $currentValue) {
                 continue;
             }
+
             if ($attribute == 'name' && $originalValue != $currentValue) {
                 $module->logActivities()->create([
-                    'activity' => "Module Name updated from {$originalValue} to {$currentValue}"
+                    'activity' => "Module Name updated from {$originalValue} to {$currentValue}",
                 ]);
             }
-            // Add more conditionals for other attributes as needed
+
+            if ($attribute == 'is_active' && $originalValue != $currentValue) {
+                $module->logActivities()->create([
+                    'activity' => "Module Activity Updated",
+                ]);
+            }
         }
     }
 
@@ -44,7 +49,7 @@ class ModuleObserver
      */
     public function deleted(Module $module): void
     {
-        // You can add log entries for deletions here if needed.
+        // You can add code here to handle the "deleted" event.
     }
 
     /**
@@ -52,7 +57,7 @@ class ModuleObserver
      */
     public function restored(Module $module): void
     {
-        // You can add log entries for restorations here if needed.
+        // You can add code here to handle the "restored" event.
     }
 
     /**
@@ -60,6 +65,6 @@ class ModuleObserver
      */
     public function forceDeleted(Module $module): void
     {
-        // You can add log entries for force deletions here if needed.
+        // You can add code here to handle the "force deleted" event.
     }
 }
