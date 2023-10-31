@@ -39,11 +39,11 @@ class ModuleObserver
             if ($attribute === 'is_active') {
                 if ($originalValue == 0 && $currentValue == 1) {
                     $module->logActivities()->create([
-                        'activity' => 'Blog status Deactivate to Activated',
+                        'activity' => 'module status Deactivate to Activated',
                     ]);
                 } elseif ($originalValue == 1 && $currentValue == 0) {
                     $module->logActivities()->create([
-                        'activity' => 'Blog status Activate to Deactivated',
+                        'activity' => 'module status Activate to Deactivated',
                     ]);
                 }
             }

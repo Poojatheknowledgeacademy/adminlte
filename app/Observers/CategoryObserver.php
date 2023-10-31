@@ -39,16 +39,40 @@ class CategoryObserver
             if ($attribute === 'is_active') {
                 if ($originalValue == 0 && $currentValue == 1) {
                     $category->logActivities()->create([
-                        'activity' => 'Blog status Deactivate to Activated',
+                        'activity' => 'category status Deactivate to Activated',
                     ]);
                 } elseif ($originalValue == 1 && $currentValue == 0) {
                     $category->logActivities()->create([
-                        'activity' => 'Blog status Activate to Deactivated',
+                        'activity' => 'category status Activate to Deactivated',
+                    ]);
+                }
+            }
+            if ($attribute === 'is_popular') {
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $category->logActivities()->create([
+                        'activity' => 'category popular off to on',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $category->logActivities()->create([
+                        'activity' => 'category popular on to off',
+                    ]);
+                }
+            }
+            if ($attribute === 'is_technical') {
+                if ($originalValue == 0 && $currentValue == 1) {
+                    $category->logActivities()->create([
+                        'activity' => 'category technical off to on',
+                    ]);
+                } elseif ($originalValue == 1 && $currentValue == 0) {
+                    $category->logActivities()->create([
+                        'activity' => 'category technical on to off',
                     ]);
                 }
             }
         }
     }
+
+
 
     /**
      * Handle the Category "deleted" event.
