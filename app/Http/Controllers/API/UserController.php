@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -27,8 +28,23 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
+        $created_by = Auth::guard('api')->user()->id;
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'created_by' => $created_by
+        ]);
+
+        $user->assignRole($request->input('roles'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User Created Successfully',
+            'data' => new UserResource($user)
+        ], 200);
     }
 
     /**
@@ -50,9 +66,9 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'User Updated Successfully',
             'data' => new UserResource($user)
         ], 200);
-
     }
 
     /**
