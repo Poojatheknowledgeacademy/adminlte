@@ -21,7 +21,7 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'data' => UserResource::collection($users)
-        ], 400);
+        ], 200);
     }
 
     /**
@@ -48,8 +48,11 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('roles'));
 
-        // return $this->sendResponse(new UserResource($user), 'User updated successfully.');
-        return (new UserResource($user))->response();
+        return response()->json([
+            'success' => true,
+            'data' => new UserResource($user)
+        ], 200);
+
     }
 
     /**
