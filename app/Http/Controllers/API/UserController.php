@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //echo "dddd";
+        //
     }
 
     /**
@@ -79,7 +79,7 @@ class UserController extends Controller
         $user->delete();
         return response()->json([
             'success' => true,
-            'message' => 'Successfully Deleted'
+            'message' => 'User Deleted Successfully'
         ], 400);
     }
 }
