@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Http\Requests\UserUpdateRequest;
-use Illuminate\Support\Facades\DB;
-use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -16,7 +14,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        if (!Auth::guard('api')->check()) {
+            return response()->json([
+                'error' => 'Not Authenticated',
+            ], 404);
+        }
+
+        $users = User::all();
+        return response()->json([
+            'success' => true,
+            'data' => $users->toArray()
+        ], 200);
     }
 
     /**
@@ -24,7 +32,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -32,7 +39,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //echo "dddd";
     }
 
     /**
@@ -52,8 +59,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        //$user->delete();
     }
 }
