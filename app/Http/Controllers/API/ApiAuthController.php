@@ -14,23 +14,19 @@ class ApiAuthController extends Controller
 {
     public function authenticatedUserDetails()
     {
-
-
-        if (Auth::guard('api')->check()) {
-
+        if (!Auth::guard('api')->check()) {
             return response()->json([
-                'success' => true,
-                'message' => 'Authenticated User Details.',
-                'data' => [
-                    'user' => Auth::guard('api')->user(),
-                ],
-            ], 200);
+                'error' => 'Not Authenticated',
+            ], 404);
         }
+
         return response()->json([
-            'success' => false,
-            'message' => 'Unauthorized',
-            'data' => null,
-        ], 401);
+            'success' => true,
+            'message' => 'Authenticated User Details.',
+            'data' => [
+                'user' => Auth::guard('api')->user(),
+            ],
+        ], 200);
     }
     public function login(UserLoginRequest $request)
     {
