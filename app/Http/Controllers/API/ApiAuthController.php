@@ -14,12 +14,6 @@ class ApiAuthController extends Controller
 {
     public function authenticatedUserDetails()
     {
-        if (!Auth::guard('api')->check()) {
-            return response()->json([
-                'error' => 'Not Authenticated',
-            ], 404);
-        }
-
         return response()->json([
             'success' => true,
             'message' => 'Authenticated User Details.',

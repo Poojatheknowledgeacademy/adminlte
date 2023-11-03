@@ -17,13 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (!Auth::guard('api')->check()) {
-            return response()->json([
-                'error' => 'Not Authenticated',
-            ], 404);
-        }
         $users = User::all();
-
         return response()->json([
             'success' => true,
             'data' => UserResource::collection($users)
@@ -63,6 +57,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //$user->delete();
+       // $user->delete();
     }
 }
