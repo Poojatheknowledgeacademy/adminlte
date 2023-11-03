@@ -22,12 +22,12 @@ class UserController extends Controller
                 'error' => 'Not Authenticated',
             ], 404);
         }
-
         $users = User::all();
+
         return response()->json([
             'success' => true,
-            'data' => $users->toArray()
-        ], 200);
+            'data' => UserResource::collection($users)
+        ], 400);
     }
 
     /**
@@ -54,9 +54,8 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('roles'));
 
-       // return $this->sendResponse(new UserResource($user), 'User updated successfully.');
+        // return $this->sendResponse(new UserResource($user), 'User updated successfully.');
         return (new UserResource($user))->response();
-
     }
 
     /**
