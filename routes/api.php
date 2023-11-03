@@ -24,5 +24,5 @@ Route::prefix('auth')->group(function () {
     Route::post('login', [ApiAuthController::class, 'login']);
     Route::middleware('auth:api')->get('authenticated-user-details', [ApiAuthController::class, 'authenticatedUserDetails']);
 
-    Route::apiResource('User', UserController::class);
+    Route::apiResource('users', UserController::class);
 });

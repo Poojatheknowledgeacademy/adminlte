@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -49,7 +50,13 @@ class UserController extends Controller
 
     public function store(UserRequest $request): RedirectResponse
     {
-        $user = User::create($request->all());
+        //$user = User::create($request->all(),'created_by'=> Auth::user()->id);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'created_by' =>  Auth::user()->id
+        ]);
 
         $user->assignRole($request->input('roles'));
 

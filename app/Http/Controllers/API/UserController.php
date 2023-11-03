@@ -4,6 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -34,9 +38,15 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request,  User $user)
     {
-        //
+        $user->update($request->all());
+        DB::table('model_has_roles')->where('model_id', $user->id)->delete();
+        $user->assignRole($request->input('roles'));
+
+       // return $this->sendResponse(new UserResource($user), 'User updated successfully.');
+        return (new UserResource($user))->response();
+
     }
 
     /**

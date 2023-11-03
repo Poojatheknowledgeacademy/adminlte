@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'created_by'
     ];
 
     protected $hidden = [
@@ -34,16 +35,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        // create a event  on saving
-        static::saving(function ($user) {
-            if ($authenticatedUser = Auth::user()) {
-                $user->created_by = Auth::user()->id;
-            }
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     // create a event  on saving
+    //     static::saving(function ($user) {
+    //         if ($authenticatedUser = Auth::user()) {
+    //             $user->created_by = Auth::user()->id;
+    //         }
+    //     });
+    // }
 
     // Define the "creator" relationship
 
