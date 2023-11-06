@@ -9,7 +9,6 @@ class CountryController extends Controller
 {
     public function country()
     {
-
         $json_data = file_get_contents('https://www.theknowledgeacademy.com/_engine/scripts/get-country-location-continent-region.php');
         $data = json_decode($json_data);
         if ($data->success = 1) {

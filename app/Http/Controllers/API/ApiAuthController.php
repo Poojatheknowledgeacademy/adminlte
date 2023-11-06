@@ -24,15 +24,34 @@ class ApiAuthController extends Controller
     }
     public function login(UserLoginRequest $request)
     {
-        if (User::where('email', '=', $request->email)->exists()) {
-            $user = User::where('email', '=', $request->email)->first();
+
+        $user = User::where('email', '=', $request->email)->first();
+        if ($user) {
 
             if (Hash::check($request->password, $user->password)) {
+                $fields = [
+                    'user_id' => $user->id
+                ];
+
+                $data = [
+                    'iss'   => 'adminlte',
+                    'iat'   => time(),
+                    'nbf'   => time(),
+                    'exp'   => time() + 60 * 120,
+                    'sub'   => 'Login',
+                    'jti'   => md5('TKA' . time()),
+                ];
+
+
+                $data = array_merge($data, $fields);
+
+                $key  =  config('jwt.key');
+                $access_token = JWT::encode($data, $key, 'HS256');
                 return response()->json([
                     'success' => true,
                     'message' => 'User Logged In Succesfully!',
                     'data' => [
-                        'accessToken' => JWT::encode(['user_id' => $user->id], config('jwt.key'), 'HS256'),
+                        'accessToken' => $access_token,
                     ],
                 ], 200);
             }
