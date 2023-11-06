@@ -58,10 +58,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  User $user)
+    public function update(UserUpdateRequest $request,  User $user)
     {
-        echo"hello";
-        dd(request()->all());
         $user->update($request->all());
         DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('roles'));
@@ -82,6 +80,6 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'User Deleted Successfully'
-        ], 200);
+        ], 400);
     }
 }
