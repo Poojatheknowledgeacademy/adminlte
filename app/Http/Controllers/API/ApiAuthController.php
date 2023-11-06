@@ -29,6 +29,10 @@ class ApiAuthController extends Controller
         if ($user) {
 
             if (Hash::check($request->password, $user->password)) {
+
+                Auth::login($user);
+                Auth::logoutOtherDevices($request->password);
+
                 $fields = [
                     'user_id' => $user->id
                 ];
@@ -42,9 +46,7 @@ class ApiAuthController extends Controller
                     'jti'   => md5('TKA' . time()),
                 ];
 
-
                 $data = array_merge($data, $fields);
-
                 $key  =  config('jwt.key');
                 $access_token = JWT::encode($data, $key, 'HS256');
                 return response()->json([
