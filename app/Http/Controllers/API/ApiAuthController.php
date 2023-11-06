@@ -9,6 +9,8 @@ use App\Http\Requests\UserLoginRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Firebase\JWT\JWT;
+use Illuminate\Support\Str;
+use JWTAuth;
 
 class ApiAuthController extends Controller
 {
@@ -24,10 +26,8 @@ class ApiAuthController extends Controller
     }
     public function login(UserLoginRequest $request)
     {
-
         $user = User::where('email', '=', $request->email)->first();
         if ($user) {
-
             if (Hash::check($request->password, $user->password)) {
 
                 Auth::login($user);
@@ -49,6 +49,8 @@ class ApiAuthController extends Controller
                 $data = array_merge($data, $fields);
                 $key  =  config('jwt.key');
                 $access_token = JWT::encode($data, $key, 'HS256');
+
+
                 return response()->json([
                     'success' => true,
                     'message' => 'User Logged In Succesfully!',
