@@ -61,8 +61,6 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request,  User $user)
     {
-        echo"hello";
-        dd(request()->all());
         $user->update($request->all());
         DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('roles'));
