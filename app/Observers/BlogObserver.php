@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Helpers\LogActivity;
+use Illuminate\Support\Facades\Auth;
 
 class BlogObserver
 {
@@ -16,7 +17,7 @@ class BlogObserver
     public function created(Blog $blog): void
     {
         $blog->logActivities()->create([
-            'activity' => 'Blog'.$blog->title . ' created'
+            'activity' => 'Blog'.$blog->title . ' created',
         ]);
     }
     /**

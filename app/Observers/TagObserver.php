@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
 
 class TagObserver
 {
@@ -13,7 +14,7 @@ class TagObserver
     {
 
         $tag->logActivities()->create([
-            'activity' => 'Tag '.$tag->name.' created'
+            'activity' => 'Tag '.$tag->name.' created',
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryObserver
 {
@@ -11,6 +12,7 @@ class CategoryObserver
      */
     public function created(Category $category): void
     {
+        //$created_by =  ?? NULL;
         $category->logActivities()->create([
             'activity' => 'Category ' . $category->name . ' created',
         ]);

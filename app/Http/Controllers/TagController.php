@@ -8,6 +8,7 @@ use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\Datatables;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -47,7 +48,8 @@ class TagController extends Controller
         $is_active = $request->is_active == "on" ? 1 : 0;
         Tag::create([
             'name' => $request->name,
-            'is_active' => $is_active
+            'is_active' => $is_active,
+            'created_by' => Auth::user()->id
         ]);
         session()->flash('success', 'Tag Created successfully.');
         return redirect()->route('tag.index');

@@ -10,6 +10,7 @@ use App\Models\Course;
 use App\Models\Topic;
 use App\Helpers\LogActivity;
 use App\Models\LogActivity as ModelsLogActivity;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -56,7 +57,6 @@ class CourseController extends Controller
         $courseimage->move($courselocation, $courseimagename);
         $filepath = $courselocation . $courseimagename;
 
-        $id = auth()->user()->id;
         if ($request->is_active == 'on') {
             $active = '1';
         } else {
@@ -69,7 +69,7 @@ class CourseController extends Controller
             "topic_id" => $request->topic_id,
             "logo" => $filepath,
             "is_active" => $active,
-            "created_by" => $id,
+            "created_by" => Auth::user()->id
         ]);
         $course->slugs()->create([
             'slug' => $request->slug,

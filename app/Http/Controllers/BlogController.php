@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\LogActivity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -81,6 +82,7 @@ class BlogController extends Controller
             "created_by" => $id,
             "is_active" => $is_active,
             "country_id" => $request->country_id,
+            "created_by" => Auth::user()->id
         ]);
         $blog->slugs()->create(['slug' => $request->slug,]);
 

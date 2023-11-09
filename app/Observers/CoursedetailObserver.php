@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Country;
 use App\Models\Coursedetail;
 use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
 
 class CoursedetailObserver
 {
@@ -13,8 +14,9 @@ class CoursedetailObserver
      */
     public function created(Coursedetail $coursedetail): void
     {
+       // $created_by = Auth::user()->id ?? NULL;
         $coursedetail->logActivities()->create([
-            'activity' => 'CourseDetail '.$coursedetail->name.' created'
+            'activity' => 'CourseDetail '.$coursedetail->name.' created',
         ]);
     }
 

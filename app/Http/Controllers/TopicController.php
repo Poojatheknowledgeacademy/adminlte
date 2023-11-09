@@ -10,6 +10,7 @@ use App\Http\Requests\TopicRequest;
 use Illuminate\Http\RedirectResponse;
 use Yajra\DataTables\Facades\Datatables;
 use App\Http\Requests\TopicUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
 {
@@ -60,7 +61,8 @@ class TopicController extends Controller
             'name' => $request->name,
             'category_id' => $category_id,
             'logo' => $logo_location . $logo_name,
-            'is_active' => $is_active
+            'is_active' => $is_active,
+            'created_by' => Auth::user()->id
         ]);
 
         $topic->slugs()->create([

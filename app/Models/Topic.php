@@ -16,6 +16,7 @@ class Topic extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable = [
+        'tka_id',
         'name', // Add 'name' to the fillable array
         'logo',
         'slug',
@@ -25,14 +26,14 @@ class Topic extends Model
     ];
 
 
-    public static function boot()
-    {
-        parent::boot();
-        // create a event  on saving
-        static::saving(function ($topic) {
-            $topic->created_by = Auth::user()->id;
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     // create a event  on saving
+    //     static::saving(function ($topic) {
+    //         $topic->created_by = Auth::user()->id;
+    //     });
+    // }
 
     public function creator()
     {

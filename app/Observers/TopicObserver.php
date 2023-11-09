@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Topic;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class TopicObserver
 {

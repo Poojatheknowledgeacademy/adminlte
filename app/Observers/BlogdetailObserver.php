@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\BlogDetail;
 use App\Models\Blog;
+use Illuminate\Support\Facades\Auth;
 
 class BlogdetailObserver
 {
@@ -13,7 +14,7 @@ class BlogdetailObserver
     public function created(BlogDetail $blogDetail): void
     {
         $blogDetail->logActivities()->create([
-            'activity' => 'Blogdetails'.$blogDetail->meta_title.' created'
+            'activity' => 'Blogdetails'.$blogDetail->meta_title.' created',
         ]);
     }
 

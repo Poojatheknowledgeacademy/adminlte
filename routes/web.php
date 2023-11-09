@@ -17,6 +17,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TopicDetailController;
 use App\Http\Controllers\CoursedetailController;
 use App\Http\Controllers\BlogDetailController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,3 +68,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/country',             [CountryController::class, 'country']);
+

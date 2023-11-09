@@ -10,6 +10,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -80,14 +81,13 @@ class CategoryController extends Controller
             'logo' => $logo_location . $logo_name,
             'is_active' => $is_active,
             'is_popular' => $is_popular,
-            'is_technical' => $is_technical
+            'is_technical' => $is_technical,
+            'created_by' => Auth::user()->id
         ]);
 
         $category->slugs()->create([
             'slug' => $request->slug,
         ]);
-
-
         session()->flash('success', 'Category Created successfully.');
         return redirect()->route('category.index');
     }

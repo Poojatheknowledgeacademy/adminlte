@@ -15,6 +15,7 @@ class Category extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable = [
+        'tka_id',
         'name', // Add 'name' to the fillable array
         'slug',
         'icon',
@@ -25,14 +26,14 @@ class Category extends Model
         'created_by',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        // create a event  on saving
-        static::saving(function ($category) {
-            $category->created_by = Auth::user()->id;
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     // create a event  on saving
+    //     static::saving(function ($category) {
+    //         $category->created_by = Auth::user()->id;
+    //     });
+    // }
 
     public function creator()
     {

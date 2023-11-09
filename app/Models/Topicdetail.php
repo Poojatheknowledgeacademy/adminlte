@@ -27,14 +27,14 @@ class Topicdetail extends Model
         'meta_keywords',
         'meta_description'
     ];
-    public static function boot()
-    {
-        parent::boot();
-        // create a event  on saving
-        static::saving(function ($topicDetail) {
-            $topicDetail->added_by = Auth::user()->id;
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     // create a event  on saving
+    //     static::saving(function ($topicDetail) {
+    //         $topicDetail->added_by = Auth::user()->id;
+    //     });
+    // }
     public function creator()
     {
         return $this->belongsTo(User::class, 'added_by');

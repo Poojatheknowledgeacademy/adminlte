@@ -23,14 +23,14 @@ class BlogDetail extends Model
 
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        // create a event  on saving
-        static::saving(function ($blogdetails) {
-            $blogdetails->created_by = Auth::user()->id;
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     // create a event  on saving
+    //     static::saving(function ($blogdetails) {
+    //         $blogdetails->created_by = Auth::user()->id;
+    //     });
+    // }
 
     public function creator()
     {

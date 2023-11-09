@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Faq;
+use Illuminate\Support\Facades\Auth;
 
 class FaqObserver
 {
@@ -11,8 +12,9 @@ class FaqObserver
      */
     public function created(Faq $faq): void
     {
+        //$created_by = Auth::user()->id ?? NULL;
         $faq->logActivities()->create([
-            'activity' => 'Faq created'
+            'activity' => 'Faq created',
         ]);
     }
 

@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Country;
 use App\Http\Requests\EditCoursedetailRequest;
 use App\Http\Requests\CoursedetailRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CoursedetailController extends Controller
 {
@@ -39,7 +40,6 @@ class CoursedetailController extends Controller
      */
     public function store($id, CoursedetailRequest $request)
     {
-
         CourseDetail::create([
             'course_id' => $request->course_id,
             'country_id' => $request->country_id,
@@ -53,6 +53,7 @@ class CoursedetailController extends Controller
             'meta_title' => $request->meta_title,
             'meta_keywords' => $request->meta_keywords,
             'meta_description' => $request->meta_description,
+            'created_by' => Auth::user()->id
         ]);
         return redirect()->route('course.coursedetails.index',$request->course_id)->with('success', 'Course Detail created successfully');
     }

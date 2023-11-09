@@ -8,6 +8,7 @@ use App\Models\BlogDetail;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\Datatables;
+use Illuminate\Support\Facades\Auth;
 
 class BlogDetailController extends Controller
 {
@@ -49,7 +50,8 @@ class BlogDetailController extends Controller
             'meta_keywords' => $request->keywords,
             'meta_description' => $request->description,
             'summary' => $request->summary,
-            'is_active' => $active
+            'is_active' => $active,
+            'created_by' => Auth::user()->id
         ]);
         $blogdetail->save();
         return redirect()->route('blogs.blogDetail.index', $request->blog_id)

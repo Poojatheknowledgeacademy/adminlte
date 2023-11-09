@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\Datatables;
 use App\Http\Requests\TopicDetailRequest;
 use App\Http\Requests\EditTopicdetailRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TopicDetailController extends Controller
 {
@@ -53,7 +54,8 @@ class TopicDetailController extends Controller
             'added_by' => $request->added_by,
             'meta_title' => $request->meta_title,
             'meta_keywords' => $request->meta_keywords,
-            'meta_description' => $request->meta_description
+            'meta_description' => $request->meta_description,
+            'created_by' => Auth::user()->id
         ]);
 
 

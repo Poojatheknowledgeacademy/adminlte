@@ -23,14 +23,14 @@ class Faq extends Model
         'updated_at'
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        // create a event  on saving
-        static::saving(function ($faq) {
-            $faq->created_by = Auth::user()->id;
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     // create a event  on saving
+    //     static::saving(function ($faq) {
+    //         $faq->created_by = Auth::user()->id;
+    //     });
+    // }
 
     public function creator()
     {

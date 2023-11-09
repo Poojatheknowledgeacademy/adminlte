@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
 </head>
 
 <body class="hold-transition login-page">
@@ -47,9 +48,13 @@
                             <span class="error invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
+
                     <div class="input-group mb-3">
-                        <input type="password" name="password" placeholder="Password"
-                            class="form-control @error('password') is-invalid @enderror">
+                        <input type="password" id="password" name="password" placeholder="Password"
+                            class="form-control @error('password') is-invalid @enderror"
+                            onkeydown="hidePassword(event)">
+
+
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -85,3 +90,5 @@
 </body>
 
 </html>
+
+

@@ -9,6 +9,7 @@ use App\Http\Requests\FaqRequest;
 use App\Http\Requests\EditFaqRequest;
 use App\Models\Course;
 use Yajra\DataTables\Facades\Datatables;
+use Illuminate\Support\Facades\Auth;
 
 class FaqController extends Controller
 {
@@ -63,7 +64,8 @@ class FaqController extends Controller
         $entity->faqs()->create([
             'question' => $request->question,
             'answer' => $request->answer,
-            'is_active' => $is_active
+            'is_active' => $is_active,
+            'created_by' => Auth::user()->id
         ]);
 
         if ($segment  === 'topic') {

@@ -46,7 +46,7 @@ class RoleController extends Controller
         $role = Role::create([
             'name' => $request->name,
             'description' => $request->description,
-            'is_active' => $is_active
+            'is_active' => $is_active,
         ]);
 
         if ($request->permissions) {

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Country;
 use App\Models\Topicdetail;
+use Illuminate\Support\Facades\Auth;
 
 class TopicdetailObserver
 {
