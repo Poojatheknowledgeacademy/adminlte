@@ -26,17 +26,22 @@ class Coursedetail extends Model
         'added_by' ,
         'meta_title' ,
         'meta_keywords' ,
-        'meta_description'
+        'meta_description',
+        'duration',
+        'pdu',
+        'audience',
+        'accreditationId',
+        'exam_included'
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        // create a event  on saving
-        static::saving(function ($courseDetail) {
-            $courseDetail->added_by = Auth::user()->id;
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     // create a event  on saving
+    //     static::saving(function ($courseDetail) {
+    //         $courseDetail->added_by = Auth::user()->id;
+    //     });
+    // }
 
     public function course()
     {

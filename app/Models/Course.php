@@ -12,12 +12,20 @@ class Course extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable = [
+        'tka_id',
         'name',
         'topic_id',
         'logo',
         'is_active',
         'slug',
-        'created_by'
+        'created_by',
+        'parentCourseId',
+        'url',
+        'coursecode',
+        'is_weekend',
+        'is_module',
+        'is_technical'
+
     ];
 
     public function creator()
