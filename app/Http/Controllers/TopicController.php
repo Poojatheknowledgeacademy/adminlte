@@ -6,11 +6,14 @@ use App\Models\Topic;
 use App\Models\Category;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use App\Http\Requests\TopicRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use Yajra\DataTables\Facades\Datatables;
 use App\Http\Requests\TopicUpdateRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Mail\topiccreatedMail;
 
 class TopicController extends Controller
 {
@@ -68,6 +71,7 @@ class TopicController extends Controller
         $topic->slugs()->create([
             'slug' => $request->slug,
         ]);
+        Mail::to('arshdeep.singh@theknowledgeacademy.com')->send(new topiccreatedMail($topic));
 
         session()->flash('success', 'Topic Created successfully.');
         return redirect()->route('topic.index');

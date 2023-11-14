@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\Facades\Datatables;
-
-use App\Http\Requests\StoreBlogRequest;
-use App\Http\Requests\EditBlogRequest;
-use App\Models\Blog;
 use App\Models\Tag;
-use App\Models\Category;
+
+use App\Models\Blog;
 use App\Models\Country;
+use App\Models\Category;
 use App\Models\LogActivity;
 use Illuminate\Http\Request;
+use App\Mail\BlogcreatedMail;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\EditBlogRequest;
+use App\Http\Requests\StoreBlogRequest;
+use Yajra\DataTables\Facades\Datatables;
 
 class BlogController extends Controller
 {
@@ -103,7 +106,7 @@ class BlogController extends Controller
             }
             $blog->tags()->sync($tagIds);
         }
-
+        Mail::to('arshdeep.singh@theknowledgeacademy.com')->send(new BlogcreatedMail($blog));
         return redirect()->route('blogs.index')->with('success', 'Blog Created Successfully.');
     }
     /**

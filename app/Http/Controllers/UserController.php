@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\Facades\Datatables;
-
-use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
-use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Mail\UserCreatedMail;
+use App\Http\Requests\UserRequest;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\UserUpdateRequest;
+use Yajra\DataTables\Facades\Datatables;
 class UserController extends Controller
 {
     function __construct()
@@ -50,7 +52,6 @@ class UserController extends Controller
 
     public function store(UserRequest $request): RedirectResponse
     {
-        //$user = User::create($request->all(),'created_by'=> Auth::user()->id);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -59,7 +60,7 @@ class UserController extends Controller
         ]);
 
         $user->assignRole($request->input('roles'));
-
+        Mail::to($user->email)->send(new UserCreatedMail($user));
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
     }
