@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\Facades\Datatables;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreCourseRequest;
-use App\Http\Requests\EditcourseRequest;
-use App\Models\Course;
+use App\Models\User;
 use App\Models\Topic;
+use App\Models\Course;
 use App\Helpers\LogActivity;
-use App\Models\LogActivity as ModelsLogActivity;
+use Illuminate\Http\Request;
+use App\Mail\CourseCreatedMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\NewCourseCreated;
+use App\Http\Requests\EditcourseRequest;
+use Yajra\DataTables\Facades\Datatables;
+use App\Http\Requests\StoreCourseRequest;
+use App\Models\LogActivity as ModelsLogActivity;
 
 class CourseController extends Controller
 {
@@ -74,6 +78,11 @@ class CourseController extends Controller
         $course->slugs()->create([
             'slug' => $request->slug,
         ]);
+
+
+        $user = User::where('email', 'arshdeep.singh@theknowledgeacademy.com')->first();
+        $message = (new CourseCreatedMail($course))->onQueue('emails');
+        Mail::to($user->email)->later(now()->addSeconds(1), $message);
 
         return redirect()->route('course.index')->with('success', 'Course Created Successfully.');
     }

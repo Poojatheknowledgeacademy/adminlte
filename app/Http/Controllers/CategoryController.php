@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\Facades\Datatables;
-use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\Slug;
-use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\CategoryUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use App\Models\Category;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\CategoryRequest;
+use App\Notifications\NewCourseCreated;
+use Yajra\DataTables\Facades\Datatables;
+use App\Notifications\NewcategoryCreated;
+use App\Http\Requests\CategoryUpdateRequest;
+use App\Mail\CategoryCreatedMail;
 
 class CategoryController extends Controller
 {
@@ -88,6 +93,11 @@ class CategoryController extends Controller
         $category->slugs()->create([
             'slug' => $request->slug,
         ]);
+
+        $user = User::where('email', 'arshdeep.singh@theknowledgeacademy.com')->first();
+        $message = (new CategoryCreatedMail($category))->onQueue('emails');
+        Mail::to($user->email)->later(now()->addSeconds(1), $message);
+
         session()->flash('success', 'Category Created successfully.');
         return redirect()->route('category.index');
     }
@@ -194,5 +204,11 @@ class CategoryController extends Controller
         $query = Category::where('is_active', 1)->with('creator');
         return Datatables::eloquent($query)->make(true);
         //return response()->json($activeCategories);
+    }
+    // CategoryController.php
+    public function trashed()
+    {
+        $trashedCategories = Category::onlyTrashed()->get();
+        return view('categories.trashed', compact('trashedCategories'));
     }
 }
