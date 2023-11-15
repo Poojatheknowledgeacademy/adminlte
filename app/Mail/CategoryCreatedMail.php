@@ -26,7 +26,7 @@ class CategoryCreatedMail extends Mailable
     {
         $userName = $this->category->creator->name;
         return $this->subject('Welcome to YourApp')
-            ->markdown('emails.category_created_markdown', ['userName' => $userName]);
+            ->markdown('email.category_created_markdown', ['userName' => $userName]);
     }
     /**
      * Get the message envelope.
