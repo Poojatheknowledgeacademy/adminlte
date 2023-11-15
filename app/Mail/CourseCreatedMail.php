@@ -27,7 +27,7 @@ class CourseCreatedMail extends Mailable
     {
         $userName = $this->course->creator->name;
         return $this->subject('Welcome to YourApp')
-            ->markdown('emails.course_created_markdown', ['userName' => $userName]);
+            ->markdown('email.course_created_markdown', ['userName' => $userName]);
 
 
     }
