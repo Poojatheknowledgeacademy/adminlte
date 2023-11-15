@@ -16,26 +16,26 @@ use Illuminate\Support\Facades\DB;
 class SendEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $user;
+   // protected $user;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    // public function __construct(User $user)
+    // {
+    //     $this->user = $user;
+    // }
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
-    {
+    // /**
+    //  * Execute the job.
+    //  */
+    // public function handle(): void
+    // {
 
 
-        $email = new UserCreatedMail($this->user);
-        Mail::to($this->user['email'])->send($email);
-    }
+    //     $email = new UserCreatedMail($this->user);
+    //     Mail::to($this->user['email'])->send($email);
+    // }
 
 
 }
