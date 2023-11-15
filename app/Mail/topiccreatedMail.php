@@ -54,8 +54,8 @@ class topiccreatedMail extends Mailable
     }
     public function build()
     {
-        //return $this->subject('Test Email')->view('emails.test');
+        $userName = $this->topic->creator->name;
         return $this->subject('Welcome to YourApp')
-            ->markdown('email.topic_created_markdown');
+            ->markdown('email.topic_created_markdown', ['userName' => $userName]);
     }
 }

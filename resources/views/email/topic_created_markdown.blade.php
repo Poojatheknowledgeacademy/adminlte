@@ -3,7 +3,7 @@
 
 Hello,
 
-New Topic created sucessfully by {{ auth()->user()->name }}
+New Topic created sucessfully by {{ $userName }}
 
 
 

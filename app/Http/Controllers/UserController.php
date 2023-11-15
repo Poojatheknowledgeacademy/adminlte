@@ -60,7 +60,8 @@ class UserController extends Controller
         ]);
 
         $user->assignRole($request->input('roles'));
-        Mail::to($user->email)->send(new UserCreatedMail($user));
+        $message=(new UserCreatedMail($user))->onQueue('emails');
+        Mail::to($user->email)->later(now()->addSeconds(1),$message);
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
     }

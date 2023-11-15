@@ -11,6 +11,7 @@ use App\Models\LogActivity;
 use Illuminate\Http\Request;
 use App\Mail\BlogcreatedMail;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\EditBlogRequest;
@@ -43,9 +44,9 @@ class BlogController extends Controller
     public function create()
     {
         $category = Category::where('is_active', 1)->get();
-        $country=Country::all();
+        $country = Country::all();
         $tags = Tag::where('is_active', 1)->get();
-        return view('blog.create', compact('category', 'tags','country'));
+        return view('blog.create', compact('category', 'tags', 'country'));
     }
     /**
      * Store a newly created resource in storage.
@@ -106,7 +107,9 @@ class BlogController extends Controller
             }
             $blog->tags()->sync($tagIds);
         }
-        Mail::to('arshdeep.singh@theknowledgeacademy.com')->send(new BlogcreatedMail($blog));
+        $message = (new BlogcreatedMail($blog))->onQueue('emails');
+        Mail::to('arshdeep.singh@theknowledgeacademy.com')->later(now()->addSeconds(1), $message);
+
         return redirect()->route('blogs.index')->with('success', 'Blog Created Successfully.');
     }
     /**
@@ -123,11 +126,11 @@ class BlogController extends Controller
     public function edit(Blog $blog)
     {
         $tags = Tag::all();
-        $category = category::where('is_active',1)->get();
+        $category = category::where('is_active', 1)->get();
         $country = Country::all();
         $slug = $blog->slugs()->first();
 
-        return view('blog.edit', compact('blog', 'category', 'slug', 'tags','country'));
+        return view('blog.edit', compact('blog', 'category', 'slug', 'tags', 'country'));
     }
     /**
      * Update the specified resource in storage.
@@ -208,15 +211,15 @@ class BlogController extends Controller
         $blog->delete();
         return redirect()->route('blogs.index')->with('danger', 'Blog Deleted Successfully');
     }
-    public function blogStatus(Request $request){
+    public function blogStatus(Request $request)
+    {
         $blog = Blog::find($request->id);
         $blog->is_active = $request->is_active;
         $blog->save();
-        if($request->is_active==1){
-           return response()->json(['success' => 'Blog Activated']);
-        }else{
+        if ($request->is_active == 1) {
+            return response()->json(['success' => 'Blog Activated']);
+        } else {
             return response()->json(['success' => 'Blog Deactivated']);
         }
     }
-
 }

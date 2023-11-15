@@ -71,7 +71,9 @@ class TopicController extends Controller
         $topic->slugs()->create([
             'slug' => $request->slug,
         ]);
-        Mail::to('arshdeep.singh@theknowledgeacademy.com')->send(new topiccreatedMail($topic));
+        //Mail::to('arshdeep.singh@theknowledgeacademy.com')->send(new topiccreatedMail($topic));
+        $message = (new topiccreatedMail($topic))->onQueue('emails');
+        Mail::to('arshdeep.singh@theknowledgeacademy.com')->later(now()->addSeconds(1), $message);
 
         session()->flash('success', 'Topic Created successfully.');
         return redirect()->route('topic.index');

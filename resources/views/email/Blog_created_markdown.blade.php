@@ -3,7 +3,7 @@
 
 Hello,
 
-New Blog created sucessfully by {{ auth()->user()->name }}
+New Blog created sucessfully by {{ $userName }}
 
 
 
