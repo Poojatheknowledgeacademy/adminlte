@@ -2,13 +2,12 @@
 # Welcome to Dashboard
 
 Hello {{ $user->name }},
-
-Thank you for joining Dashboard! Your account has been successfully created.
-
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/users'])
-Go to Dashboard
+Your account has been successfully created.
+@component('mail::button', ['url' => route('usersmail.index', ['remember_token' => $user->remember_token])])
+Activate acount
 @endcomponent
 
 Thanks,<br>
 
 @endcomponent
+
