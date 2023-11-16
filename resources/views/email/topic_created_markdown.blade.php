@@ -1,12 +1,11 @@
 @component('mail::message')
-# Welcome to Dashboard
+    # Welcome to Dashboard
 
-Hello,
+    Hello,
 
-New Topic created sucessfully by {{ $userName }}
+    New Topic created sucessfully by {{ $userName }}
 
 
 
-Thanks,<br>
-
+    Thanks,<br>
 @endcomponent

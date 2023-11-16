@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Exception;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -20,7 +22,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'created_by'
+        'created_by',
+        'remember_token',
+        'is_active'
     ];
 
     protected $hidden = [
@@ -53,5 +57,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function logActivities()
     {
         return $this->morphMany(LogActivity::class, 'module');
+    }
+    public function generateCode()
+    {
+        // $code = rand(1000, 9999);
+
+        // UserCode::updateOrCreate(
+        //     ['user_id' => auth()->user()->id],
+        //     ['code' => $code]
+        // );
+        // try {
+        //     $details = [
+        //         'title' => 'your two factor authentication code is:',
+        //         'code' => $code
+        //     ];
+        //     $message = (new SendCodeMail($details))->onQueue('emails');
+        //     Mail::to(auth()->user()->email->later(now()->addSeconds(1), $message));
+        // } catch (Exception $e) {
+        //     info("Error" . $e->getMessage());
+        // }
     }
 }

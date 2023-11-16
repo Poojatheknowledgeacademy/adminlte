@@ -22,7 +22,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             Auth::logoutOtherDevices($request->input('password'));
-            return redirect()->route('home.index')->withSuccess('Signed in');
+            return redirect()->route('home.index')->withSuccess('Signed in successfully');
         } else {
             return redirect("login")->with('error', 'Login details are not valid');
         }

@@ -13,10 +13,10 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BlogDetailController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TopicDetailController;
 use App\Http\Controllers\CoursedetailController;
-use App\Http\Controllers\BlogDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +69,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/country',             [CountryController::class, 'country']);
 
+Route::get('users/activateaccount/{remember_token}', [UserController::class, 'activateaccount'])->name('activateaccount');
+Route::post('/postactivate/{remember_token}', [UserController::class, 'postactivate'])->name('postactive');

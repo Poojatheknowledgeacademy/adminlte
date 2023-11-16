@@ -73,3 +73,9 @@
     </a>
 </li>
 @endif
+<li class="nav-item">
+    <a href="" class="nav-link {{ Request::is('trash') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Trash</p>
+    </a>
+</li>

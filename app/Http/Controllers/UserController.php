@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Carbon\Carbon;
 
+use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\UserCreatedMail;
 use App\Http\Requests\UserRequest;
@@ -16,6 +18,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UserUpdateRequest;
 use Yajra\DataTables\Facades\Datatables;
+use App\Http\Requests\UserActivateRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class UserController extends Controller
 {
     function __construct()
@@ -52,16 +57,18 @@ class UserController extends Controller
 
     public function store(UserRequest $request): RedirectResponse
     {
+        $token = Str::random(100);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'created_by' =>  Auth::user()->id
+            'created_by' =>  Auth::user()->id,
+            'remember_token' => $token
         ]);
 
         $user->assignRole($request->input('roles'));
-        $message=(new UserCreatedMail($user))->onQueue('emails');
-        Mail::to($user->email)->later(now()->addSeconds(1),$message);
+        $message = (new UserCreatedMail($user))->onQueue('emails');
+        Mail::to($user->email)->later(now()->addSeconds(1), $message);
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
     }
@@ -109,5 +116,33 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('danger', 'User deleted successfully');
+    }
+
+
+    public function activateaccount($remember_token)
+    {
+        $user = User::where('remember_token', $remember_token)->first();
+
+        if ($user) {
+            return view('users.activateaccount')->with('user', $user)->with('token', $remember_token);
+        }
+    }
+
+    public function postactivate(UserActivateRequest $request, $token)
+    {
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $user = User::where('remember_token', $token)->where('email', $request['email'])->firstOrFail();
+            $user->password = bcrypt($request['password']);
+            $user->remember_token = Str::random(100);
+            $user->is_active = 1;
+            $user->save();
+            Auth::loginUsingId($user->id);
+            return redirect("dashboard")->withSuccess('Signed in successfully after resetting password');
+        } else {
+            return redirect()->route('activateaccount', $token)
+                ->with('error', 'Email is not valid');
+        }
     }
 }
