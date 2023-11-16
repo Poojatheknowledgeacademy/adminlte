@@ -37,7 +37,7 @@ Route::post('custom-login', [AuthController::class, 'customLogin'])->name('login
 Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard',             [HomeController::class, 'index'])->name('home.index');
+    Route::get('dashboard',             [HomeController::class, 'index'])->name('dashboard.index');
 
     Route::resource('users',            UserController::class);
     Route::resource('category',         CategoryController::class);
