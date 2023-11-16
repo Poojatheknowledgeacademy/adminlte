@@ -1,5 +1,21 @@
 <!-- need to remove -->
-
+<li class="nav-item">
+    <a class="nav-link">
+        <p>CMS By Country</p>
+    </a>
+</li>
+@if (in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name')))
+    <li class="nav-item">
+        <select id="countryDropdown" class="form-control select2bs4">
+            <option value="1" selected>United Kingdom</option>
+            @foreach (getCountryList() as $id => $name)
+                @if ($id != 1)
+                    <option value="{{ $id }}">{{ $name }}</option>
+                @endif
+            @endforeach
+        </select>
+    </li>
+@endif
 <li class="nav-item">
     <a href="{{ route('dashboard.index') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
         <i class="nav-icon fas fa-home"></i>

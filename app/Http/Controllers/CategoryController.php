@@ -93,6 +93,7 @@ class CategoryController extends Controller
         $category->slugs()->create([
             'slug' => $request->slug,
         ]);
+        $category->countries()->attach($request->input('country', []));
 
         $user = User::where('email', 'arshdeep.singh@theknowledgeacademy.com')->first();
         $message = (new CategoryCreatedMail($category))->onQueue('emails');

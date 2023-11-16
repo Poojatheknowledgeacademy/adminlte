@@ -84,7 +84,20 @@
                                             </span>
                                         @enderror
                                     </div>
-
+                                    <div class="form-group">
+                                        <label>Country<span class="text-danger">*</span></label>
+                                        <select class="form-control select2 @error('country') is-invalid @enderror"
+                                            name="country[]" multiple="multiple" style="width: 100%;">
+                                            @foreach (getCountryList() as $id => $name)
+                                                <option value="{{ $id }}">{{ $name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('country')
+                                            <span class="error invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" name="is_active"

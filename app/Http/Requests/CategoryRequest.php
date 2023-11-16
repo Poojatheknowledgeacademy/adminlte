@@ -26,6 +26,7 @@ class CategoryRequest extends FormRequest
             'slug' => 'required',
             'icon' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             'logo'=>'required|image|mimes:jpg,png,jpeg|max:2048',
+            'country' =>'required'
         ];
     }
 }
