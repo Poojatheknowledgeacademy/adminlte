@@ -6,6 +6,8 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobsController;
+use App\Http\Controllers\Failed_JobsController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TopicController;
@@ -46,6 +48,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('permission',       PermissionController::class);
     Route::resource('roles',            RoleController::class);
     Route::resource('module',           ModuleController::class);
+    Route::resource('jobs',             JobsController::class);
+    Route::resource('failed_jobs', Failed_JobsController::class);
+
 
     Route::resource('topic.faqs',               FaqController::class);
     Route::resource('course.faqs',              FaqController::class);
@@ -64,7 +69,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
     Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
+
     Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
+
 });
 
 Route::get('/country',             [CountryController::class, 'country']);

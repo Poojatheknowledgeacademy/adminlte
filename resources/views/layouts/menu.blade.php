@@ -72,10 +72,27 @@
         <p>Module</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('jobs.index') }}" class="nav-link {{ Request::is('jobs') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Jobs</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('failed_jobs.index') }}" class="nav-link {{ Request::is('failed_jobs') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>Failed_Jobs</p>
+    </a>
+</li>
 @endif
+<<<<<<< HEAD
 <li class="nav-item">
     <a href="" class="nav-link {{ Request::is('trash') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p>Trash</p>
     </a>
 </li>
+=======
+
+
+>>>>>>> c3c90fc7de99a4cfab2a478473abfa3d74989644

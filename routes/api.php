@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ApiAuthController;
-use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\GetDataController;
+use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\ApiAuthController;
+use App\Http\Controllers\API\StoreDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('authenticated-user-details', [ApiAuthController::class, 'authenticatedUserDetails']);
     Route::apiResource('users', UserController::class);
     Route::get('/get-categories-topics-courses',             [GetDataController::class, 'data']);
+    Route::get('storedata', [StoreDataController::class, 'storedata']);
 });
