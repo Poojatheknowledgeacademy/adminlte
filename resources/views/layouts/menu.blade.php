@@ -100,4 +100,10 @@
             <p>Failed_Jobs</p>
         </a>
     </li>
+    <li class="nav-item">
+        <a href="{{ route('url_redirect.index') }}" class="nav-link {{ Request::is('url_redirect') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-th"></i>
+            <p>URL Redirect</p>
+        </a>
+    </li>
 @endif

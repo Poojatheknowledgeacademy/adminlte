@@ -125,10 +125,10 @@ class FaqController extends Controller
         $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         if ($uriSegments[1] === 'topic') {
             return redirect()->route('topic.faqs.index', $id)
-                ->with('success', 'Faq created successfully.');
+                ->with('success', 'Faq deleted successfully.');
         } elseif ($uriSegments[1] === 'course') {
             return redirect()->route('course.faqs.index', $id)
-                ->with('success', 'Faq created successfully.');
+                ->with('success', 'Faq deleted successfully.');
         }
     }
     public function faqStatus(Request $request){

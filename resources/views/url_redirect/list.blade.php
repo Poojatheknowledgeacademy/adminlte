@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
-@section('content')
+
     <div class="container-fluid">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1>Role</h1>
+                        <h1>UrlRedirect</h1>
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('tag.index') }}">Role</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('url_redirect.index') }}">UrlRedirect List</a></li>
                         </ol>
                     </div>
                 </div>
@@ -25,9 +25,9 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Role List</h3>
+                                <h3 class="card-title">UrlRedirect List</h3>
                                 <div class="float-right"> <a class="btn btn-block btn-sm btn-success"
-                                        href="{{ route('roles.create') }}"> Create New Role</a></div>
+                                        href="{{ route('url_redirect.create') }}"> Create New UrlRedirect</a></div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body ">
@@ -36,10 +36,10 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Id</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Active</th>
-                                                <th scope="col">Action</th>
+                                                <th scope="col">Source url</th>
+                                                <th scope="col">Redirect url</th>
+                                                <th scope="col">Actions</th>
+
                                             </tr>
                                         </thead>
                                     </table>
@@ -50,41 +50,29 @@
                                             $('#table').DataTable({
                                                 processing: true,
                                                 serverSide: true,
-                                                ajax: '{{ route('roles.index') }}',
+                                                ajax: '{{ route('url_redirect.index') }}',
                                                 columns: [{
                                                         data: 'id',
                                                         name: 'id'
                                                     },
                                                     {
-                                                        data: 'name',
-                                                        name: 'name'
+                                                        data: 'source_url',
+                                                        name: 'source_url'
                                                     },
                                                     {
-                                                        data: 'description',
-                                                        name: 'description'
+                                                        data: 'redirect_url',
+                                                        name: 'redirect_url'
                                                     },
-                                                    {
-                                                        data: 'is_active',
-                                                        name: 'is_active', 
-                                                        render: function(data, type, full, meta) {
-                                                            if (data === 1) {
-                                                                return '<i class="fas fa-toggle-on text-primary is_active" data-activestatus="' +
-                                                                    0 + '" data-val="' + full.id + '"></i>';
-                                                            } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary is_active" data-activestatus="' +
-                                                                    1 + '" data-val="' + full.id + '"></i>';
-                                                            }
-                                                        }
-                                                    },
+
                                                     {
                                                         data: 'id',
                                                         name: 'actions',
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('roles.edit', ':id') }}'.replace(':id', data);
+                                                            var editUrl = '{{ route('url_redirect.edit', ':id') }}'.replace(':id', data);
                                                             var deleteFormId = 'delete-form-' + data;
-                                                            var deleteUrl = '{{ route('roles.destroy', ':id') }}'.replace(':id',
+                                                            var deleteUrl = '{{ route('url_redirect.destroy', ':id') }}'.replace(':id',
                                                                 data);
 
                                                             return '<a href="' + editUrl + '" class="fas fa-edit"></a>' +
@@ -111,20 +99,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </section>
 @endsection
-@push('child-scripts')
-    <script>
-        $(document).ready(function() {
-            $('#table').on('click', '.is_active', function() {
-                var $toggle = $(this);
-                var activestatus = $(this).data('activestatus');
-                var dataVal = $(this).data('val');
-                var url = '/changeroleStatus';
-                handleStatusToggle($toggle, activestatus, dataVal, url);
-
-            });
-        });
-    </script>
-@endpush
