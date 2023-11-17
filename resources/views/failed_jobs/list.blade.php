@@ -100,8 +100,7 @@
                                                         success: function(response) {
                                                             console.log(response.message);
 
-                                                            // Remove the deleted row from the DataTable
-                                                            var table = $('#table').DataTable();
+                                                                                                                       var table = $('#table').DataTable();
                                                             table.row('#row-id-' + failedJobId).remove().draw(false);
                                                         },
                                                         error: function(xhr, status, error) {
@@ -121,7 +120,3 @@
         </section>
     </div>
 @endsection
-
-@push('child-scripts')
-    {{-- Additional scripts if needed for failed_jobs --}}
-@endpush
