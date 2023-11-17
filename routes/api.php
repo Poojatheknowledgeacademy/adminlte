@@ -30,4 +30,5 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::get('/get-categories-topics-courses',             [GetDataController::class, 'data']);
     Route::get('storedata', [StoreDataController::class, 'storedata']);
+    Route::get('Storedata',[ StoreDataController::class,'Storedata']);
 });

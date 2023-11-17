@@ -2,165 +2,172 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Faq;
-use App\Models\Slug;
 use App\Models\Topic;
 use App\Models\Course;
 use App\Models\Category;
 use App\Models\Topicdetail;
 use App\Models\Coursedetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class StoreDataController extends Controller
 {
-    public function storeData(Request $request)
+    public function __construct()
+    {
+        ini_set('max_execution_time', 600);
+    }
+    public function Storedata()
     {
         $json_data = file_get_contents('https://www.theknowledgeacademy.com/_engine/scripts/get-categories-topics-courses.php');
         $data = json_decode($json_data);
-
-        if ($data->success == 1) { // Use the correct equality operator here
+        if ($data->success = 1) {
             $this->storeCcategories($data->categories);
         }
     }
-
     public function storeCcategories($categories)
     {
-
         foreach ($categories as $key => $value) {
-            // echo "Key: " . $key . "\n";
             if (property_exists($value, 'name')) {
-                $category = Category::updateOrCreate([
-                    'name' => $value->name,
-                    'tka_id' => $key
-                ]);
-                // echo "Category TKA_ID: " . $category->tka_id;
-                $this->storeTopics($value->topic, $category->id);
+                $category = Category::updateOrCreate(
+                    ['tka_id' => $key],
+                    [
+                        'name' => $value->name,
+                        'created_by' => Auth::guard('api')->user()->id
+                    ]
+
+                );
+                $categoryid = $category->id;
+                $this->storeTopics($categoryid, $value->topic);
             }
         }
     }
-
-    public function storeTopics($topics, $category_id)
+    public function storeTopics($categoryid, $topics)
     {
         foreach ($topics as $topic => $topicvalue) {
-            // echo "topics: " . $topic . "\n";
             if (property_exists($topicvalue, 'name')) {
-                // print_r($topicvalue);
-                $topic = Topic::updateOrCreate([
-                    'name' => $topicvalue->name,
-                    'tka_id' => $topic,
-                    'category_id' => $category_id,
-                ]);
-                //  echo "course TKA_ID: " . $topic->tka_id;
-                //if (property_exists($topicvalue->courses, 'courses')) {
+                $topic = Topic::updateOrCreate(
+                    ['tka_id' => $topic],
+                    [
+                        'name' => $topicvalue->name,
+                        'category_id' => $categoryid,
+                        'created_by' => Auth::guard('api')->user()->id
 
-                $this->storeCourses($topicvalue->courses, $topic->id);
-                $this->storeTopicsFaq($topicvalue->faq, $topic);
-                $this->topicdetails($topicvalue, $topic->id);
-                $this->storeTopicSlugs($topicvalue, $topic);
+                    ]
+                );
+                $topic->slugs()->updateOrCreate(
+                    ['entity_id' => $topic->id],
+                    [
+                        'slug' => $topicvalue->topicURL,
+                    ]
+                );
+                $this->storetopicdetails($topicvalue, $topic->id);
+
+                if (isset($topicvalue->faq)) {
+
+                    $this->storetopicfaq($topicvalue->faq, $topic);
+                }
+                $this->storecourse($topicvalue->courses, $topic->id);
+            }
+        }
+    }
+    public function storetopicdetails($topicvalue, $topicid)
+    {
+        Topicdetail::updateOrCreate(
+            ['topic_id' => $topicid],
+            [
+                'meta_title' => $topicvalue->topicMetaTitle,
+                'meta_description' => $topicvalue->topicMetaDesc,
+                'meta_keywords' => $topicvalue->topicMetaKeywords,
+                'summary' => $topicvalue->summary,
+                'overview' => $topicvalue->overview,
+                'who_should_attend' => $topicvalue->whyChoose,
+                'heading' => $topicvalue->h1,
+                'added_by' => Auth::guard('api')->user()->id,
+                'country_id' => 1
+            ]
+        );
+    }
+    public function storetopicfaq($topicfaq, $topic)
+    {
+        foreach ($topicfaq as $faqItem) {
+            if (isset($faqItem->question)) {
+                $topic->faqs()->updateOrCreate(
+                    ['question' => $faqItem->question],
+                    [
+                        'answer' =>  $faqItem->answer,
+                        'created_by' => Auth::guard('api')->user()->id
+                    ]
+                );
             }
         }
     }
 
-    public function storeTopicsFaq($topicfaq, $topic)
+    public function storecourse($courses, $topicid)
     {
-        foreach ($topicfaq as $faqitem) {
-            //  echo "coursefaq: " . $coursefaq . "\n";
-            $topic->faqs()->updateOrCreate([
-                'question' => $faqitem->question,
-                'answer' => $faqitem->answer,
-            ]);
-        }
+        foreach ($courses as $coursesItem => $coursesvalue) {
+            $course = Course::updateOrCreate(
+                ['tka_id' => $coursesItem],
+                [
+                    'topic_id' => $topicid,
+                    'name' => $coursesvalue->name,
+                    'is_active' => $coursesvalue->isHidden,
+                    'parentCourseId'=> $coursesvalue->parentCourseId,
+                    'url'=> $coursesvalue->url,
+                    'coursecode'=> $coursesvalue->courseCode,
+                    'is_weekend' => $coursesvalue->isWeekend,
+                    'is_module' => $coursesvalue->isModule,
+                    'is_technical' => $coursesvalue->isTechnical,
+                    'created_by' => Auth::guard('api')->user()->id
+                ]
+            );
 
-        // }
-    }
-
-    public function storeCourses($course, $topic_id)
-    {
-
-        foreach ($course as $key => $value) {
-
-            $course = Course::updateOrCreate([
-                'name' => $value->name,
-                'tka_id' => $key,
-                'topic_id' => $topic_id,
-
-            ]);
-            if (isset($value->faq)) {
-                $this->storeTopicsFaq($value->faq, $course);
-                $this->Coursedetail($value, $course->id);
-                $this->storeCourseSlugs($value, $course);
+            $course->slugs()->updateOrCreate(
+                ['entity_id' => $course->id],
+                [
+                    'slug' => $coursesvalue->courseURL,
+                ]
+            );
+            $this->storecoursedetails($coursesvalue, $course->id);
+            if (isset($coursesvalue->faq->question)) {
+                $this->storecoursefaq($coursesvalue->faq, $course);
             }
         }
     }
-
-    public function storeCourseFaq($coursefaq, $course)
+    public function storecoursedetails($coursesvalue, $courseid)
     {
-        foreach ($coursefaq as $faqitem) {
-            //  echo "coursefaq: " . $coursefaq . "\n";
-            $course->faqs()->updateOrCreate([
-                'question' => $faqitem->question,
-                'answer' => $faqitem->answer,
-            ]);
-        }
-    }
-    public function topicdetails($topicdetails, $topic_id)
-    {
-
-        Topicdetail::updateOrCreate([
-
-            'country_id' => 1,
-            'summary' => $topicdetails->summary,
-            'overview' => $topicdetails->overview,
-            'meta_keywords' => $topicdetails->topicMetaKeywords,
-            'meta_description' => $topicdetails->topicMetaDesc,
-            'meta_title' => $topicdetails->topicMetaTitle,
-            'who_should_attend' => $topicdetails->whyChoose,
-            'heading' => $topicdetails->h1,
-            'topic_id' => $topic_id,
-        ]);
-    }
-
-    public function CourseDetail($coursesvalue, $courseid)
-    {
-        CourseDetail::updateOrCreate(
+        Coursedetail::updateOrCreate(
             ['course_id' => $courseid],
             [
-                'country_id' => 1,
-                'heading' => $coursesvalue->h1,
+                'meta_title' => $coursesvalue->courseMetaTitle,
+                'meta_description' => $coursesvalue->courseMetaDesc,
+                'meta_keywords' => $coursesvalue->courseMetaKeywords,
                 'summary' => $coursesvalue->overviewBulletList,
-                'detail' => $coursesvalue->outline,
                 'overview' => $coursesvalue->overview,
                 'whats_included' => $coursesvalue->whatsincluded,
-                'who_should_attend' => $coursesvalue->audience,
-                'meta_title' => $coursesvalue->courseMetaTitle,
-                'meta_keywords' => $coursesvalue->courseMetaKeywords,
-                'meta_description' => $coursesvalue->courseMetaDesc,
+                'heading' => $coursesvalue->h1,
+                'detail' => $coursesvalue->outline,
+                'added_by' => Auth::guard('api')->user()->id,
                 'duration' => $coursesvalue->duration,
                 'pdu' => $coursesvalue->pdu,
                 'audience' => $coursesvalue->audience,
                 'accreditationId' => $coursesvalue->accreditationId,
-                'exam_included' => $coursesvalue->examIncluded
+                'exam_included' => $coursesvalue->examIncluded,
+                'country_id' => 1
             ]
         );
     }
-    public function storeTopicSlugs($topicvalue, $topic)
+    public function storecoursefaq($coursefaq, $course)
     {
+        foreach ($coursefaq as $faqItem) {
+            $course->faqs()->updateOrCreate(
+                ['question' => $faqItem->question],
+                [
 
-        $topic->slugs()->updateOrCreate([
-
-            'entity_id' => $topic->id,
-            'slug' => $topicvalue->topicURL,
-        ]);
-    }
-    public function storeCourseSlugs($value, $course)
-    {
-
-        $course->slugs()->updateOrCreate([
-
-            'entity_id' => $course->id,
-            'slug' => $value->courseURL,
-        ]);
+                    'answer' =>  $faqItem->answer,
+                    'created_by' => Auth::guard('api')->user()->id
+                ]
+            );
+        }
     }
 }
