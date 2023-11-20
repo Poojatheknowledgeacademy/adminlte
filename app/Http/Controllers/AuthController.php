@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserLoginRequest;
+use App\Models\Country;
 
 class AuthController extends Controller
 {
@@ -22,6 +23,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             Auth::logoutOtherDevices($request->input('password'));
+            $country = Country::where('country_code', 'uk')->where('isAdvert', '=', 1)->first();
+            if ($country === null) {
+                return redirect('/');
+            }
+            $request->session()->put('country', $country);
+            $request->session()->save();
             return redirect()->route('dashboard.index')->withSuccess('Signed in successfully');
         } else {
             return redirect("login")->with('error', 'Login details are not valid');

@@ -39,7 +39,7 @@ Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard',             [HomeController::class, 'index'])->name('dashboard.index');
 
-    Route::resource('users',            UserController::class);
+
     Route::resource('category',         CategoryController::class);
     Route::resource('blogs',            BlogController::class);
     Route::resource('topic',            TopicController::class);
@@ -69,12 +69,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
     Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
-
     Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
-
 });
 
 Route::get('/country',             [CountryController::class, 'country']);
 
 Route::get('users/activateaccount/{remember_token}', [UserController::class, 'activateaccount'])->name('activateaccount');
 Route::post('/postactivate/{remember_token}', [UserController::class, 'postactivate'])->name('postactive');
+
+Route::group(['prefix' => '{country}', 'middleware' => 'country'], function () {
+    Route::get('/country_change',             [CountryController::class, 'countrychange']);
+});

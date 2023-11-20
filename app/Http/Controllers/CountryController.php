@@ -55,4 +55,9 @@ class CountryController extends Controller
             $object->save();
         }
     }
+    public function countrychange(Request $request){
+
+        $request->session()->get('country');
+        return redirect()->route('dashboard.index');
+    }
 }
