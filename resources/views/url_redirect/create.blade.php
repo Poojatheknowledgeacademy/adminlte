@@ -71,18 +71,19 @@
 @push('child-scripts')
     <script>
         $(document).ready(function() {
-            $('#name', 'description').on('input', function() {
+
+            $('#source_url,#redirect_url').on('input', function() {
                 removeErrorMessages($(this));
             });
 
             function removeErrorMessages(inputField) {
+
                 var parent = inputField.closest('.form-group');
                 var errorElement = parent.find('.error');
-
-                errorElement remove();
-
+                errorElement.remove();
                 inputField.removeClass('is-invalid');
             }
+
         });
     </script>
 @endpush
