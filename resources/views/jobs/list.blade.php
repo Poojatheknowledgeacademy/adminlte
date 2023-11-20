@@ -33,7 +33,7 @@
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Attempts</th>
-                                                <th>payload</th>
+                                                <th>Payload</th>
                                                 <th>Available At</th>
                                                 <th>Created At</th>
                                                 <th>Action</th>
@@ -53,8 +53,8 @@
                                                         name: 'id'
                                                     },
                                                     {
-                                                        data: 'queue', // Adjust this to match the actual case in your database
-                                                        name: 'queue' // Adjust this to match the actual case in your database
+                                                        data: 'queue',
+                                                        name: 'queue'
                                                     },
                                                     {
                                                         data: 'attempts',
@@ -113,7 +113,3 @@
         </section>
     </div>
 @endsection
-
-@push('child-scripts')
-    {{-- Additional scripts if needed for queues --}}
-@endpush

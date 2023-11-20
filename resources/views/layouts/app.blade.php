@@ -52,6 +52,7 @@
     <script src="{{ asset('adminlte/dist/js/jquery-3.6.0.min.js') }}"></script>
     @stack('child-scripts')
 
+
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet"
@@ -216,3 +217,13 @@
 </body>
 
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('#countryDropdown').on('change', function() {
+            var country_id = $(this).val();
+            var country_code = $(this).find(':selected').data('codeselect');
+            window.location.href = "/" + country_code + "/country_change";
+        });
+    });
+</script>

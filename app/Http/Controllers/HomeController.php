@@ -16,6 +16,10 @@ class HomeController extends Controller
             return Datatables::eloquent($query)->make(true);
         }
         $course_count = Course::count();
+        // print_r(session('country'));
+        // print_r(session('country')->id);
+        // $request->session()->get('country');
+
         return view('home.index',compact('course_count'));
     }
 }

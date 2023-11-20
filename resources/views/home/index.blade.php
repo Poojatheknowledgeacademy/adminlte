@@ -29,14 +29,15 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{$course_count;}}</h3>
+                            <h3>{{ $course_count }}</h3>
 
                             <p>Total Courses</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ route('course.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('course.index') }}" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -114,8 +115,7 @@
                                                     processing: true,
                                                     serverSide: true,
                                                     ajax: '{{ route('course.index') }}',
-                                                    columns: [
-                                                        {
+                                                    columns: [{
                                                             data: 'name',
                                                             name: 'name'
                                                         },
@@ -128,7 +128,8 @@
                                                             orderable: false,
                                                             searchable: false,
                                                             render: function(data, type, full, meta) {
-                                                                var action = '<button type="button" class="btn btn-block btn-info">Info</button>';
+                                                                var action =
+                                                                    '<button type="button" class="btn btn-block btn-info">Info</button>';
                                                                 return action;
                                                             }
                                                         },
@@ -148,3 +149,6 @@
     </section>
     <!-- /.content-wrapper -->
 @endsection
+
+
+
