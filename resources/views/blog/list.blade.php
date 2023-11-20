@@ -38,6 +38,7 @@
                                                 <th scope="col">Author Name</th>
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">Country</th>
                                                 <th scope="col">Blog Detils</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Created At</th>
@@ -95,6 +96,16 @@
                                                             }
                                                         }
                                                     },
+                                                    {
+                                                        data: 'country',
+                                                        name: 'country',
+                                                        render: function(data, type, full, meta) {
+                                                            return '<input type="checkbox" class="country-checkbox" data-blog-id="' +
+                                                                full.id + '" ' +
+                                                                (data ? 'checked' : '') + '>';
+                                                        }
+                                                    },
+
                                                     {
 
                                                         data: 'id',
@@ -177,9 +188,31 @@
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
                 var $toggle = $(this);
-                var url ='/changeblogStatus';
+                var url = '/changeblogStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
+            $(document).on('click', '.country-checkbox', function() {
+
+                var blogid = $(this).data('blog-id');
+                var url = '/blog-country';
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: url,
+
+                    data: {
+
+                        'id': blogid
+                    },
+                    success: function(data) {
+                        alert(data)
+                    }
+                });
+
+                // You can now use the checkboxId as needed.
+            });
+
+
         });
     </script>
 @endpush

@@ -35,4 +35,8 @@ class Country extends Model
     {
         return $this->belongsToMany(Category::class, 'category_country');
     }
+    public function Blog()
+    {
+        return $this->belongsToMany(Category::class, 'blog_country');
+    }
 }

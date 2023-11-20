@@ -58,4 +58,8 @@ class Blog extends Model
     {
         return $this->morphMany(LogActivity::class, 'module');
     }
+    public function countries()
+    {
+        return $this->belongsToMany(Country::class, 'blog_country');
+    }
 }

@@ -222,4 +222,13 @@ class BlogController extends Controller
             return response()->json(['success' => 'Blog Deactivated']);
         }
     }
+    public function storeblogcountry(Request $request)
+    {
+        $now = now();
+        $blog = Blog::find($request->id);
+        $blog->countries()->attach([1], [
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+    }
 }
