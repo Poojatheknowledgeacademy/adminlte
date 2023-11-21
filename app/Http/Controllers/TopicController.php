@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Yajra\DataTables\Facades\Datatables;
 use App\Http\Requests\TopicUpdateRequest;
 use App\Mail\topiccreatedMail;
+use App\Models\Tag;
 
 class TopicController extends Controller
 {
@@ -146,5 +147,26 @@ class TopicController extends Controller
             return response()->json(['success' => 'Topic Deactivated']);
         }
     }
-   
+    public function trashedTopic(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedTopics = Topic::onlyTrashed();
+            return Datatables::eloquent($trashedTopics)->make(true);
+        }
+        return view('trash.topic_list');
+    }
+    public function restore(Request $request ,$id)
+    {
+        $topic = Topic::withTrashed()->findOrFail($id);
+        $topic->restore();
+        session()->flash('success', 'Topic Restored successfully.');
+        return redirect()->route('topic.index');
+    }
+    public function delete($id)
+    {
+        $topic = Topic::withTrashed()->findOrFail($id);
+        $topic->forceDelete();
+        session()->flash('danger', 'Topic Deleted successfully.');
+        return view('trash.topic_list');
+    }
 }

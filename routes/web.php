@@ -49,18 +49,18 @@ Route::middleware(['auth'])->group(function () {
     // });
 
 
-        Route::resource('users',         UserController::class);
-        Route::resource('category',         CategoryController::class);
-        Route::resource('blogs',            BlogController::class);
-        Route::resource('topic',            TopicController::class);
-        Route::resource('course',           CourseController::class);
-        Route::resource('tag',              TagController::class);
-        Route::resource('permission',       PermissionController::class);
-        Route::resource('roles',            RoleController::class);
-        Route::resource('url_redirect',     UrlRedirectController::class);
-        Route::resource('module',           ModuleController::class);
-        Route::resource('jobs',             JobsController::class);
-        Route::resource('failed_jobs',      Failed_JobsController::class);
+    Route::resource('users',         UserController::class);
+    Route::resource('category',         CategoryController::class);
+    Route::resource('blogs',            BlogController::class);
+    Route::resource('topic',            TopicController::class);
+    Route::resource('course',           CourseController::class);
+    Route::resource('tag',              TagController::class);
+    Route::resource('permission',       PermissionController::class);
+    Route::resource('roles',            RoleController::class);
+    Route::resource('url_redirect',     UrlRedirectController::class);
+    Route::resource('module',           ModuleController::class);
+    Route::resource('jobs',             JobsController::class);
+    Route::resource('failed_jobs',      Failed_JobsController::class);
 
 
         Route::resource('topic.faqs',               FaqController::class);
@@ -80,14 +80,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
         Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
-        Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
-        Route::get('trashedCategory', [CategoryController::class, 'trashedCategory'])->name('trashedCategory');
-        Route::get('restore/{category}', [CategoryController::class, 'restore'])->name('category.restore');
-        Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
+    Route::get('trashedCategory', [CategoryController::class, 'trashedCategory'])->name('trashedCategory');
+    Route::get('restore/{category}', [CategoryController::class, 'restore'])->name('category.restore');
+    Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category.delete');
 
-        Route::get('blog-country', [BlogController::class, 'storeblogcountry']);
-        Route::get('ActiveCourse', [CourseController::class, 'getActiveCourse']);
-        Route::get('coursesetpopular',      [CourseController::class, 'setPopular']);
+    Route::get('blog-country', [BlogController::class, 'storeblogcountry']);
+    Route::get('ActiveCourse', [CourseController::class, 'getActiveCourse']);
 });
 
 Route::get('/country',             [CountryController::class, 'country']);

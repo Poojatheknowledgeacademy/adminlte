@@ -6,11 +6,12 @@
 </li>
 @if (in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name')))
     <li class="nav-item">
-        <select id="countryDropdown" class="form-control select2bs4" id="country" >
+        <select id="countryDropdown" class="form-control select2bs4" id="country">
             {{-- <option value="1"  data-codeselect="uk" selected>United Kingdom</option> --}}
-            @foreach (getCountryList() as  $country)
+            @foreach (getCountryList() as $country)
                 {{-- @if ($country->id != 1) --}}
-                    <option value="{{ $country->id }}" data-codeselect="{{ $country->country_code}}" {{ $country->id == session('country')->id ? 'selected' : '' }}>{{ $country->name }}</option>
+                <option value="{{ $country->id }}" data-codeselect="{{ $country->country_code }}"
+                    {{ $country->id == session('country')->id ? 'selected' : '' }}>{{ $country->name }}</option>
                 {{-- @endif --}}
             @endforeach
         </select>
@@ -102,7 +103,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('url_redirect.index') }}" class="nav-link {{ Request::is('url_redirect') ? 'active' : '' }}">
+        <a href="{{ route('url_redirect.index') }}"
+            class="nav-link {{ Request::is('url_redirect') ? 'active' : '' }}">
             <i class="nav-icon fas fa-th"></i>
             <p>URL Redirect</p>
         </a>
@@ -121,36 +123,58 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/data.html" class="nav-link">
+                <a href="{{ route('trashedTopic') }}" class="nav-link">
                     <p>Topics List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="{{ route('trashedCourse') }}" class="nav-link">
                     <p>Course List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/simple.html" class="nav-link">
+                <a href="{{ route('trashedBlog') }}" class="nav-link">
                     <p>Blog List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/data.html" class="nav-link">
+                <a href="{{ route('trashedRole') }}" class="nav-link">
                     <p>Role List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="{{ route('trashedPermission') }}" class="nav-link">
                     <p>Permission List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="{{ route('trashedModule') }}" class="nav-link">
                     <p>Module List</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedTag') }}" class="nav-link">
+                    <p>Tag List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedCoursedetail') }}" class="nav-link">
+                    <p>CourseDetail List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedUser') }}" class="nav-link">
+                    <p>User List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedTopicDetail') }}" class="nav-link">
+                    <p>TopicDetail List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedBlogDetail') }}" class="nav-link">
+                    <p>BlogDetail List</p>
+                </a>
         </ul>
-    </li>
 @endif
-

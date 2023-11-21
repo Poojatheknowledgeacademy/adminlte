@@ -104,4 +104,31 @@ class TagController extends Controller
             return response()->json(['success' => 'Tag Activated']);
         }
     }
+
+    public function trashedTag(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedTags = Tag::onlyTrashed();
+            return Datatables::eloquent($trashedTags)->make(true);
+        }
+
+        return view('trash.tag_list');
+    }
+
+    public function restoreTag($id)
+    {
+        $tag = Tag::withTrashed()->findOrFail($id);
+        $tag->restore();
+        session()->flash('success', 'Tag Restored successfully.');
+        return redirect()->route('tag.index'); // Adjust the route name as needed
+    }
+
+    public function deleteTag($id)
+    {
+        $tag = Tag::withTrashed()->findOrFail($id);
+        $tag->forceDelete();
+        session()->flash('danger', 'Tag Deleted successfully.');
+        return view('trash.tag_list');
+    }
 }
+

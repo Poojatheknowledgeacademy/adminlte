@@ -51,6 +51,7 @@
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Technical</th>
+                                                <th scope="col">Country</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
@@ -125,6 +126,15 @@
                                                     }
                                                 }
                                             }, {
+                                                data: 'country',
+                                                name: 'country',
+                                                orderable: false,
+                                                render: function(data, type, full, meta) {
+                                                    return '<input type="checkbox" class="category-checkbox" data-category-id="' + full.id + '" ' +
+                                                        (data ? 'checked' : '') + '>';
+                                                }
+                                            },
+                                            {
                                                 data: 'created_at',
                                                 name: 'created_at',
                                                 render: function(data, type, full, meta) {
@@ -139,41 +149,40 @@
                                                 name: 'creator.name'
                                             },
                                             {
-                                                        data: 'id',
-                                                        name: 'actions',
-                                                        orderable: false,
-                                                        searchable: false,
-                                                        render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('category.edit', ':id') }}'.replace(':id',
-                                                                data);
-                                                            var deleteFormId = 'delete-form-' + data;
-                                                            var deleteUrl = '{{ route('category.destroy', ':id') }}'.replace(':id',
-                                                                data);
-                                                            @php
-                                                                $isAdmin = in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name'));
-                                                            @endphp
+                                                data: 'id',
+                                                name: 'actions',
+                                                orderable: false,
+                                                searchable: false,
+                                                render: function(data, type, full, meta) {
+                                                    var editUrl = '{{ route('category.edit', ':id') }}'.replace(':id',
+                                                        data);
+                                                    var deleteFormId = 'delete-form-' + data;
+                                                    var deleteUrl = '{{ route('category.destroy', ':id') }}'.replace(':id',
+                                                        data);
+                                                    @php
+                                                        $isAdmin = in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name'));
+                                                    @endphp
 
-                                                            var action = '<a href="' + editUrl + '" class="fas fa-edit"></a>';
+                                                    var action = '<a href="' + editUrl + '" class="fas fa-edit"></a>';
 
-                                                            if (@json($isAdmin)) {
-                                                                action += '<a href="#" class="delete-link" ' +
-                                                                    'onclick="event.preventDefault(); document.getElementById(\'' +
-                                                                    deleteFormId + '\').submit();">' +
-                                                                    '<i class="fas fa-trash text-danger"></i>' +
-                                                                    '</a>' +
-                                                                    '<form id="' + deleteFormId + '" ' +
-                                                                    'action="' + deleteUrl +
-                                                                    '" method="POST" style="display: none;">' +
-                                                                    '@csrf' +
-                                                                    '@method('DELETE')' +
-                                                                    '</form>';
-                                                            }
-                                                            return action;
-                                                        }
-                                                    },
+                                                    if (@json($isAdmin)) {
+                                                        action += '<a href="#" class="delete-link" ' +
+                                                            'onclick="event.preventDefault(); document.getElementById(\'' +
+                                                            deleteFormId + '\').submit();">' +
+                                                            '<i class="fas fa-trash text-danger"></i>' +
+                                                            '</a>' +
+                                                            '<form id="' + deleteFormId + '" ' +
+                                                            'action="' + deleteUrl +
+                                                            '" method="POST" style="display: none;">' +
+                                                            '@csrf' +
+                                                            '@method('DELETE')' +
+                                                            '</form>';
+                                                    }
+                                                    return action;
+                                                }
+                                            },
                                         ]
                                         loadAllData();
-
                                     </script>
                                 @endpush
                             </div>
@@ -208,7 +217,7 @@
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
                 var $toggle = $(this);
-                var url ='/changecategoryStatus';
+                var url = '/changecategoryStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
             $('#customSwitch1').on('change', function() {
@@ -221,6 +230,30 @@
                 }
             });
             loadAllData();
+        });
+
+        $(document).on('click', '.category-checkbox', function() {
+
+            var categoryId = $(this).data('category-id');
+
+            var url = '/update-category-country';
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: url,
+                data: {
+                    'id': categoryId,
+                    'is_active': true, // or false based on your logic
+                     'updated_at': '{{ now()->toDateTimeString() }}',
+                    // Add any additional data you need to send
+                },
+                success: function(data) {
+                    alert(data);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
         });
     </script>
 @endpush

@@ -145,4 +145,33 @@ class UserController extends Controller
                 ->with('error', 'Email is not valid');
         }
     }
+    public function trashedUser(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedUsers = User::onlyTrashed();
+            return Datatables::eloquent($trashedUsers)->make(true);
+        }
+        return view('trash.user_list');
+    }
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
+        session()->flash('success', 'User Restored successfully.');
+
+        // Redirect to a route that displays the list of trashed users
+        return redirect()->route('trashedUser');
+    }
+
+
+    public function delete($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->forceDelete();
+        session()->flash('danger', 'User Deleted successfully.');
+
+        // Redirect to a route that displays the list of trashed users
+        return redirect()->route('trashedUser');
+    }
 }

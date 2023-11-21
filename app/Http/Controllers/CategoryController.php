@@ -227,4 +227,39 @@ class CategoryController extends Controller
         session()->flash('danger', 'Category Deleted successfully.');
         return view('trash.category_list');
     }
+    public function storeCategoryCountry(Request $request)
+    {
+        $now = now();
+        $category = Category::find($request->id);
+
+        if (!$category) {
+            return response()->json(['error' => 'Category not found'], 404);
+        }
+
+        $category->countries()->attach([1], [
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        // Add any additional logic or response as needed
+
+        return response()->json(['success' => 'Category Country Stored']);
+    }
+    public function updatecategorycountry(Request $request)
+    {
+
+        $category = Category::find($request->id);
+
+    if (!$category) {
+        return response()->json(['error' => 'Category not found'], 404);
+    }
+
+        $category->countries()->attach([1] , [
+        'created_at' => now(),
+        'updated_at' => now(),
+
+       ]);
+
+    return response()->json(['success' => 'Category Country Updated']);
+}
 }

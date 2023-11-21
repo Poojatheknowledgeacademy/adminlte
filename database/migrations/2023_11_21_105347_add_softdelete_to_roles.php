@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_country', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('category_id');
-
+        Schema::table('roles', function (Blueprint $table) {
+            $table->tinyInteger('is_active')->default(1);
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_country');
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropColumn('is_active');
+        });
     }
 };

@@ -145,4 +145,33 @@ class PermissionController extends Controller
             return response()->json(['success' => 'permission Deactivated']);
         }
     }
+
+    public function trashedPermission(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedPermissions = Permission::onlyTrashed();
+            return Datatables::eloquent($trashedPermissions)->make(true);
+        }
+        return view('trash.permission_list');
+    }
+
+    public function restore($id)
+    {
+        $permission = Permission::withTrashed()->findOrFail($id);
+        $permission->restore();
+        session()->flash('success', 'Permission Restored successfully.');
+
+        // Redirect to a route that displays the list of trashed permissions
+        return redirect()->route('trashedPermission');
+    }
+
+    public function delete($id)
+    {
+        $permission = Permission::withTrashed()->findOrFail($id);
+        $permission->forceDelete();
+        session()->flash('danger', 'Permission Deleted successfully.');
+
+        // Redirect to a route that displays the list of trashed permissions
+        return redirect()->route('trashedPermission');
+    }
 }

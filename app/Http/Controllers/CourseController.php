@@ -169,32 +169,4 @@ class CourseController extends Controller
             return response()->json(['success' => 'course Deactivated']);
         }
     }
-    public function getActiveCourse(Request $request)
-    {
-        $course = Course::find($request->course_id);
-        if ($request->checked == true) {
-            $course->countries()->sync(session('country')->id);
-        } else {
-
-            // $countryCourse = CountryCourses::where('course_id', $course->id)
-            //     ->where('country_id', session('country')->id)
-            //     ->first();
-
-            // if ($countryCourse) {
-            //     $countryCourse->delete(); // This will perform a soft delete
-            // }
-        }
-    }
-    public function setPopular(Request $request){
-        $course = Course::find($request->id);
-        $course->countries()->updateExistingPivot(session('country')->id, [
-            'is_popular' =>  $request->is_popular,
-        ]);
-        if ($request->is_popular == 1) {
-            return response()->json(['success' => 'Course Popular Activated']);
-        } else {
-            return response()->json(['success' => 'Course Popular Deactivated']);
-        }
-
-    }
 }

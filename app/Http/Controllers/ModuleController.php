@@ -99,9 +99,38 @@ class ModuleController extends Controller
         $module->is_active = $request->is_active;
         $module->save();
         if ($request->is_active == 1) {
-           return response()->json(['success' => 'Module Activated']);
+            return response()->json(['success' => 'Module Activated']);
         } else {
             return response()->json(['success' => 'Module Activated']);
+        }
     }
+
+    public function trashedModule(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedModules = Module::onlyTrashed();
+            return Datatables::eloquent($trashedModules)->make(true);
+        }
+        return view('trash.module_list');
+    }
+
+    public function restore($id)
+    {
+        $module = Module::withTrashed()->findOrFail($id);
+        $module->restore();
+        session()->flash('success', 'Module Restored successfully.');
+
+        // Redirect to a route that displays the list of trashed modules
+        return redirect()->route('trashedModule');
+    }
+
+    public function delete($id)
+    {
+        $module = Module::withTrashed()->findOrFail($id);
+        $module->forceDelete();
+        session()->flash('danger', 'Module Deleted successfully.');
+
+        // Redirect to a route that displays the list of trashed modules
+        return redirect()->route('trashedModule');
     }
 }

@@ -118,4 +118,32 @@ class BlogDetailController extends Controller
             return response()->json(['success' => 'Blogdetails  Deactivated']);
         }
     }
+    public function trashedBlogDetail(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedBlogDetails = BlogDetail::onlyTrashed();
+            return Datatables::eloquent($trashedBlogDetails)->make(true);
+        }
+        return view('trash.blogdetail_list');
+    }
+
+    public function restore($id)
+    {
+        $blogDetail = BlogDetail::withTrashed()->findOrFail($id);
+        $blogDetail->restore();
+        session()->flash('success', 'BlogDetail Restored successfully.');
+
+        // Redirect to a route that displays the list of trashed blog details
+        return redirect()->route('trashedBlogDetail');
+    }
+
+    public function delete($id)
+    {
+        $blogDetail = BlogDetail::withTrashed()->findOrFail($id);
+        $blogDetail->forceDelete();
+        session()->flash('danger', 'BlogDetail Deleted successfully.');
+
+        // Redirect to a route that displays the list of trashed blog details
+        return redirect()->route('trashedBlogDetail');
+    }
 }

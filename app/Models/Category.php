@@ -23,7 +23,9 @@ class Category extends Model
         'is_active',
         'is_popular',
         'is_technical',
+        'added_date',
         'created_by',
+        'country_id',
     ];
 
     // public static function boot()
