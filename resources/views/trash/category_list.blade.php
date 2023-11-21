@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('trashedCategory') }}">Trashed </a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('trashedCategory') }}">Trashed Category</a></li>
                         </ol>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                                                             var deleteUrl = '{{ route('category.delete', ':id') }}'.replace(':id',
                                                                 data);
 
-                                                            return '<a href="' + restoreUrl + '" class="fas fa-edit"></a>' +
+                                                            return '<a href="' + restoreUrl + '" class="fas fa-undo"></a>' +
                                                                 '<a href="' + deleteUrl + '" class="delete-link" ' +
                                                                 '   onclick="event.preventDefault(); document.getElementById(\'' +
                                                                 deleteFormId + '\').submit();">' +

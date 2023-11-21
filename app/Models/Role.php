@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use App\Observers\RoleObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Role extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory,SoftDeletes;
+
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'name',
@@ -27,6 +26,4 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
-
-
 }

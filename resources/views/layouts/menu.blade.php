@@ -121,32 +121,32 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/data.html" class="nav-link">
+                <a href="{{ route('trashedTopic') }}" class="nav-link">
                     <p>Topics List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="{{ route('trashedCourse') }}" class="nav-link">
                     <p>Course List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/simple.html" class="nav-link">
+                <a href="{{ route('trashedBlog') }}" class="nav-link">
                     <p>Blog List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/data.html" class="nav-link">
+                <a href="{{ route('trashedRole') }}" class="nav-link">
                     <p>Role List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="{{ route('trashedCategory') }}" class="nav-link">
                     <p>Permission List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="{{ route('trashedCategory') }}" class="nav-link">
                     <p>Module List</p>
                 </a>
             </li>

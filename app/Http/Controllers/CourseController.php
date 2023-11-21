@@ -163,4 +163,27 @@ class CourseController extends Controller
             return response()->json(['success' => 'course Deactivated']);
         }
     }
+    public function trashedCourse(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedCourses = Course::onlyTrashed();
+            return Datatables::eloquent($trashedCourses)->make(true);
+        }
+        return view('trash.course_list');
+    }
+
+    public function restore($id)
+    {
+        $course = Course::withTrashed()->findOrFail($id);
+        $course->restore();
+        session()->flash('success', 'Course Restored successfully.');
+        return redirect()->route('course.index');
+    }
+    public function delete($id)
+    {
+        $course = Course::withTrashed()->findOrFail($id);
+        $course->forceDelete();
+        session()->flash('danger', 'Course Deleted successfully.');
+        return view('trash.course_list');
+    }
 }

@@ -231,4 +231,26 @@ class BlogController extends Controller
             'updated_at' => $now,
         ]);
     }
+    public function trashedBlog(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedBlogs = Blog::onlyTrashed();
+            return Datatables::eloquent($trashedBlogs)->make(true);
+        }
+        return view('trash.blog_list');
+    }
+    public function restore($id)
+    {
+        $blog = Blog::withTrashed()->findOrFail($id);
+        $blog->restore();
+        session()->flash('success', 'Blog Restored successfully.');
+        return redirect()->route('blogs.index');
+    }
+    public function delete($id)
+    {
+        $blog = Blog::withTrashed()->findOrFail($id);
+        $blog->forceDelete();
+        session()->flash('danger', 'Blog Deleted successfully.');
+        return view('trash.blog_list');
+    }
 }

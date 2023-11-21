@@ -91,7 +91,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-        $role->permissions()->detach();
+       // $role->permissions()->detach();
         session()->flash('danger', 'Role Deleted successfully.');
         return redirect()->route('roles.index');
     }
@@ -105,5 +105,27 @@ class RoleController extends Controller
         } else {
             return response()->json(['success' => 'Role Deactivated']);
         }
+    }
+    public function trashedRole(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedRoles = Role::onlyTrashed();
+            return Datatables::eloquent($trashedRoles)->make(true);
+        }
+        return view('trash.role_list');
+    }
+    public function restore($id)
+    {
+        $role = Role::withTrashed()->findOrFail($id);
+        $role->restore();
+        session()->flash('success', 'Role Restored successfully.');
+        return redirect()->route('roles.index');
+    }
+    public function delete($id)
+    {
+        $role = Role::withTrashed()->findOrFail($id);
+        $role->forceDelete();
+        session()->flash('danger', 'Role Deleted successfully.');
+        return view('trash.role_list');
     }
 }

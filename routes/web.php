@@ -54,7 +54,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('jobs',             JobsController::class);
     Route::resource('failed_jobs',      Failed_JobsController::class);
 
-
     Route::resource('topic.faqs',               FaqController::class);
     Route::resource('course.faqs',              FaqController::class);
     Route::resource('course.coursedetails',     CoursedetailController::class);
@@ -73,12 +72,29 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
     Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
-    Route::get('trashedCategory', [CategoryController::class, 'trashedCategory'])->name('trashedCategory');
-    Route::get('restore/{category}', [CategoryController::class, 'restore'])->name('category.restore');
-    Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category.delete');
-    
-    Route::get('blog-country', [BlogController::class, 'storeblogcountry']);
-    Route::get('ActiveCourse', [CourseController::class, 'getActiveCourse']);
+
+    Route::get('trashedCategory',                [CategoryController::class, 'trashedCategory'])->name('trashedCategory');
+    Route::get('category/restore/{category}',    [CategoryController::class, 'restore'])->name('category.restore');
+    Route::delete('category/delete/{category}',  [CategoryController::class, 'delete'])->name('category.delete');
+
+    Route::get('trashedTopic',                   [TopicController::class, 'trashedTopic'])->name('trashedTopic');
+    Route::get('topic/restore/{topic}',          [TopicController::class, 'restore'])->name('topic.restore');
+    Route::delete('topic/delete/{topic}',        [TopicController::class, 'delete'])->name('topic.delete');
+
+    Route::get('trashedCourse',                 [CourseController::class, 'trashedCourse'])->name('trashedCourse');
+    Route::get('course/restore/{course}',       [CourseController::class, 'restore'])->name('course.restore');
+    Route::delete('course/delete/{course}',     [CourseController::class, 'delete'])->name('course.delete');
+
+    Route::get('trashedBlog',                   [BlogController::class, 'trashedBlog'])->name('trashedBlog');
+    Route::get('blog/restore/{blog}',           [BlogController::class, 'restore'])->name('blog.restore');
+    Route::delete('blog/delete/{blog}',         [BlogController::class, 'delete'])->name('blog.delete');
+
+    Route::get('trashedRole',                   [RoleController::class, 'trashedRole'])->name('trashedRole');
+    Route::get('restore/{role}',                [RoleController::class, 'restore'])->name('role.restore');
+    Route::delete('delete/{role}',              [RoleController::class, 'delete'])->name('role.delete');
+
+    Route::get('blog-country',   [BlogController::class, 'storeblogcountry']);
+    Route::get('ActiveCourse',   [CourseController::class, 'getActiveCourse']);
 });
 
 Route::get('/country',             [CountryController::class, 'country']);
