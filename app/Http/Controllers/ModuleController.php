@@ -119,9 +119,7 @@ class ModuleController extends Controller
         $module = Module::withTrashed()->findOrFail($id);
         $module->restore();
         session()->flash('success', 'Module Restored successfully.');
-
-        // Redirect to a route that displays the list of trashed modules
-        return redirect()->route('trashedModule');
+        return redirect()->route('module.index');
     }
 
     public function delete($id)
@@ -129,8 +127,6 @@ class ModuleController extends Controller
         $module = Module::withTrashed()->findOrFail($id);
         $module->forceDelete();
         session()->flash('danger', 'Module Deleted successfully.');
-
-        // Redirect to a route that displays the list of trashed modules
         return redirect()->route('trashedModule');
     }
 }

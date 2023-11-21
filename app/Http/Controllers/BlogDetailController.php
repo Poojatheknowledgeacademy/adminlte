@@ -132,9 +132,7 @@ class BlogDetailController extends Controller
         $blogDetail = BlogDetail::withTrashed()->findOrFail($id);
         $blogDetail->restore();
         session()->flash('success', 'BlogDetail Restored successfully.');
-
-        // Redirect to a route that displays the list of trashed blog details
-        return redirect()->route('trashedBlogDetail');
+        return redirect()->route('blogs.blogDetail.index', $blogDetail->blog_id);
     }
 
     public function delete($id)
@@ -142,8 +140,6 @@ class BlogDetailController extends Controller
         $blogDetail = BlogDetail::withTrashed()->findOrFail($id);
         $blogDetail->forceDelete();
         session()->flash('danger', 'BlogDetail Deleted successfully.');
-
-        // Redirect to a route that displays the list of trashed blog details
         return redirect()->route('trashedBlogDetail');
     }
 }

@@ -260,7 +260,7 @@
                 }
             });
 
-            // You can now use the checkboxId as needed.
+
         });
     </script>
 @endpush

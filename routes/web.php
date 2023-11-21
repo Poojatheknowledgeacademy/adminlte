@@ -139,6 +139,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('coursesetpopular',      [CourseController::class, 'setPopular']);
 
     Route::get('update-category-country', [CategoryController::class, 'updatecategorycountry']);
+
+    Route::get('country-topics', [TopicController::class, 'storeTopicCountry']);
 });
 
 Route::get('/country',             [CountryController::class, 'country']);

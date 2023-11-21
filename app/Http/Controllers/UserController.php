@@ -159,9 +159,7 @@ class UserController extends Controller
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
         session()->flash('success', 'User Restored successfully.');
-
-        // Redirect to a route that displays the list of trashed users
-        return redirect()->route('trashedUser');
+        return redirect()->route('users.index');
     }
 
 
@@ -170,8 +168,6 @@ class UserController extends Controller
         $user = User::withTrashed()->findOrFail($id);
         $user->forceDelete();
         session()->flash('danger', 'User Deleted successfully.');
-
-        // Redirect to a route that displays the list of trashed users
         return redirect()->route('trashedUser');
     }
 }

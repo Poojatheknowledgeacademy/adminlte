@@ -130,9 +130,7 @@ class TopicDetailController extends Controller
         $topicDetail = TopicDetail::withTrashed()->findOrFail($id);
         $topicDetail->restore();
         session()->flash('success', 'TopicDetail Restored successfully.');
-
-        // Redirect to a route that displays the list of trashed topic details
-        return redirect()->route('trashedTopicDetail');
+        return redirect()->route('topic.topicdetails.index', $topicDetail->topic_id);
     }
 
     public function delete($id)
@@ -140,8 +138,6 @@ class TopicDetailController extends Controller
         $topicDetail = TopicDetail::withTrashed()->findOrFail($id);
         $topicDetail->forceDelete();
         session()->flash('danger', 'TopicDetail Deleted successfully.');
-
-        // Redirect to a route that displays the list of trashed topic details
         return redirect()->route('trashedTopicDetail');
     }
 }

@@ -120,7 +120,7 @@ class TagController extends Controller
         $tag = Tag::withTrashed()->findOrFail($id);
         $tag->restore();
         session()->flash('success', 'Tag Restored successfully.');
-        return redirect()->route('tag.index'); // Adjust the route name as needed
+        return redirect()->route('tag.index'); 
     }
 
     public function deleteTag($id)

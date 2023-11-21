@@ -124,9 +124,7 @@ class CoursedetailController extends Controller
         $coursedetail = Coursedetail::withTrashed()->findOrFail($id);
         $coursedetail->restore();
         session()->flash('success', 'Coursedetail Restored successfully.');
-
-        // Redirect to a route that displays the list of trashed coursedetails
-        return redirect()->route('trashedCoursedetail');
+        return redirect()->route('course.coursedetails.index', $coursedetail->topic_id);
     }
 
     public function delete($id)
@@ -134,8 +132,6 @@ class CoursedetailController extends Controller
         $coursedetail = Coursedetail::withTrashed()->findOrFail($id);
         $coursedetail->forceDelete();
         session()->flash('danger', 'Coursedetail Deleted successfully.');
-
-        // Redirect to a route that displays the list of trashed coursedetails
         return redirect()->route('trashedCoursedetail');
     }
 }

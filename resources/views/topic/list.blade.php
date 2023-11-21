@@ -127,19 +127,27 @@
                                                     {
                                                         data: 'country',
                                                         name: 'country',
-                                                        orderable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var isChecked = (data === 'United Kingdom') ? 'checked' : '';
-                                                            return '<input type="checkbox" class="topic-country" value="' + data +
-                                                                '" ' + isChecked + '>';
+
+                                                            var isChecked = full.countries.some(function(country) {
+                                                                return country.id === countryId;
+                                                            });
+                                                            if (isChecked && full.countries.length > 0) {
+                                                                isChecked = full.countries[0].pivot.deleted_at === null;
+                                                            }
+                                                            return '<input type="checkbox" class="topic-checkbox" data-topic-id="' +
+                                                                full.id + '" data-codeselect="' + countryId + '"' +
+                                                                (isChecked ? 'checked' : '') + '>';
                                                         }
                                                     },
+
                                                     {
                                                         data: 'created_at',
                                                         name: 'created_at',
                                                         render: function(data, type, full, meta) {
                                                             if (data) {
-                                                                return moment(data).format('DD MMM YYYY [at] HH:mm:ss [GMT]');
+                                                                return moment(data).format(
+                                                                    'DD MMM YYYY [at] HH:mm:ss [GMT]');
                                                             }
                                                             return '';
                                                         }
@@ -147,25 +155,27 @@
                                                     {
                                                         data: 'creator.name',
                                                         name: 'creator.name'
-                                                    },
-                                                    {
+                                                    }, {
                                                         data: 'id',
                                                         name: 'actions',
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('topic.edit', ':id') }}'.replace(
-                                                                ':id',
-                                                                data);
+                                                            var editUrl = '{{ route('topic.edit', ':id') }}'
+                                                                .replace(
+                                                                    ':id',
+                                                                    data);
                                                             var deleteFormId = 'delete-form-' + data;
-                                                            var deleteUrl = '{{ route('topic.destroy', ':id') }}'.replace(
-                                                                ':id',
-                                                                data);
+                                                            var deleteUrl = '{{ route('topic.destroy', ':id') }}'
+                                                                .replace(
+                                                                    ':id',
+                                                                    data);
                                                             @php
                                                                 $isAdmin = in_array('Admin', array_column(Auth::user()->roles->toArray(), 'name'));
                                                             @endphp
 
-                                                            var action = '<a href="' + editUrl + '" class="fas fa-edit"></a>';
+                                                            var action = '<a href="' + editUrl +
+                                                                '" class="fas fa-edit"></a>';
 
                                                             if (@json($isAdmin)) {
                                                                 action += '<a href="#" class="delete-link" ' +
@@ -206,6 +216,34 @@
                 var url = '/changetopicStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
+
+            $(document).on('click', '.topic-checkbox', function() {
+
+                var topicId = $(this).data('topic-id');
+                var countryId = $(this).data('codeselect');
+                var checked = $(this).prop('checked');
+
+                var url = '/country-topics';
+
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: url,
+                    data: {
+                        'id': topicId,
+                        'country_id': countryId,
+                        'checked': checked,
+                    },
+                    success: function(data) {
+                        $checkbox.prop('checked', data.deleted_at === null);
+                    }
+
+                });
+            });
+
         });
+    </script>
+    <script>
+        var countryId = {{ session('country')->id ?? null }};
     </script>
 @endpush

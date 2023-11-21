@@ -45,4 +45,8 @@ class Country extends Model
     {
         return $this->belongsToMany(Course::class, 'country_courses')->withTimestamps()->withPivot(['is_popular', 'deleted_at']);
     }
+    public function topics()
+    {
+        return $this->belongsToMany(Topic::class, 'country_topics')->withTimestamps();
+    }
 }

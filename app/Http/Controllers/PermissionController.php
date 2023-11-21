@@ -162,7 +162,7 @@ class PermissionController extends Controller
         session()->flash('success', 'Permission Restored successfully.');
 
         // Redirect to a route that displays the list of trashed permissions
-        return redirect()->route('trashedPermission');
+        return redirect()->route('permission.index');
     }
 
     public function delete($id)

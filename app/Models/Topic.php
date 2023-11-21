@@ -2,12 +2,10 @@
 
 
 namespace App\Models;
-
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Topic extends Model
 {
@@ -17,7 +15,7 @@ class Topic extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = [
         'tka_id',
-        'name', // Add 'name' to the fillable array
+        'name',
         'logo',
         'slug',
         'category_id',
@@ -57,5 +55,8 @@ class Topic extends Model
     {
         return $this->morphMany(LogActivity::class, 'module');
     }
-
+    public function countries()
+    {
+        return $this->belongsToMany(Country::class, 'country_topics')->withTimestamps();
+    }
 }

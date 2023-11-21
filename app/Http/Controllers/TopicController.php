@@ -30,8 +30,21 @@ class TopicController extends Controller
      */
     public function index(Request $request)
     {
+        // if ($request->ajax()) {
+        //     $query = Topic::with('creator', 'category');
+        //     return Datatables::eloquent($query)->make(true);
+        // }
+        // return view('topic.list');
+
         if ($request->ajax()) {
-            $query = Topic::with('creator', 'category');
+            $query = Topic::with([
+                'creator',
+                'category',
+                'countries' => function ($query) {
+                    $query->select('countries.*', 'country_topics.deleted_at as pivot_deleted_at','country_topics.is_popular as pivot_is_popular')
+                        ->where('country_id', session('country')->id);
+                },
+            ]);
             return Datatables::eloquent($query)->make(true);
         }
         return view('topic.list');
@@ -72,7 +85,6 @@ class TopicController extends Controller
         $topic->slugs()->create([
             'slug' => $request->slug,
         ]);
-        //Mail::to('arshdeep.singh@theknowledgeacademy.com')->send(new topiccreatedMail($topic));
         $message = (new topiccreatedMail($topic))->onQueue('emails');
         Mail::to('arshdeep.singh@theknowledgeacademy.com')->later(now()->addSeconds(1), $message);
 
@@ -82,7 +94,6 @@ class TopicController extends Controller
 
     public function show(string $id)
     {
-        //
     }
 
     public function edit(Topic $topic): View
@@ -147,6 +158,49 @@ class TopicController extends Controller
             return response()->json(['success' => 'Topic Deactivated']);
         }
     }
+    // public function storeTopicCountry(Request $request)
+    // {
+    //     $topicId = $request->input('topic_id');
+    //     $countryId = session()->get('country');
+
+    //     $topic = Topic::findOrFail($topicId);
+
+    //     if ($request->input('is_checked')) {
+    //         $topic->countries()->attach($countryId);
+    //         return response()->json(['message' => 'Country attached to the topic']);
+    //     } else {
+    //         $topic->countries()->detach($countryId);
+    //         return response()->json(['message' => 'Country detached from the topic']);
+    //     }
+    // }
+    // public function storeTopicCountry(Request $request)
+    // {
+    //     $topicId = $request->input('topic_id');
+    //     $countryId = session()->get('country');
+
+    //     $topic = Topic::findOrFail($topicId);
+
+    //     if ($request->input('is_checked')) {
+    //         $topic->countries()->attach($countryId);
+    //     } else {
+    //         //$topic->countries()->updateExistingPivot($countryId, ['deleted_at' => now()]);
+    //         $topic->countries()->detach($countryId);
+    //     }
+    // }
+    public function storeTopicCountry(Request $request)
+    {
+        print_r($request->all());
+        $topic = Topic::find($request->id);
+        if ($request->checked == 'true') {
+            $topic->countries()->sync([$request->country_id => ['deleted_at' => null]]);
+        } else {
+            $topic->countries()->updateExistingPivot($request->country_id, [
+                'deleted_at' => now(),
+            ]);
+           // $topic->countries()->where('country_id', $request->country_id)->delete();
+        }
+    }
+
     public function trashedTopic(Request $request)
     {
         if ($request->ajax()) {
@@ -155,7 +209,7 @@ class TopicController extends Controller
         }
         return view('trash.topic_list');
     }
-    public function restore(Request $request ,$id)
+    public function restore(Request $request, $id)
     {
         $topic = Topic::withTrashed()->findOrFail($id);
         $topic->restore();
