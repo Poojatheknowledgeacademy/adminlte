@@ -182,6 +182,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
@@ -201,15 +202,29 @@ class CategoryController extends Controller
     }
     public function getActiveCategories()
     {
-        //$activeCategories = Category::where('is_active', 1)->get();
         $query = Category::where('is_active', 1)->with('creator');
         return Datatables::eloquent($query)->make(true);
-        //return response()->json($activeCategories);
     }
-    // CategoryController.php
-    public function trashed()
+    public function trashedCategory(Request $request)
     {
-        $trashedCategories = Category::onlyTrashed()->get();
-        return view('categories.trashed', compact('trashedCategories'));
+        if ($request->ajax()) {
+            $trashedCategories = Category::onlyTrashed();
+            return Datatables::eloquent($trashedCategories)->make(true);
+        }
+        return view('trash.category_list');
+    }
+    public function restore($id)
+    {
+        $category = Category::withTrashed()->findOrFail($id);
+        $category->restore();
+        session()->flash('success', 'Category Restored successfully.');
+        return redirect()->route('category.index');
+    }
+    public function delete($id)
+    {
+        $category = Category::withTrashed()->findOrFail($id);
+        $category->forceDelete();
+        session()->flash('danger', 'Category Deleted successfully.');
+        return view('trash.category_list');
     }
 }

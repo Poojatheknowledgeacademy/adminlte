@@ -107,5 +107,50 @@
             <p>URL Redirect</p>
         </a>
     </li>
+    <li class="nav-item menu-is-opening menu-open">
+        <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-trash text-danger"></i>
+            <p>
+                Trash <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview" style="display: block;">
+            <li class="nav-item">
+                <a href="{{ route('trashedCategory') }}" class="nav-link">
+                    <p>Categories List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="../tables/data.html" class="nav-link">
+                    <p>Topics List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="../tables/jsgrid.html" class="nav-link">
+                    <p>Course List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="../tables/simple.html" class="nav-link">
+                    <p>Blog List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="../tables/data.html" class="nav-link">
+                    <p>Role List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="../tables/jsgrid.html" class="nav-link">
+                    <p>Permission List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="../tables/jsgrid.html" class="nav-link">
+                    <p>Module List</p>
+                </a>
+            </li>
+        </ul>
+    </li>
 @endif
 

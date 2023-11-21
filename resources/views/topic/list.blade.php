@@ -44,6 +44,7 @@
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Details</th>
                                                 <th scope="col">FaQ</th>
+                                                <th scope="col">Country</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
@@ -80,6 +81,7 @@
                                                                 '<i class="fas fa-times text-secondary"></i>';
                                                         }
                                                     },
+
 
                                                     {
                                                         data: 'is_active',
@@ -120,6 +122,16 @@
                                                             var action = '<a href="' + editUrl +
                                                                 '" class="fas fa-question-circle text-primary"></a>';
                                                             return action;
+                                                        }
+                                                    },
+                                                    {
+                                                        data: 'country',
+                                                        name: 'country',
+                                                        orderable: false,
+                                                        render: function(data, type, full, meta) {
+                                                            var isChecked = (data === 'United Kingdom') ? 'checked' : '';
+                                                            return '<input type="checkbox" class="topic-country" value="' + data +
+                                                                '" ' + isChecked + '>';
                                                         }
                                                     },
                                                     {
@@ -191,7 +203,7 @@
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
                 var $toggle = $(this);
-                var url ='/changetopicStatus';
+                var url = '/changetopicStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
         });

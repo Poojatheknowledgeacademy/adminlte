@@ -146,4 +146,5 @@ class TopicController extends Controller
             return response()->json(['success' => 'Topic Deactivated']);
         }
     }
+   
 }

@@ -73,6 +73,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
     Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
+    Route::get('trashedCategory', [CategoryController::class, 'trashedCategory'])->name('trashedCategory');
+    Route::get('restore/{category}', [CategoryController::class, 'restore'])->name('category.restore');
+    Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category.delete');
+    
     Route::get('blog-country', [BlogController::class, 'storeblogcountry']);
     Route::get('ActiveCourse', [CourseController::class, 'getActiveCourse']);
 });
