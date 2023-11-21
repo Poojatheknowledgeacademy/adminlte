@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Yajra\DataTables\Facades\Datatables;
 use App\Models\Coursedetail;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class CoursedetailController extends Controller
     public function index(Request $request, $id)
     {
         if ($request->ajax()) {
-            $query = Coursedetail::with('country','course');
+            $query = Coursedetail::with('country', 'course');
             $query->where('course_id', $id);
             return Datatables::eloquent($query)->make(true);
         }
@@ -32,7 +33,7 @@ class CoursedetailController extends Controller
     {
         $courses = Course::where('is_active', 1)->get();
         $countries = Country::get();
-        return view('course.detail.create', compact('id', 'courses','countries'));
+        return view('course.detail.create', compact('id', 'courses', 'countries'));
     }
 
     /**
@@ -55,7 +56,7 @@ class CoursedetailController extends Controller
             'meta_description' => $request->meta_description,
             'created_by' => Auth::user()->id
         ]);
-        return redirect()->route('course.coursedetails.index',$request->course_id)->with('success', 'Course Detail created successfully');
+        return redirect()->route('course.coursedetails.index', $request->course_id)->with('success', 'Course Detail created successfully');
     }
 
     /**
@@ -69,18 +70,18 @@ class CoursedetailController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id,Coursedetail $coursedetail)
+    public function edit($id, Coursedetail $coursedetail)
     {
 
         $courses = Course::where('is_active', 1)->get();
         $countries = Country::get();
-        return view('course.detail.edit', compact('id','coursedetail', 'courses','countries'));
+        return view('course.detail.edit', compact('id', 'coursedetail', 'courses', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update($id,EditCoursedetailRequest $request, Coursedetail $coursedetail)
+    public function update($id, EditCoursedetailRequest $request, Coursedetail $coursedetail)
     {
         $coursedetail->update([
             'course_id' => $request->course_id,
@@ -96,16 +97,45 @@ class CoursedetailController extends Controller
             'meta_keywords' => $request->meta_keywords,
             'meta_description' => $request->meta_description,
         ]);
-        return redirect()->route('course.coursedetails.index',$coursedetail->course_id)->with('success', 'Course Detail Updated successfully');
+        return redirect()->route('course.coursedetails.index', $coursedetail->course_id)->with('success', 'Course Detail Updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id,Coursedetail $coursedetail)
+    public function destroy($id, Coursedetail $coursedetail)
     {
-         $coursedetail->delete();
-         return redirect()->route('course.coursedetails.index',$coursedetail->course_id)
-         ->with('danger', 'Course Detail deleted successfully');
+        $coursedetail->delete();
+        return redirect()->route('course.coursedetails.index', $coursedetail->course_id)
+            ->with('danger', 'Course Detail deleted successfully');
+    }
+
+    public function trashedCoursedetail(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedCoursedetails = Coursedetail::onlyTrashed();
+            return Datatables::eloquent($trashedCoursedetails)->make(true);
+        }
+        return view('trash.coursedetail_list');
+    }
+
+    public function restore($id)
+    {
+        $coursedetail = Coursedetail::withTrashed()->findOrFail($id);
+        $coursedetail->restore();
+        session()->flash('success', 'Coursedetail Restored successfully.');
+
+        // Redirect to a route that displays the list of trashed coursedetails
+        return redirect()->route('trashedCoursedetail');
+    }
+
+    public function delete($id)
+    {
+        $coursedetail = Coursedetail::withTrashed()->findOrFail($id);
+        $coursedetail->forceDelete();
+        session()->flash('danger', 'Coursedetail Deleted successfully.');
+
+        // Redirect to a route that displays the list of trashed coursedetails
+        return redirect()->route('trashedCoursedetail');
     }
 }

@@ -116,4 +116,32 @@ class TopicDetailController extends Controller
             ->with('danger', 'Topic Detail deleted successfully');
     }
 
+    public function trashedTopicDetail(Request $request)
+    {
+        if ($request->ajax()) {
+            $trashedTopicDetails = TopicDetail::onlyTrashed();
+            return Datatables::eloquent($trashedTopicDetails)->make(true);
+        }
+        return view('trash.topicdetail_list');
+    }
+
+    public function restore($id)
+    {
+        $topicDetail = TopicDetail::withTrashed()->findOrFail($id);
+        $topicDetail->restore();
+        session()->flash('success', 'TopicDetail Restored successfully.');
+
+        // Redirect to a route that displays the list of trashed topic details
+        return redirect()->route('trashedTopicDetail');
+    }
+
+    public function delete($id)
+    {
+        $topicDetail = TopicDetail::withTrashed()->findOrFail($id);
+        $topicDetail->forceDelete();
+        session()->flash('danger', 'TopicDetail Deleted successfully.');
+
+        // Redirect to a route that displays the list of trashed topic details
+        return redirect()->route('trashedTopicDetail');
+    }
 }
