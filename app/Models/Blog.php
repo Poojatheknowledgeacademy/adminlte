@@ -60,6 +60,6 @@ class Blog extends Model
     }
     public function countries()
     {
-        return $this->belongsToMany(Country::class, 'blog_country');
+        return $this->belongsToMany(Country::class, 'country_blog')->withTimestamps();
     }
 }

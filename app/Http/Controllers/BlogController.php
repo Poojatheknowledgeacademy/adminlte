@@ -33,7 +33,14 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Blog::with('creator', 'category');
+            $query = Blog::with([
+                'creator',
+                'category',
+                'countries' => function ($query) {
+                    $query->select('countries.*', 'country_blog.deleted_at as pivot_deleted_at','country_blog.is_popular as pivot_is_popular')
+                        ->where('country_id', session('country')->id);
+                },
+            ]);
             return Datatables::eloquent($query)->make(true);
         }
         return view('blog.list');
@@ -224,12 +231,15 @@ class BlogController extends Controller
     }
     public function storeblogcountry(Request $request)
     {
-        $now = now();
         $blog = Blog::find($request->id);
-        $blog->countries()->attach([1], [
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
+        if ($request->checked == 'true') {
+            $blog->countries()->sync([$request->country_id => ['deleted_at' => null]]);
+        } else {
+            $blog->countries()->updateExistingPivot($request->country_id, [
+                'deleted_at' => now(),
+            ]);
+           // $blog->countries()->where('country_id', $request->country_id)->delete();
+        }
     }
     public function trashedBlog(Request $request)
     {
@@ -253,4 +263,5 @@ class BlogController extends Controller
         session()->flash('danger', 'Blog Deleted successfully.');
         return view('trash.blog_list');
     }
+
 }
