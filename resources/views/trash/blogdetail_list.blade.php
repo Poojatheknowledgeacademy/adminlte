@@ -1,3 +1,5 @@
+<!-- resources/views/trash/blogdetail_list.blade.php -->
+
 @extends('layouts.app')
 
 @section('content')
@@ -7,11 +9,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-12">
-                        <h1>Trashed Coursedetails</h1>
+                        <h1>Trashed BlogDetails</h1>
                     </div>
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('trashedCoursedetail') }}">Trashed </a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('trashedBlogDetail') }}">Trashed BlogDetails</a>
+                            </li>
                         </ol>
                     </div>
                 </div>
@@ -24,7 +27,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Trashed Coursedetail List</h3>
+                                <h3 class="card-title">Trashed BlogDetail List</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -46,14 +49,14 @@
                                             $('#table').DataTable({
                                                 processing: true,
                                                 serverSide: true,
-                                                ajax: '{{ route('trashedCoursedetail') }}',
+                                                ajax: '{{ route('trashedBlogDetail') }}',
                                                 columns: [{
                                                         data: 'id',
                                                         name: 'id'
                                                     },
                                                     {
-                                                        data: 'course_id',
-                                                        name: 'course_id'
+                                                        data: 'blog_id',
+                                                        name: 'blog_id'
                                                     },
                                                     {
                                                         data: 'deleted_at',
@@ -65,11 +68,10 @@
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-
-                                                            var restoreUrl = '{{ route('coursedetail.restore', ':id') }}'.replace(':id',
-                                                                data);
+                                                            var restoreUrl = '{{ route('blogdetail.restore', ':id') }}'.replace(
+                                                                ':id', data);
                                                             var deleteFormId = 'delete-form-' + data;
-                                                            var deleteUrl = '{{ route('coursedetail.delete', ':id') }}'.replace(':id',
+                                                            var deleteUrl = '{{ route('blogdetail.delete', ':id') }}'.replace(':id',
                                                                 data);
 
                                                             return '<a href="' + restoreUrl + '" class="fas fa-undo"></a>' +

@@ -52,8 +52,8 @@
                                                         name: 'id'
                                                     },
                                                     {
-                                                        data: 'name',
-                                                        name: 'name'
+                                                        data: 'topic_id',
+                                                        name: 'topic_id'
                                                     },
                                                     {
                                                         data: 'deleted_at',

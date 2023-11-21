@@ -122,6 +122,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('topicdetail/delete/{topicdetail}', [TopicDetailController::class, 'delete'])->name('topicdetail.delete');
 
 
+    Route::get('trashedBlogDetail', [BlogDetailController::class, 'trashedBlogDetail'])->name('trashedBlogDetail');
+    Route::get('blogdetail/restore/{blogdetail}', [BlogDetailController::class, 'restore'])->name('blogdetail.restore');
+    Route::delete('blogdetail/delete/{blogdetail}', [BlogDetailController::class, 'delete'])->name('blogdetail.delete');
 
 
 
@@ -132,6 +135,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('blog-country',   [BlogController::class, 'storeblogcountry']);
     Route::get('ActiveCourse',   [CourseController::class, 'getActiveCourse']);
+
+
+    Route::get('update-category-country', [CategoryController::class, 'updatecategorycountry']);
 });
 
 Route::get('/country',             [CountryController::class, 'country']);

@@ -143,12 +143,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('trashedCategory') }}" class="nav-link">
+                <a href="{{ route('trashedPermission') }}" class="nav-link">
                     <p>Permission List</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('trashedCategory') }}" class="nav-link">
+                <a href="{{ route('trashedModule') }}" class="nav-link">
                     <p>Module List</p>
                 </a>
             </li>
@@ -162,25 +162,19 @@
                     <p>CourseDetail List</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedUser') }}" class="nav-link">
+                    <p>User List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedTopicDetail') }}" class="nav-link">
+                    <p>TopicDetail List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedBlogDetail') }}" class="nav-link">
+                    <p>BlogDetail List</p>
+                </a>
         </ul>
-        <ul class="nav nav-treeview" style="display: block;">
-
-            <ul class="nav nav-treeview" style="display: block;">
-                <li class="nav-item">
-                    <a href="{{ route('trashedUser') }}" class="nav-link">
-                        <p>User List</p>
-                    </a>
-                </li>
-            </ul>
-            <ul class="nav nav-treeview" style="display: block;">
-
-                <ul class="nav nav-treeview" style="display: block;">
-                    <li class="nav-item">
-                        <a href="{{ route('trashedTopicDetail') }}" class="nav-link">
-                            <p>TopicDetail List</p>
-                        </a>
-                    </li>
-
-                </ul>
-    </li>
 @endif

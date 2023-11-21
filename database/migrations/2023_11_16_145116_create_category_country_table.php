@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('category_id');
+
         });
     }
 
