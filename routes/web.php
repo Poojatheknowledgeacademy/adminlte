@@ -20,6 +20,7 @@ use App\Http\Controllers\Failed_JobsController;
 use App\Http\Controllers\TopicDetailController;
 use App\Http\Controllers\UrlRedirectController;
 use App\Http\Controllers\CoursedetailController;
+use App\Models\Course;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,7 @@ Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard',             [HomeController::class, 'index'])->name('dashboard.index');
 
-
+    Route::resource('users',         UserController::class);
     Route::resource('category',         CategoryController::class);
     Route::resource('blogs',            BlogController::class);
     Route::resource('topic',            TopicController::class);
@@ -73,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
     Route::get('blog-country', [BlogController::class, 'storeblogcountry']);
+    Route::get('ActiveCourse', [CourseController::class, 'getActiveCourse']);
 });
 
 Route::get('/country',             [CountryController::class, 'country']);
