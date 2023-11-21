@@ -39,8 +39,8 @@ Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 
-   // Route::group(['prefix' => '{country?}', 'where' => ['country' => '[a-z]{2}'], 'middleware' => 'country'], function () {
-        Route::get('dashboard',             [HomeController::class, 'index'])->name('dashboard.index');
+    // Route::group(['prefix' => '{country?}', 'where' => ['country' => '[a-z]{2}'], 'middleware' => 'country'], function () {
+    Route::get('dashboard',             [HomeController::class, 'index'])->name('dashboard.index');
 
     //});
     // Route::get('aa/{name?}', function (?string $name = null) {
@@ -62,22 +62,22 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('failed_jobs',      Failed_JobsController::class);
 
 
-        Route::resource('topic.faqs',               FaqController::class);
-        Route::resource('course.faqs',              FaqController::class);
-        Route::resource('course.coursedetails',     CoursedetailController::class);
-        Route::resource('topic.topicdetails',       TopicDetailController::class);
-        Route::resource('blogs.blogDetail',         BlogDetailController::class);
+    Route::resource('topic.faqs',               FaqController::class);
+    Route::resource('course.faqs',              FaqController::class);
+    Route::resource('course.coursedetails',     CoursedetailController::class);
+    Route::resource('topic.topicdetails',       TopicDetailController::class);
+    Route::resource('blogs.blogDetail',         BlogDetailController::class);
 
-        Route::get('changetopicStatus',       [TopicController::class, 'updateStatus']);
-        Route::get('changecourseStatus',      [CourseController::class, 'courseStatus']);
-        Route::get('changetagStatus',         [TagController::class, 'tagStatus']);
-        Route::get('changeroleStatus',        [RoleController::class, 'roleStatus']);
-        Route::get('changepermissionStatus',  [PermissionController::class, 'permissionStatus']);
-        Route::get('changeblogStatus',        [BlogController::class, 'blogStatus']);
-        Route::get('changecategoryStatus',    [CategoryController::class, 'categoryStatus']);
-        Route::get('changefaqStatus',         [FaqController::class, 'faqStatus']);
-        Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
-        Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
+    Route::get('changetopicStatus',       [TopicController::class, 'updateStatus']);
+    Route::get('changecourseStatus',      [CourseController::class, 'courseStatus']);
+    Route::get('changetagStatus',         [TagController::class, 'tagStatus']);
+    Route::get('changeroleStatus',        [RoleController::class, 'roleStatus']);
+    Route::get('changepermissionStatus',  [PermissionController::class, 'permissionStatus']);
+    Route::get('changeblogStatus',        [BlogController::class, 'blogStatus']);
+    Route::get('changecategoryStatus',    [CategoryController::class, 'categoryStatus']);
+    Route::get('changefaqStatus',         [FaqController::class, 'faqStatus']);
+    Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
+    Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
     Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
 
