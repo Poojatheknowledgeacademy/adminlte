@@ -49,4 +49,9 @@ class Course extends Model
         return $this->morphMany(LogActivity::class, 'module');
     }
 
+    public function countries()
+    {
+        return $this->belongsToMany(Country::class, 'country_courses')->withTimestamps();
+    }
+
 }

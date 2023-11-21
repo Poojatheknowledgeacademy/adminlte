@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Country extends Model
 {
     use HasFactory;
@@ -28,8 +29,6 @@ class Country extends Model
         'date_format',
         'isAdvert',
         'map_id',
-
-
     ];
     public function categories()
     {
@@ -38,5 +37,9 @@ class Country extends Model
     public function Blog()
     {
         return $this->belongsToMany(Category::class, 'blog_country');
+    }
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'country_courses')->withTimestamps()->withPivot(['is_popular', 'deleted_at']);;
     }
 }

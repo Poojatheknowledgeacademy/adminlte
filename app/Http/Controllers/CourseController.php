@@ -15,6 +15,7 @@ use App\Http\Requests\EditcourseRequest;
 use Yajra\DataTables\Facades\Datatables;
 use App\Http\Requests\StoreCourseRequest;
 use App\Models\LogActivity as ModelsLogActivity;
+use App\Models\Country;
 
 class CourseController extends Controller
 {
@@ -31,7 +32,11 @@ class CourseController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Course::with('creator', 'topic');
+            $query = Course::with(['creator', 'topic', 'countries' => function ($query) {
+                $query->select('countries.*', 'country_courses.deleted_at as pivot_deleted_at','country_courses.is_popular as pivot_is_popular')
+                ->where('country_id', session('country')->id);
+            }]);
+
             return Datatables::eloquent($query)->make(true);
         }
         return view('course.list');
@@ -75,6 +80,7 @@ class CourseController extends Controller
             "is_active" => $active,
             "created_by" => Auth::user()->id
         ]);
+
         $course->slugs()->create([
             'slug' => $request->slug,
         ]);
@@ -162,5 +168,33 @@ class CourseController extends Controller
         } else {
             return response()->json(['success' => 'course Deactivated']);
         }
+    }
+    public function getActiveCourse(Request $request)
+    {
+        $course = Course::find($request->course_id);
+        if ($request->checked == true) {
+            $course->countries()->sync(session('country')->id);
+        } else {
+
+            // $countryCourse = CountryCourses::where('course_id', $course->id)
+            //     ->where('country_id', session('country')->id)
+            //     ->first();
+
+            // if ($countryCourse) {
+            //     $countryCourse->delete(); // This will perform a soft delete
+            // }
+        }
+    }
+    public function setPopular(Request $request){
+        $course = Course::find($request->id);
+        $course->countries()->updateExistingPivot(session('country')->id, [
+            'is_popular' =>  $request->is_popular,
+        ]);
+        if ($request->is_popular == 1) {
+            return response()->json(['success' => 'Course Popular Activated']);
+        } else {
+            return response()->json(['success' => 'Course Popular Deactivated']);
+        }
+
     }
 }

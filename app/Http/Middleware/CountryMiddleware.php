@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Country;
+use Illuminate\Support\Facades\URL;
 
 class CountryMiddleware
 {
@@ -25,6 +26,7 @@ class CountryMiddleware
         }
         $request->session()->put('country', $country);
         $request->session()->save();
+        URL::defaults(['locale' => $request->segment(1)]);
         return $next($request);
     }
 }

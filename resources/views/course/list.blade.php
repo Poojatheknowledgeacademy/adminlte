@@ -38,6 +38,8 @@
                                                 <th scope="col">Course Name</th>
                                                 <th scope="col">Topic Name</th>
                                                 <th scope="col">Active</th>
+                                                <th scope="col">IsActive</th>
+                                                <th scope="col">Popular</th>
                                                 <th scope="col">Detail</th>
                                                 <th scope="col">FaQ</th>
                                                 <th scope="col">Created At</th>
@@ -80,14 +82,45 @@
                                                         }
                                                     },
                                                     {
+                                                        data: 'isactive',
+                                                        name: 'isactive',
+                                                        render: function(data, type, full, meta) {
+                                                            var isChecked = full.countries.some(function(country) {
+                                                                return country.id;
+                                                            });
+
+                                                            return '<input type="checkbox" class="course-checkbox" data-course-id="' +
+                                                                full.id + '" ' +
+                                                                (isChecked ? 'checked' : '') + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        data: 'popular',
+                                                        name: 'popular',
+                                                        render: function(data, type, full, meta) {
+                                                            var ispopular = full.countries.some(function(country) {
+                                                                return country.is_popular;
+                                                            });
+                                                            if (ispopular == 1) {
+                                                                return '<i class="fas fa-toggle-on text-primary is_popular" data-populartatus="' +
+                                                                    0 + '" data-val="' + full.id + '"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-toggle-on text-secondary is_popular" data-populartatus="' +
+                                                                    1 + '" data-val="' + full.id + '"></i>';
+                                                            }
+                                                        }
+                                                    },
+
+                                                    {
                                                         data: 'id',
                                                         name: 'detail',
                                                         orderable: false,
                                                         searchable: false,
                                                         render: function(data, type, full, meta) {
-                                                            var editUrl = '{{ route('course.coursedetails.index', ':id') }}'.replace(
-                                                                ':id',
-                                                                data);
+                                                            var editUrl = '{{ route('course.coursedetails.index', ':id') }}'
+                                                                .replace(
+                                                                    ':id',
+                                                                    data);
                                                             var action = '<a href="' + editUrl +
                                                                 '" class="fas fa-list text-primary"></a>';
                                                             return action;
@@ -174,9 +207,60 @@
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
                 var $toggle = $(this);
-                var url ='/changecourseStatus';
+                var url = '/changecourseStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
+            $('#table').on('click', '.is_popular', function() {
+                var popularstatus = $(this).data('populartatus');
+                var dataVal = $(this).data('val');
+                var $toggle = $(this);
+                var url = '/coursesetpopular';
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: url,
+                    data: {
+                        'is_popular': popularstatus,
+                        'id': dataVal
+                    },
+                    success: function(data) {
+                        if (popularstatus === 1) {
+                            $toggle.removeClass('text-secondary').addClass('text-primary');
+                            $toggle.data('popularstatus', 0);
+                            $('#success-message').text(data.success).show();
+                            $('#danger-message').text(data.success).hide();
+                        } else {
+                            $toggle.removeClass('text-primary').addClass('text-secondary');
+                            $toggle.data('popularstatus', 1);
+                            $('#danger-message').text(data.success).show();
+                            $('#success-message').text(data.success).hide();
+                        }
+                    }
+                });
+            });
+        });
+
+
+
+        $(document).on('click', '.course-checkbox', function() {
+            var course_id = $(this).data('course-id');
+            var checked = $(this).prop('checked');
+            var url = '/ActiveCourse';
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: url,
+                data: {
+                    'course_id': course_id,
+                    'checked': checked
+
+                },
+                success: function(data) {
+                    alert(data)
+                }
+            });
+
+            // You can now use the checkboxId as needed.
         });
     </script>
 @endpush
