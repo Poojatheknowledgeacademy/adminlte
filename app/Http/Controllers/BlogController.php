@@ -233,12 +233,11 @@ class BlogController extends Controller
     {
         $blog = Blog::find($request->id);
         if ($request->checked == 'true') {
-            $blog->countries()->sync([$request->country_id => ['deleted_at' => null]]);
+            $blog->countries()->sync([session('country')->id => ['deleted_at' => null]]);
         } else {
-            $blog->countries()->updateExistingPivot($request->country_id, [
+            $blog->countries()->updateExistingPivot(session('country')->id, [
                 'deleted_at' => now(),
             ]);
-           // $blog->countries()->where('country_id', $request->country_id)->delete();
         }
     }
     public function trashedBlog(Request $request)

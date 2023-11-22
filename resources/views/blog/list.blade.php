@@ -101,13 +101,14 @@
                                                         name: 'country',
                                                         render: function(data, type, full, meta) {
                                                             var isChecked = full.countries.some(function(country) {
-                                                                return country.id === countryId;
+                                                                if (country.pivot.deleted_at == null) {
+                                                                    return true;
+                                                                } else {
+                                                                    return false;
+                                                                }
                                                             });
-                                                            if (isChecked && full.countries.length > 0) {
-                                                                isChecked = full.countries[0].pivot.deleted_at === null;
-                                                            }
                                                             return '<input type="checkbox" class="country-checkbox" data-blog-id="' +
-                                                                full.id + '" data-codeselect="' + countryId + '"' +
+                                                                full.id + '" ' +
                                                                 (isChecked ? 'checked' : '') + '>';
                                                         }
                                                     },
@@ -196,13 +197,9 @@
                 var url = '/changeblogStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
-
-
             $(document).on('click', '.country-checkbox', function() {
-                var $checkbox = $(this);
-                var blogId = $checkbox.data('blog-id');
-                var countryId = $checkbox.data('codeselect');
-                var isChecked = $checkbox.prop('checked');
+                var blogId = $(this).data('blog-id');
+                var isChecked = $(this).prop('checked');
                 var url = '/blog-country';
                 $.ajax({
                     type: 'GET',
@@ -210,7 +207,6 @@
                     url: url,
                     data: {
                         'id': blogId,
-                        'country_id': countryId,
                         'checked': isChecked
                     },
                     success: function(data) {
@@ -219,8 +215,5 @@
                 });
             });
         });
-    </script>
-    <script>
-        var countryId = {{ session('country')->id ?? null }};
     </script>
 @endpush
