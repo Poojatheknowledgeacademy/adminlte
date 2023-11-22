@@ -77,7 +77,7 @@ class BlogController extends Controller
         } else {
             $popular = '0';
         }
-        $is_active = $request->is_active == "on" ? 1 : 0;
+        $is_active = $request->is_active2 == "on" ? 1 : 0;
         $blog = Blog::create([
             "category_id" => $request->category_id,
             "title" => $request->title,
