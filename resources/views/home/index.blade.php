@@ -114,7 +114,7 @@
                                                 $('#table').DataTable({
                                                     processing: true,
                                                     serverSide: true,
-                                                    ajax: '{{ route('course.index') }}',
+                                                    ajax: '{{ route('dashboard.index') }}',
                                                     columns: [{
                                                             data: 'name',
                                                             name: 'name'

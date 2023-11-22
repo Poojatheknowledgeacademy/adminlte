@@ -19,14 +19,14 @@ class Tag extends Model
         'is_active'
     ];
 
-    // public static function boot()
-    // {
-    //     parent::boot();
-    //     // create a event  on saving
-    //     static::saving(function ($topic) {
-    //         $topic->created_by = Auth::user()->id;
-    //     });
-    // }
+    public static function boot()
+    {
+        parent::boot();
+        // create a event  on saving
+        static::saving(function ($topic) {
+            $topic->created_by = Auth::user()->id;
+        });
+    }
 
     public function creator()
     {

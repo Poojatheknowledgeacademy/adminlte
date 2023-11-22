@@ -58,6 +58,7 @@ class CountryController extends Controller
     public function countrychange(Request $request){
 
         $request->session()->get('country');
+
         return redirect()->route('dashboard.index');
     }
 }

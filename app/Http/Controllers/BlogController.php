@@ -37,10 +37,9 @@ class BlogController extends Controller
                 'creator',
                 'category',
                 'countries' => function ($query) {
-                    $query->select('countries.*', 'country_blog.deleted_at as pivot_deleted_at','country_blog.is_popular as pivot_is_popular')
-                        ->where('country_id', session('country')->id);
+                    $query->select('countries.*', 'country_blog.deleted_at as pivot_deleted_at','country_blog.is_popular as pivot_is_popular');
                 },
-            ]);
+            ])->where('country_id', session('country')->id);
             return Datatables::eloquent($query)->make(true);
         }
         return view('blog.list');
