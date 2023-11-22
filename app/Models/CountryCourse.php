@@ -11,14 +11,13 @@ class CountryCourse extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-
-    public function courses()
+    public function course_name()
     {
-        return $this->belongsToMany(Course::class, 'country_courses');
+        return $this->belongsTo(Course::class, 'course_id');
     }
-    public function country()
+    public function country_name()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
 }

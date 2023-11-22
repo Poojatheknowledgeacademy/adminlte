@@ -14,7 +14,9 @@ class HomeController extends Controller
     {
 
         if ($request->ajax()) {
-            $query = CountryCourse::query();
+            $query = CountryCourse::with('course_name','country_name');
+            $query->where('country_id', session('country')->id);
+
             return Datatables::eloquent($query)->make(true);
         }
         $course_count = CountryCourse::where('country_id',session('country')->id)->count();
