@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->Integer('tka_id')->nullable();
             $table->string('name');
-            $table->string('icon')->nullable();
-            $table->string('logo')->nullable();
+            $table->string('icon')->nullable()->change();
+            $table->string('logo')->nullable()->change();
             $table->tinyInteger('is_active')->default(1);
             $table->tinyInteger('is_popular')->default(1);
             $table->tinyInteger('is_technical')->default(1);
