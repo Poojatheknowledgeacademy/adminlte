@@ -106,10 +106,10 @@
                                                                 return country.pivot.is_popular;
                                                             });
                                                             if (ispopular == 1) {
-                                                                return '<i class="fas fa-toggle-on text-primary is_popular" data-populartatus="' +
+                                                                return '<i class="fas fa-toggle-on text-primary is_popular" data-popularstatus="' +
                                                                     0 + '" data-val="' + full.id + '"></i>';
                                                             } else {
-                                                                return '<i class="fas fa-toggle-on text-secondary is_popular" data-populartatus="' +
+                                                                return '<i class="fas fa-toggle-on text-secondary is_popular" data-popularstatus="' +
                                                                     1 + '" data-val="' + full.id + '"></i>';
                                                             }
                                                         }
@@ -215,7 +215,7 @@
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
             $('#table').on('click', '.is_popular', function() {
-                var popularstatus = $(this).data('populartatus');
+                var popularstatus = $(this).data('popularstatus');
                 var dataVal = $(this).data('val');
                 var $toggle = $(this);
                 var url = '/coursesetpopular';
