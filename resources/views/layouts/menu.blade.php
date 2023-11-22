@@ -118,6 +118,11 @@
         </a>
         <ul class="nav nav-treeview" style="display:none;">
             <li class="nav-item">
+                <a href="{{ route('trashedUser') }}" class="nav-link">
+                    <p>User List</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('trashedCategory') }}" class="nav-link">
                     <p>Categories List</p>
                 </a>
@@ -128,13 +133,33 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('trashedTopicDetail') }}" class="nav-link">
+                    <p>TopicDetail List</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('trashedCourse') }}" class="nav-link">
-                    <p>Course List</p>
+                    <p>Courses List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedCoursedetail') }}" class="nav-link">
+                    <p>CourseDetail List</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('trashedBlog') }}" class="nav-link">
-                    <p>Blog List</p>
+                    <p>Blogs List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedBlogDetail') }}" class="nav-link">
+                    <p>BlogDetail List</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('trashedTag') }}" class="nav-link">
+                    <p>Tags List</p>
                 </a>
             </li>
             <li class="nav-item">
@@ -152,29 +177,5 @@
                     <p>Module List</p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('trashedTag') }}" class="nav-link">
-                    <p>Tag List</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('trashedCoursedetail') }}" class="nav-link">
-                    <p>CourseDetail List</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('trashedUser') }}" class="nav-link">
-                    <p>User List</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('trashedTopicDetail') }}" class="nav-link">
-                    <p>TopicDetail List</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('trashedBlogDetail') }}" class="nav-link">
-                    <p>BlogDetail List</p>
-                </a>
         </ul>
 @endif
