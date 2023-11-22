@@ -38,9 +38,9 @@ class BlogController extends Controller
                 'category',
                 'countries' => function ($query) {
                     $query->select('countries.*', 'country_blog.deleted_at as pivot_deleted_at','country_blog.is_popular as pivot_is_popular')
-                        ->where('country_id', session('country')->id);
+                        ;
                 },
-            ]);
+            ])->where('country_id', session('country')->id);
             return Datatables::eloquent($query)->make(true);
         }
         return view('blog.list');
@@ -78,7 +78,8 @@ class BlogController extends Controller
         } else {
             $popular = '0';
         }
-        $is_active = $request->is_active == "on" ? 1 : 0;
+
+        $is_active = $request->is_active2 == "on" ? 1 : 0;
         $blog = Blog::create([
             "category_id" => $request->category_id,
             "title" => $request->title,

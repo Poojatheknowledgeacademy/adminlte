@@ -46,11 +46,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Country<span class="text-danger">*</span></label>
-                                    <select id="blog_country" name="country_id"
-                                        class="form-control select2bs4 @error('country_id') is-invalid @enderror">
+                                    <select id="blog_country" name="country_id" class="form-control select2bs4 @error('country_id') is-invalid @enderror">
                                         <option value="">Select a Country</option>
                                         @foreach ($country as $countries)
-                                            <option value="{{ $countries->id }}">{{ $countries->name }}</option>
+                                            <option value="{{ $countries->id }}" @if(session('country')->id == $countries->id) selected @endif>{{ $countries->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('country_id')
