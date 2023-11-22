@@ -37,8 +37,7 @@ class BlogController extends Controller
                 'creator',
                 'category',
                 'countries' => function ($query) {
-                    $query->select('countries.*', 'country_blog.deleted_at as pivot_deleted_at','country_blog.is_popular as pivot_is_popular')
-                        ;
+                    $query->select('countries.*', 'country_blog.deleted_at as pivot_deleted_at','country_blog.is_popular as pivot_is_popular');
                 },
             ])->where('country_id', session('country')->id);
             return Datatables::eloquent($query)->make(true);
@@ -60,7 +59,6 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-        //
         $image1 = $request->file('featured_img1');
         $image1name = time() . '_' . $image1->getClientOriginalName();
         $image1location = 'Images/featureimage1/';
@@ -79,8 +77,7 @@ class BlogController extends Controller
         } else {
             $popular = '0';
         }
-
-        $is_active = $request->is_active2 == "on" ? 1 : 0;
+        $is_active = $request->is_active == "on" ? 1 : 0;
         $blog = Blog::create([
             "category_id" => $request->category_id,
             "title" => $request->title,
