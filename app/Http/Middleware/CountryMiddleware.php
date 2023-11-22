@@ -17,6 +17,7 @@ class CountryMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         $countryShortcode = $request->route('country')?? 'uk';  //get country part from url
         $country = Country::where('country_code', '=', $countryShortcode)->where('isAdvert', '=', 1)->first();
         if ($country === null) {
@@ -26,7 +27,7 @@ class CountryMiddleware
         }
         $request->session()->put('country', $country);
         $request->session()->save();
-        URL::defaults(['locale' => $request->segment(1)]);
+        //URL::defaults(['locale' => $request->segment(1)]);
         return $next($request);
     }
 }

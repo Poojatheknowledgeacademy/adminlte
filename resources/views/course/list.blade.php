@@ -38,8 +38,8 @@
                                                 <th scope="col">Course Name</th>
                                                 <th scope="col">Topic Name</th>
                                                 <th scope="col">Active</th>
-                                                <th scope="col">IsActive</th>
-                                                <th scope="col">Popular</th>
+                                                <th scope="col">Country Active</th>
+                                                <th scope="col">Country Popular</th>
                                                 <th scope="col">Detail</th>
                                                 <th scope="col">FaQ</th>
                                                 <th scope="col">Created At</th>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\LogActivity;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -48,6 +49,8 @@ class CreateAdminUserSeeder extends Seeder
             'password' => bcrypt('user123'),
             'created_by' =>1
         ]);
+
+       
 
         $role = Role::create(['name' => 'Admin','guard_name'=>'web','description'=>'adminpermission','is_active'=>1]);
         $permissions = Permission::pluck('id','id')->all();

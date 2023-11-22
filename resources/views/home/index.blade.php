@@ -114,14 +114,14 @@
                                                 $('#table').DataTable({
                                                     processing: true,
                                                     serverSide: true,
-                                                    ajax: '{{ route('course.index') }}',
+                                                    ajax: '{{ route('dashboard.index') }}',
                                                     columns: [{
-                                                            data: 'name',
-                                                            name: 'name'
+                                                            data: 'course_name.name',
+                                                            name: 'course_name.name'
                                                         },
                                                         {
-                                                            data: '',
-                                                            name: ''
+                                                            data: 'country_name.name',
+                                                            name: 'country_name.name'
                                                         }, {
                                                             data: 'id',
                                                             name: 'actions',
