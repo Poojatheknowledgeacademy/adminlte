@@ -21,6 +21,7 @@ class TopicDetailController extends Controller
         if ($request->ajax()) {
             $query = Topicdetail::with('country', 'topic');
             $query->where('topic_id', $id);
+            $query->where('country_id', session('country')->id);
             return Datatables::eloquent($query)->make(true);
         }
         return view('topic.detail.list', compact('id'));
@@ -124,6 +125,7 @@ class TopicDetailController extends Controller
         }
         return view('trash.topicdetail_list');
     }
+
 
     public function restore($id)
     {

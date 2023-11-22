@@ -109,14 +109,14 @@
             <p>URL Redirect</p>
         </a>
     </li>
-    <li class="nav-item menu-is-opening menu-open">
+    <li class="nav-item">
         <a href="#" class="nav-link">
             <i class="nav-icon fas fa-trash text-danger"></i>
             <p>
                 Trash <i class="fas fa-angle-left right"></i>
             </p>
         </a>
-        <ul class="nav nav-treeview" style="display: block;">
+        <ul class="nav nav-treeview" style="display:none;">
             <li class="nav-item">
                 <a href="{{ route('trashedCategory') }}" class="nav-link">
                     <p>Categories List</p>
