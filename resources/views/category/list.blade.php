@@ -51,7 +51,7 @@
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Technical</th>
-                                                <th scope="col">Country</th>
+                                                <th scope="col">Country Active</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
@@ -125,13 +125,20 @@
                                                         return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                     }
                                                 }
-                                            }, {
+                                            },
+                                            {
                                                 data: 'country',
                                                 name: 'country',
                                                 orderable: false,
                                                 render: function(data, type, full, meta) {
-                                                    return '<input type="checkbox" class="category-checkbox" data-category-id="' + full.id + '" ' +
-                                                        (data ? 'checked' : '') + '>';
+                                                    var isChecked = full.countries.some(function(country) {
+                                                        // alert(country.pivot.deleted_at);
+                                                        return country.pivot.deleted_at == null;
+                                                    });
+
+                                                    return '<input type="checkbox" class="category-checkbox" data-category-id="' +
+                                                        full.id + '" ' +
+                                                        (isChecked ? 'checked' : '') + '>';
                                                 }
                                             },
                                             {
@@ -143,12 +150,10 @@
                                                     }
                                                     return '';
                                                 }
-                                            },
-                                            {
+                                            }, {
                                                 data: 'creator.name',
                                                 name: 'creator.name'
-                                            },
-                                            {
+                                            }, {
                                                 data: 'id',
                                                 name: 'actions',
                                                 orderable: false,
@@ -232,28 +237,32 @@
             loadAllData();
         });
 
+
         $(document).on('click', '.category-checkbox', function() {
 
             var categoryId = $(this).data('category-id');
+            // var countryId = $(this).data('codeselect');
+            var checked = $(this).prop('checked');
+            //alert(categoryId);
+            var url = '/country-category';
 
-            var url = '/update-category-country';
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 url: url,
                 data: {
                     'id': categoryId,
-                    'is_active': true, // or false based on your logic
-                     'updated_at': '{{ now()->toDateTimeString() }}',
-                    // Add any additional data you need to send
+                    // 'country_id': countryId,
+                    'checked': checked,
                 },
                 success: function(data) {
-                    alert(data);
-                },
-                error: function(error) {
-                    console.error(error);
+                    $checkbox.prop('checked', data.deleted_at === null);
                 }
             });
+
         });
     </script>
+    {{-- <script>
+        var countryId = {{ session('country')->id ?? null }};
+    </script> --}}
 @endpush

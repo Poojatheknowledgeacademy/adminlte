@@ -81,8 +81,8 @@
                                                         data: 'id',
                                                         name: 'action',
                                                         render: function(data, type, full, meta) {
-                                                            return '<button class="btn btn-danger btn-sm delete-failed-job" data-failed-job-id="' +
-                                                                full.id + '">Delete</button>';
+                                                            return '<i class="fas fa-trash text-danger delete-failed-job" data-failed-job-id="' +
+                                                                full.id + '" style="cursor: pointer;"></i>';
                                                         }
                                                     }
                                                 ]
@@ -100,7 +100,7 @@
                                                         success: function(response) {
                                                             console.log(response.message);
 
-                                                                                                                       var table = $('#table').DataTable();
+                                                            var table = $('#table').DataTable();
                                                             table.row('#row-id-' + failedJobId).remove().draw(false);
                                                         },
                                                         error: function(xhr, status, error) {

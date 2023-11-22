@@ -32,12 +32,17 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Category::with('creator');
+            $query = Category::with([
+                'creator',
+                'countries' => function ($query) {
+                    $query->select('countries.*', 'country_category.deleted_at as pivot_deleted_at', 'country_category.is_popular as pivot_is_popular')
+                        ->where('country_id', session('country')->id);
+                },
+            ]);
             return Datatables::eloquent($query)->make(true);
         }
         return view('category.list');
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -95,9 +100,9 @@ class CategoryController extends Controller
         ]);
         $category->countries()->attach($request->input('country', []));
 
-        $user = User::where('email', 'arshdeep.singh@theknowledgeacademy.com')->first();
+
         $message = (new CategoryCreatedMail($category))->onQueue('emails');
-        Mail::to($user->email)->later(now()->addSeconds(1), $message);
+        Mail::to('arshdeep.singh@theknowledgeacademy.com')->later(now()->addSeconds(1), $message);
 
         session()->flash('success', 'Category Created successfully.');
         return redirect()->route('category.index');
@@ -227,39 +232,21 @@ class CategoryController extends Controller
         session()->flash('danger', 'Category Deleted successfully.');
         return view('trash.category_list');
     }
+
     public function storeCategoryCountry(Request $request)
     {
-        $now = now();
+        echo "gfbfbggh";
+        print_r($request->all());
         $category = Category::find($request->id);
 
-        if (!$category) {
-            return response()->json(['error' => 'Category not found'], 404);
+        if ($request->checked == 'true') {
+            $category->countries()->sync([session('country')->id => ['deleted_at' => null]]);
+
+        } else {
+            $category->countries()->updateExistingPivot(session('country')->id, [
+                'deleted_at' => now(),
+            ]);
+            // $category->countries()->where('country_id', $request->country_id)->delete();
         }
-
-        $category->countries()->attach([1], [
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
-
-        // Add any additional logic or response as needed
-
-        return response()->json(['success' => 'Category Country Stored']);
     }
-    public function updatecategorycountry(Request $request)
-    {
-
-        $category = Category::find($request->id);
-
-    if (!$category) {
-        return response()->json(['error' => 'Category not found'], 404);
-    }
-
-        $category->countries()->attach([1] , [
-        'created_at' => now(),
-        'updated_at' => now(),
-
-       ]);
-
-    return response()->json(['success' => 'Category Country Updated']);
-}
 }

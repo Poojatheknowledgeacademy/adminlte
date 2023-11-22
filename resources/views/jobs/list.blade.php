@@ -76,8 +76,9 @@
                                                         data: 'id',
                                                         name: 'action',
                                                         render: function(data, type, full, meta) {
-                                                            return '<button class="btn btn-danger btn-sm delete-job" data-job-id="' +
-                                                                full.id + '">Delete</button>';
+                                                            return '<i class="fas fa-trash text-danger delete-job" data-job-id="' +
+                                                                full.id + '" style="cursor: pointer;"></i>';
+
                                                         }
                                                     }
                                                 ]

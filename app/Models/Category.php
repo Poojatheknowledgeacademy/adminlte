@@ -60,7 +60,7 @@ class Category extends Model
     }
     public function countries()
     {
-        return $this->belongsToMany(Country::class, 'category_country');
+        return $this->belongsToMany(Country::class, 'country_category')->withTimestamps();
     }
 
 }
