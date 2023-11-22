@@ -86,7 +86,11 @@
                                                         name: 'isactive',
                                                         render: function(data, type, full, meta) {
                                                             var isChecked = full.countries.some(function(country) {
-                                                                return country.id;
+                                                                if (country.pivot.deleted_at == null) {
+                                                                    return true;
+                                                                } else {
+                                                                    return false;
+                                                                }
                                                             });
 
                                                             return '<input type="checkbox" class="course-checkbox" data-course-id="' +
@@ -239,9 +243,6 @@
                 });
             });
         });
-
-
-
         $(document).on('click', '.course-checkbox', function() {
             var course_id = $(this).data('course-id');
             var checked = $(this).prop('checked');
@@ -253,14 +254,11 @@
                 data: {
                     'course_id': course_id,
                     'checked': checked
-
                 },
                 success: function(data) {
-                    alert(data)
+                    $(this).prop('checked', data.deleted_at === null);
                 }
             });
-
-
         });
     </script>
 @endpush
