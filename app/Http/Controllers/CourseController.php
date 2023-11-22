@@ -195,18 +195,15 @@ class CourseController extends Controller
     public function getActiveCourse(Request $request)
     {
         $course = Course::find($request->course_id);
-        if ($request->checked == true) {
-            $course->countries()->sync(session('country')->id);
+        if ($request->checked == 'true') {
+            $course->countries()->sync([session('country')->id => ['deleted_at' => null]]);
+
         } else {
-
-            // $countryCourse = CountryCourses::where('course_id', $course->id)
-            //     ->where('country_id', session('country')->id)
-            //     ->first();
-
-            // if ($countryCourse) {
-            //     $countryCourse->delete(); // This will perform a soft delete
-            // }
+            $course->countries()->updateExistingPivot(session('country')->id, [
+                'deleted_at' => now(),
+            ]);
         }
+
     }
     public function setPopular(Request $request){
         $course = Course::find($request->id);
