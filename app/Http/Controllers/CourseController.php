@@ -31,6 +31,7 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
+
         if ($request->ajax()) {
             $query = Course::with(['creator', 'topic', 'countries' => function ($query) {
                 $query->select('countries.*', 'country_courses.deleted_at as pivot_deleted_at','country_courses.is_popular as pivot_is_popular')

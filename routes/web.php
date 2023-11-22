@@ -147,6 +147,6 @@ Route::get('/country',             [CountryController::class, 'country']);
 Route::get('users/activateaccount/{remember_token}', [UserController::class, 'activateaccount'])->name('activateaccount');
 Route::post('/postactivate/{remember_token}', [UserController::class, 'postactivate'])->name('postactive');
 
-// Route::group(['prefix' => '{country}', 'middleware' => 'country'], function () {
-//     Route::get('/country_change',             [CountryController::class, 'countrychange']);
-// });
+Route::group(['prefix' => '{country}', 'middleware' => 'country'], function () {
+    Route::get('/country_change',             [CountryController::class, 'countrychange']);
+});
