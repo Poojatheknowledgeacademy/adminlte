@@ -103,7 +103,7 @@
                                                         name: 'popular',
                                                         render: function(data, type, full, meta) {
                                                             var ispopular = full.countries.some(function(country) {
-                                                                return country.is_popular;
+                                                                return country.pivot.is_popular;
                                                             });
                                                             if (ispopular == 1) {
                                                                 return '<i class="fas fa-toggle-on text-primary is_popular" data-populartatus="' +

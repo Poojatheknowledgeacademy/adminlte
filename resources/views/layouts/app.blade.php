@@ -223,7 +223,8 @@
         $('#countryDropdown').on('change', function() {
             var country_id = $(this).val();
             var country_code = $(this).find(':selected').data('codeselect');
-            window.location.href = "/" + country_code + "/dashboard";
+           // window.location.href = "/" + country_code + "/dashboard";
+           window.location.href =  "/dashboard";
         });
     });
 </script>
