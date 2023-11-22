@@ -41,7 +41,7 @@ class TopicController extends Controller
                 'creator',
                 'category',
                 'countries' => function ($query) {
-                    $query->select('countries.*', 'country_topics.deleted_at as pivot_deleted_at','country_topics.is_popular as pivot_is_popular')
+                    $query->select('countries.*', 'country_topics.deleted_at as pivot_deleted_at', 'country_topics.is_popular as pivot_is_popular')
                         ->where('country_id', session('country')->id);
                 },
             ]);
@@ -158,46 +158,16 @@ class TopicController extends Controller
             return response()->json(['success' => 'Topic Deactivated']);
         }
     }
-    // public function storeTopicCountry(Request $request)
-    // {
-    //     $topicId = $request->input('topic_id');
-    //     $countryId = session()->get('country');
 
-    //     $topic = Topic::findOrFail($topicId);
-
-    //     if ($request->input('is_checked')) {
-    //         $topic->countries()->attach($countryId);
-    //         return response()->json(['message' => 'Country attached to the topic']);
-    //     } else {
-    //         $topic->countries()->detach($countryId);
-    //         return response()->json(['message' => 'Country detached from the topic']);
-    //     }
-    // }
-    // public function storeTopicCountry(Request $request)
-    // {
-    //     $topicId = $request->input('topic_id');
-    //     $countryId = session()->get('country');
-
-    //     $topic = Topic::findOrFail($topicId);
-
-    //     if ($request->input('is_checked')) {
-    //         $topic->countries()->attach($countryId);
-    //     } else {
-    //         //$topic->countries()->updateExistingPivot($countryId, ['deleted_at' => now()]);
-    //         $topic->countries()->detach($countryId);
-    //     }
-    // }
     public function storeTopicCountry(Request $request)
     {
-        print_r($request->all());
-        $topic = Topic::find($request->id);
+        $topic = Topic::find($request->topic_id);
         if ($request->checked == 'true') {
-            $topic->countries()->sync([$request->country_id => ['deleted_at' => null]]);
+            $topic->countries()->sync([session('country')->id => ['deleted_at' => null]]);
         } else {
-            $topic->countries()->updateExistingPivot($request->country_id, [
+            $topic->countries()->updateExistingPivot(session('country')->id, [
                 'deleted_at' => now(),
             ]);
-           // $topic->countries()->where('country_id', $request->country_id)->delete();
         }
     }
 
@@ -222,5 +192,17 @@ class TopicController extends Controller
         $topic->forceDelete();
         session()->flash('danger', 'Topic Deleted successfully.');
         return view('trash.topic_list');
+    }
+    public function setPopular(Request $request)
+    {
+        $topic = Topic::find($request->id);
+        $topic->countries()->updateExistingPivot(session('country')->id, [
+            'is_popular' =>  $request->is_popular,
+        ]);
+        if ($request->is_popular == 1) {
+            return response()->json(['success' => 'Topic Popular Activated']);
+        } else {
+            return response()->json(['success' => 'Topic Popular Deactivated']);
+        }
     }
 }

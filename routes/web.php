@@ -79,14 +79,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('changeModuleStatus',      [ModuleController::class, 'updateStatus']);
     Route::get('changeblogdetailsStatus', [BlogDetailController::class, 'updateStatus']);
 
-    Route::get('ActiveCategories', [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
+    Route::get('ActiveCategories',        [CategoryController::class, 'getActiveCategories'])->name('getActiveCategories');
 
-    Route::get('trashedCategory', [CategoryController::class, 'trashedCategory'])->name('trashedCategory');
-    Route::get('restore/{category}', [CategoryController::class, 'restore'])->name('category.restore');
-    Route::delete('delete/{category}', [CategoryController::class, 'delete'])->name('category.delete');
-    Route::get('trashedTopic',                   [TopicController::class, 'trashedTopic'])->name('trashedTopic');
-    Route::get('topic/restore/{topic}',          [TopicController::class, 'restore'])->name('topic.restore');
-    Route::delete('topic/delete/{topic}',        [TopicController::class, 'delete'])->name('topic.delete');
+    Route::get('trashedCategory',               [CategoryController::class, 'trashedCategory'])->name('trashedCategory');
+    Route::get('restore/{category}',            [CategoryController::class, 'restore'])->name('category.restore');
+    Route::delete('delete/{category}',          [CategoryController::class, 'delete'])->name('category.delete');
+
+    Route::get('trashedTopic',                  [TopicController::class, 'trashedTopic'])->name('trashedTopic');
+    Route::get('topic/restore/{topic}',         [TopicController::class, 'restore'])->name('topic.restore');
+    Route::delete('topic/delete/{topic}',       [TopicController::class, 'delete'])->name('topic.delete');
 
     Route::get('trashedCourse',                 [CourseController::class, 'trashedCourse'])->name('trashedCourse');
     Route::get('course/restore/{course}',       [CourseController::class, 'restore'])->name('course.restore');
@@ -100,40 +101,38 @@ Route::middleware(['auth'])->group(function () {
     Route::get('restore/{role}',                [RoleController::class, 'restore'])->name('role.restore');
     Route::delete('delete/{role}',              [RoleController::class, 'delete'])->name('role.delete');
 
+    Route::get('trashedTag',                    [TagController::class, 'trashedTag'])->name('trashedTag');
+    Route::get('tag/restoreTag/{tag}',          [TagController::class, 'restoreTag'])->name('tag.restore');
+    Route::delete('tag/deleteTag/{tag}',        [TagController::class, 'deleteTag'])->name('tag.delete');
 
-    Route::get('trashedTag', [TagController::class, 'trashedTag'])->name('trashedTag');
-    Route::get('tag/restoreTag/{tag}', [TagController::class, 'restoreTag'])->name('tag.restore');
-    Route::delete('tag/deleteTag/{tag}', [TagController::class, 'deleteTag'])->name('tag.delete');
+    Route::get('trashedUser',                   [UserController::class, 'trashedUser'])->name('trashedUser');
+    Route::get('user/restore/{user}',           [UserController::class, 'restore'])->name('user.restore');
+    Route::delete('user/delete/{user}',         [UserController::class, 'delete'])->name('user.delete');
 
-    Route::get('trashedUser', [UserController::class, 'trashedUser'])->name('trashedUser');
-    Route::get('user/restore/{user}', [UserController::class, 'restore'])->name('user.restore');
-    Route::delete('user/delete/{user}', [UserController::class, 'delete'])->name('user.delete');
-
-    Route::get('trashedPermission', [PermissionController::class, 'trashedPermission'])->name('trashedPermission');
-    Route::get('permission/restore/{permission}', [PermissionController::class, 'restore'])->name('permission.restore');
-    Route::delete('permission/deletse/{permission}', [PermissionController::class, 'delete'])->name('permission.delete');
-
-
-    Route::get('trashedModule', [ModuleController::class, 'trashedModule'])->name('trashedModule');
-    Route::get('module/restore/{module}', [ModuleController::class, 'restore'])->name('module.restore');
-    Route::delete('module/delete/{module}', [ModuleController::class, 'delete'])->name('module.delete');
+    Route::get('trashedPermission',                 [PermissionController::class, 'trashedPermission'])->name('trashedPermission');
+    Route::get('permission/restore/{permission}',   [PermissionController::class, 'restore'])->name('permission.restore');
+    Route::delete('permission/delete/{permission}', [PermissionController::class, 'delete'])->name('permission.delete');
 
 
-    Route::get('trashedCoursedetail', [CoursedetailController::class, 'trashedCoursedetail'])->name('trashedCoursedetail');
-    Route::get('coursedetail/restore/{coursedetail}', [CoursedetailController::class, 'restore'])->name('coursedetail.restore');
+    Route::get('trashedModule',                 [ModuleController::class, 'trashedModule'])->name('trashedModule');
+    Route::get('module/restore/{module}',       [ModuleController::class, 'restore'])->name('module.restore');
+    Route::delete('module/delete/{module}',     [ModuleController::class, 'delete'])->name('module.delete');
+
+
+    Route::get('trashedCoursedetail',                   [CoursedetailController::class, 'trashedCoursedetail'])->name('trashedCoursedetail');
+    Route::get('coursedetail/restore/{coursedetail}',   [CoursedetailController::class, 'restore'])->name('coursedetail.restore');
     Route::delete('coursedetail/delete/{coursedetail}', [CoursedetailController::class, 'delete'])->name('coursedetail.delete');
 
+    Route::get('trashedTopicDetail',                    [TopicDetailController::class, 'trashedTopicDetail'])->name('trashedTopicDetail');
+    Route::get('topicdetail/restore/{topicdetail}',     [TopicDetailController::class, 'restore'])->name('topicdetail.restore');
+    Route::delete('topicdetail/delete/{topicdetail}',   [TopicDetailController::class, 'delete'])->name('topicdetail.delete');
 
-    Route::get('trashedTopicDetail', [TopicDetailController::class, 'trashedTopicDetail'])->name('trashedTopicDetail');
-    Route::get('topicdetail/restore/{topicdetail}', [TopicDetailController::class, 'restore'])->name('topicdetail.restore');
-    Route::delete('topicdetail/delete/{topicdetail}', [TopicDetailController::class, 'delete'])->name('topicdetail.delete');
-
-
-    Route::get('trashedBlogDetail', [BlogDetailController::class, 'trashedBlogDetail'])->name('trashedBlogDetail');
-    Route::get('blogdetail/restore/{blogdetail}', [BlogDetailController::class, 'restore'])->name('blogdetail.restore');
-    Route::delete('blogdetail/delete/{blogdetail}', [BlogDetailController::class, 'delete'])->name('blogdetail.delete');
+    Route::get('trashedBlogDetail',                     [BlogDetailController::class, 'trashedBlogDetail'])->name('trashedBlogDetail');
+    Route::get('blogdetail/restore/{blogdetail}',       [BlogDetailController::class, 'restore'])->name('blogdetail.restore');
+    Route::delete('blogdetail/delete/{blogdetail}',     [BlogDetailController::class, 'delete'])->name('blogdetail.delete');
 
     Route::get('blog-country', [BlogController::class, 'storeblogcountry']);
+    Route::get('blogsetpopular', [BlogController::class, 'setPopular']);
 
     Route::get('ActiveCourse', [CourseController::class, 'getActiveCourse']);
     Route::get('coursesetpopular',      [CourseController::class, 'setPopular']);
@@ -141,13 +140,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('country-category', [CategoryController::class, 'storeCategoryCountry']);
 
-    Route::get('country-topics', [TopicController::class, 'storeTopicCountry']);
+    Route::get('country-topics',        [TopicController::class, 'storeTopicCountry']);
+    Route::get('topicsetpopular',       [TopicController::class, 'setPopular']);
 });
 
 Route::get('/country',             [CountryController::class, 'country']);
 Route::get('users/activateaccount/{remember_token}', [UserController::class, 'activateaccount'])->name('activateaccount');
 Route::post('/postactivate/{remember_token}', [UserController::class, 'postactivate'])->name('postactive');
 
-// Route::group(['prefix' => '{country}', 'middleware' => 'country'], function () {
-//     Route::get('/country_change',             [CountryController::class, 'countrychange']);
-// });
+Route::group(['prefix' => '{country}', 'middleware' => 'country'], function () {
+    Route::get('/country_change',             [CountryController::class, 'countrychange']);
+});

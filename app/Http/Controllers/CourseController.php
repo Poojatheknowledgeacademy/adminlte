@@ -203,7 +203,6 @@ class CourseController extends Controller
                 'deleted_at' => now(),
             ]);
         }
-
     }
     public function setPopular(Request $request){
         $course = Course::find($request->id);

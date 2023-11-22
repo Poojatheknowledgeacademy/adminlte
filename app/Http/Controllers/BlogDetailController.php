@@ -19,6 +19,9 @@ class BlogDetailController extends Controller
     {
         if ($request->ajax()) {
             $query = BlogDetail::with('creator', 'blog');
+            $query->whereHas('blog', function ($query) {
+                $query->where('country_id', session('country')->id);
+            });
             $query->where('blog_id', $id);
             return Datatables::eloquent($query)->make(true);
         }

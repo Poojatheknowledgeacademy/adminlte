@@ -21,6 +21,7 @@ class CoursedetailController extends Controller
         if ($request->ajax()) {
             $query = Coursedetail::with('country', 'course');
             $query->where('course_id', $id);
+            $query->where('country_id', session('country')->id);
             return Datatables::eloquent($query)->make(true);
         }
         return view('course.detail.list', compact('id'));
