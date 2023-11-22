@@ -38,7 +38,8 @@
                                                 <th scope="col">Author Name</th>
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Active</th>
-                                                <th scope="col">Country</th>
+                                                <th scope="col">Country Active</th>
+                                                <th scope="col">Country Popular</th>
                                                 <th scope="col">Blog Detils</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Created At</th>
@@ -110,6 +111,22 @@
                                                             return '<input type="checkbox" class="country-checkbox" data-blog-id="' +
                                                                 full.id + '" ' +
                                                                 (isChecked ? 'checked' : '') + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        data: 'popular',
+                                                        name: 'popular',
+                                                        render: function(data, type, full, meta) {
+                                                            var ispopular = full.countries.some(function(country) {
+                                                                return country.pivot.is_popular;
+                                                            });
+                                                            if (ispopular == 1) {
+                                                                return '<i class="fas fa-toggle-on text-primary is_popular" data-popularstatus="' +
+                                                                    0 + '" data-val="' + full.id + '"></i>';
+                                                            } else {
+                                                                return '<i class="fas fa-toggle-on text-secondary is_popular" data-popularstatus="' +
+                                                                    1 + '" data-val="' + full.id + '"></i>';
+                                                            }
                                                         }
                                                     },
                                                     {
@@ -196,6 +213,34 @@
                 var $toggle = $(this);
                 var url = '/changeblogStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
+            });
+             $('#table').on('click', '.is_popular', function() {
+                var popularstatus = $(this).data('popularstatus');
+                var dataVal = $(this).data('val');
+                var $toggle = $(this);
+                var url = '/blogsetpopular';
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: url,
+                    data: {
+                        'is_popular': popularstatus,
+                        'id': dataVal
+                    },
+                    success: function(data) {
+                        if (popularstatus === 1) {
+                            $toggle.removeClass('text-secondary').addClass('text-primary');
+                            $toggle.data('popularstatus', 0);
+                            $('#success-message').text(data.success).show();
+                            $('#danger-message').text(data.success).hide();
+                        } else {
+                            $toggle.removeClass('text-primary').addClass('text-secondary');
+                            $toggle.data('popularstatus', 1);
+                            $('#danger-message').text(data.success).show();
+                            $('#success-message').text(data.success).hide();
+                        }
+                    }
+                });
             });
             $(document).on('click', '.country-checkbox', function() {
                 var blogId = $(this).data('blog-id');

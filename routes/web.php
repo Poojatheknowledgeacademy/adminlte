@@ -134,6 +134,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('blogdetail/delete/{blogdetail}', [BlogDetailController::class, 'delete'])->name('blogdetail.delete');
 
     Route::get('blog-country', [BlogController::class, 'storeblogcountry']);
+    Route::get('blogsetpopular', [BlogController::class, 'setPopular']);
 
     Route::get('ActiveCourse', [CourseController::class, 'getActiveCourse']);
     Route::get('coursesetpopular',      [CourseController::class, 'setPopular']);

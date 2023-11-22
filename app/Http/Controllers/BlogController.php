@@ -240,6 +240,18 @@ class BlogController extends Controller
             ]);
         }
     }
+    public function setPopular(Request $request){
+        $blog = Blog::find($request->id);
+        $blog->countries()->updateExistingPivot(session('country')->id, [
+            'is_popular' =>  $request->is_popular,
+        ]);
+        if ($request->is_popular == 1) {
+            return response()->json(['success' => 'Blog Popular Activated']);
+        } else {
+            return response()->json(['success' => 'Blog Popular Deactivated']);
+        }
+
+    }
     public function trashedBlog(Request $request)
     {
         if ($request->ajax()) {
