@@ -51,8 +51,8 @@
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Technical</th>
-                                                <th scope="col">Country Popular</th>
                                                 <th scope="col">Country Active</th>
+                                                <th scope="col">Country Popular</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
                                                 <th scope="col">Action</th>
@@ -126,7 +126,21 @@
                                                         return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                     }
                                                 }
-                                            }, {
+                                            },{
+                                                data: 'country',
+                                                name: 'country',
+                                                orderable: false,
+                                                render: function(data, type, full, meta) {
+                                                    var isChecked = full.countries.some(function(country) {
+                                                        // alert(country.pivot.deleted_at);
+                                                        return country.pivot.deleted_at == null;
+                                                    });
+
+                                                    return '<input type="checkbox" class="category-checkbox" data-category-id="' +
+                                                        full.id + '" ' +
+                                                        (isChecked ? 'checked' : '') + '>';
+                                                }
+                                            },{
                                                 data: 'popular',
                                                 name: 'popular',
                                                 render: function(data, type, full, meta) {
@@ -140,22 +154,6 @@
                                                         return '<i class="fas fa-toggle-on text-secondary is_popular" data-popularstatus="' +
                                                             1 + '" data-val="' + full.id + '"></i>';
                                                     }
-                                                }
-                                            },
-
-                                            {
-                                                data: 'country',
-                                                name: 'country',
-                                                orderable: false,
-                                                render: function(data, type, full, meta) {
-                                                    var isChecked = full.countries.some(function(country) {
-                                                        // alert(country.pivot.deleted_at);
-                                                        return country.pivot.deleted_at == null;
-                                                    });
-
-                                                    return '<input type="checkbox" class="category-checkbox" data-category-id="' +
-                                                        full.id + '" ' +
-                                                        (isChecked ? 'checked' : '') + '>';
                                                 }
                                             },
                                             {
@@ -277,6 +275,7 @@
                     },
                     success: function(data) {
                         console.log('Success:', data);
+                        console.log('popularstatus:', popularstatus);
                         if (popularstatus === 1) {
                             $toggle.removeClass('text-secondary').addClass('text-primary');
                             $toggle.data('popularstatus', 0);
