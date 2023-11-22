@@ -51,6 +51,7 @@
                                                 <th scope="col">Active</th>
                                                 <th scope="col">Popular</th>
                                                 <th scope="col">Technical</th>
+                                                <th scope="col">Country Popular</th>
                                                 <th scope="col">Country Active</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Created By</th>
@@ -125,7 +126,23 @@
                                                         return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                     }
                                                 }
+                                            }, {
+                                                data: 'popular',
+                                                name: 'popular',
+                                                render: function(data, type, full, meta) {
+                                                    var ispopular = full.countries.some(function(country) {
+                                                        return country.pivot.is_popular;
+                                                    });
+                                                    if (ispopular == 1) {
+                                                        return '<i class="fas fa-toggle-on text-primary is_popular" data-popularstatus="' +
+                                                            0 + '" data-val="' + full.id + '"></i>';
+                                                    } else {
+                                                        return '<i class="fas fa-toggle-on text-secondary is_popular" data-popularstatus="' +
+                                                            1 + '" data-val="' + full.id + '"></i>';
+                                                    }
+                                                }
                                             },
+
                                             {
                                                 data: 'country',
                                                 name: 'country',
@@ -236,7 +253,45 @@
             });
             loadAllData();
         });
+        $(document).ready(function() {
+            $('#table').on('click', '.is_active', function() {
+                var activestatus = $(this).data('activestatus');
+                var dataVal = $(this).data('val');
+                var $toggle = $(this);
+                var url = '/changecategoryStatus';
+                handleStatusToggle($toggle, activestatus, dataVal, url);
+            });
+            $('#table').on('click', '.is_popular', function() {
+                var popularstatus = $(this).data('popularstatus');
+                var dataVal = $(this).data('val');
+                var $toggle = $(this);
+                var url = '/categorysetpopular'; // Update with your URL
 
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: url,
+                    data: {
+                        'is_popular': popularstatus,
+                        'id': dataVal
+                    },
+                    success: function(data) {
+                        console.log('Success:', data);
+                        if (popularstatus === 1) {
+                            $toggle.removeClass('text-secondary').addClass('text-primary');
+                            $toggle.data('popularstatus', 0);
+                            $('#success-message').text(data.success).show();
+                            $('#danger-message').text(data.success).hide();
+                        } else {
+                            $toggle.removeClass('text-primary').addClass('text-secondary');
+                            $toggle.data('popularstatus', 1);
+                            $('#danger-message').text(data.success).show();
+                            $('#success-message').text(data.success).hide();
+                        }
+                    }
+                });
+            });
+        });
 
         $(document).on('click', '.category-checkbox', function() {
 

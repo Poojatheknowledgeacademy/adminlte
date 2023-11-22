@@ -235,18 +235,30 @@ class CategoryController extends Controller
 
     public function storeCategoryCountry(Request $request)
     {
-        echo "gfbfbggh";
-        print_r($request->all());
+
+        // print_r($request->all());
         $category = Category::find($request->id);
 
         if ($request->checked == 'true') {
             $category->countries()->sync([session('country')->id => ['deleted_at' => null]]);
-
         } else {
             $category->countries()->updateExistingPivot(session('country')->id, [
                 'deleted_at' => now(),
             ]);
             // $category->countries()->where('country_id', $request->country_id)->delete();
+        }
+    }
+    public function setPopular(Request $request)
+    {
+        $category = Category::find($request->id);
+        $category->countries()->updateExistingPivot(session('country')->id, [
+            'is_popular' =>  $request->is_popular,
+        ]);
+
+        if ($request->is_popular == 1) {
+            return response()->json(['success' => 'Category Popular Activated']);
+        } else {
+            return response()->json(['success' => 'Category Popular Deactivated']);
         }
     }
 }
