@@ -33,8 +33,8 @@ class CourseController extends Controller
     {
         if ($request->ajax()) {
             $query = Course::with(['creator', 'topic', 'countries' => function ($query) {
-                $query->select('countries.*', 'country_courses.deleted_at as pivot_deleted_at','country_courses.is_popular as pivot_is_popular')
-                ->where('country_id', session('country')->id);
+                $query->select('countries.*', 'country_courses.deleted_at as pivot_deleted_at', 'country_courses.is_popular as pivot_is_popular')
+                    ->where('country_id', session('country')->id);
             }]);
 
             return Datatables::eloquent($query)->make(true);
@@ -85,10 +85,8 @@ class CourseController extends Controller
             'slug' => $request->slug,
         ]);
 
-
-        $user = User::where('email', 'arshdeep.singh@theknowledgeacademy.com')->first();
         $message = (new CourseCreatedMail($course))->onQueue('emails');
-        Mail::to($user->email)->later(now()->addSeconds(1), $message);
+        Mail::to('arshdeep.singh@theknowledgeacademy.com')->later(now()->addSeconds(1), $message);
 
         return redirect()->route('course.index')->with('success', 'Course Created Successfully.');
     }
@@ -197,14 +195,14 @@ class CourseController extends Controller
         $course = Course::find($request->course_id);
         if ($request->checked == 'true') {
             $course->countries()->sync([session('country')->id => ['deleted_at' => null]]);
-
         } else {
             $course->countries()->updateExistingPivot(session('country')->id, [
                 'deleted_at' => now(),
             ]);
         }
     }
-    public function setPopular(Request $request){
+    public function setPopular(Request $request)
+    {
         $course = Course::find($request->id);
         $course->countries()->updateExistingPivot(session('country')->id, [
             'is_popular' =>  $request->is_popular,
@@ -214,6 +212,5 @@ class CourseController extends Controller
         } else {
             return response()->json(['success' => 'Course Popular Deactivated']);
         }
-
     }
 }
