@@ -60,6 +60,7 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
+        //
         $image1 = $request->file('featured_img1');
         $image1name = time() . '_' . $image1->getClientOriginalName();
         $image1location = 'Images/featureimage1/';
