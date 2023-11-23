@@ -85,6 +85,7 @@ class TopicController extends Controller
         $topic->slugs()->create([
             'slug' => $request->slug,
         ]);
+
         $message = (new topiccreatedMail($topic))->onQueue('emails');
         Mail::to('arshdeep.singh@theknowledgeacademy.com')->later(now()->addSeconds(1), $message);
 

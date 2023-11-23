@@ -86,7 +86,6 @@
                                                 data: 'logo',
                                                 name: 'logo',
                                                 render: function(data, type, full, meta) {
-                                                    console.log(data);
                                                     if (data) {
                                                         return '<i class="fas fa-check text-primary"></i>';
                                                     } else {
@@ -132,8 +131,7 @@
                                                 orderable: false,
                                                 render: function(data, type, full, meta) {
                                                     var isChecked = full.countries.some(function(country) {
-                                                        // alert(country.pivot.deleted_at);
-                                                        return country.pivot.deleted_at == null;
+                                                                                                               return country.pivot.deleted_at == null;
                                                     });
 
                                                     return '<input type="checkbox" class="category-checkbox" data-category-id="' +
@@ -263,7 +261,7 @@
                 var popularstatus = $(this).data('popularstatus');
                 var dataVal = $(this).data('val');
                 var $toggle = $(this);
-                var url = '/categorysetpopular'; // Update with your URL
+                var url = '/categorysetpopular'; 
 
                 $.ajax({
                     type: "GET",
