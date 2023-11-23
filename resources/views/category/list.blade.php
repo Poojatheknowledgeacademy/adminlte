@@ -125,20 +125,25 @@
                                                         return '<i class="fas fa-toggle-on text-secondary"></i>';
                                                     }
                                                 }
-                                            },{
+                                            },
+
+                                            {
                                                 data: 'country',
                                                 name: 'country',
-                                                orderable: false,
                                                 render: function(data, type, full, meta) {
                                                     var isChecked = full.countries.some(function(country) {
-                                                                                                               return country.pivot.deleted_at == null;
+                                                        if (country.pivot.deleted_at == null) {
+                                                            return true;
+                                                        } else {
+                                                            return false;
+                                                        }
                                                     });
-
                                                     return '<input type="checkbox" class="category-checkbox" data-category-id="' +
                                                         full.id + '" ' +
                                                         (isChecked ? 'checked' : '') + '>';
                                                 }
-                                            },{
+                                            },
+                                            {
                                                 data: 'popular',
                                                 name: 'popular',
                                                 render: function(data, type, full, meta) {
@@ -154,6 +159,8 @@
                                                     }
                                                 }
                                             },
+
+
                                             {
                                                 data: 'created_at',
                                                 name: 'created_at',
@@ -213,31 +220,25 @@
 @endsection
 @push('child-scripts')
     <script>
-        function loadAllData() {
-            $('#table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('category.index') }}',
-                columns: columnStructure
-            });
-        }
-
-        function loadActiveData() {
-            $('#table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('getActiveCategories') }}',
-                columns: columnStructure
-            });
-        }
         $(document).ready(function() {
-            $('#table').on('click', '.is_active', function() {
-                var activestatus = $(this).data('activestatus');
-                var dataVal = $(this).data('val');
-                var $toggle = $(this);
-                var url = '/changecategoryStatus';
-                handleStatusToggle($toggle, activestatus, dataVal, url);
-            });
+            function loadAllData() {
+                $('#table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route('category.index') }}',
+                    columns: columnStructure
+                });
+            }
+
+            function loadActiveData() {
+                $('#table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route('getActiveCategories') }}',
+                    columns: columnStructure
+                });
+            }
+
             $('#customSwitch1').on('change', function() {
                 var isChecked = $(this).prop('checked');
                 $('#table').DataTable().destroy();
@@ -247,9 +248,9 @@
                     loadAllData();
                 }
             });
+
             loadAllData();
-        });
-        $(document).ready(function() {
+
             $('#table').on('click', '.is_active', function() {
                 var activestatus = $(this).data('activestatus');
                 var dataVal = $(this).data('val');
@@ -257,12 +258,12 @@
                 var url = '/changecategoryStatus';
                 handleStatusToggle($toggle, activestatus, dataVal, url);
             });
+
             $('#table').on('click', '.is_popular', function() {
                 var popularstatus = $(this).data('popularstatus');
                 var dataVal = $(this).data('val');
                 var $toggle = $(this);
-                var url = '/categorysetpopular'; 
-
+                var url = '/categorysetpopular';
                 $.ajax({
                     type: "GET",
                     dataType: "json",
@@ -272,8 +273,6 @@
                         'id': dataVal
                     },
                     success: function(data) {
-                        console.log('Success:', data);
-                        console.log('popularstatus:', popularstatus);
                         if (popularstatus === 1) {
                             $toggle.removeClass('text-secondary').addClass('text-primary');
                             $toggle.data('popularstatus', 0);
@@ -288,33 +287,25 @@
                     }
                 });
             });
-        });
 
-        $(document).on('click', '.category-checkbox', function() {
-
-            var categoryId = $(this).data('category-id');
-            // var countryId = $(this).data('codeselect');
-            var checked = $(this).prop('checked');
-            //alert(categoryId);
-            var url = '/country-category';
-
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: url,
-                data: {
-                    'id': categoryId,
-                    // 'country_id': countryId,
-                    'checked': checked,
-                },
-                success: function(data) {
-                    $checkbox.prop('checked', data.deleted_at === null);
-                }
+            $('#table').on('click', '.category-checkbox', function() {
+                var categoryId = $(this).data('category-id');
+                var isChecked = $(this).prop('checked');
+                var url = '/country-category';
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: url,
+                    data: {
+                        'id': categoryId,
+                        'checked': isChecked
+                    },
+                    success: function(data) {
+                        $checkbox.prop('checked', data.deleted_at === null);
+                    }
+                });
             });
 
         });
     </script>
-    {{-- <script>
-        var countryId = {{ session('country')->id ?? null }};
-    </script> --}}
 @endpush

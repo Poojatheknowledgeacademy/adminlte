@@ -48,17 +48,13 @@ class CategoryController extends Controller
      */
     public function create()
     {
-
         return view('category.create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(CategoryRequest $request): RedirectResponse
     {
-
-
         if ($request->file('icon')) {
             $icon = $request->file('icon');
             $icon_name = time() . '_' . $icon->getClientOriginalName();
@@ -107,7 +103,6 @@ class CategoryController extends Controller
         session()->flash('success', 'Category Created successfully.');
         return redirect()->route('category.index');
     }
-
     /**
      * Display the specified resource.
      */
@@ -115,7 +110,6 @@ class CategoryController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -124,7 +118,6 @@ class CategoryController extends Controller
         $slug = $category->slugs()->first();
         return view('category.edit', compact('category', 'slug'));
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -183,11 +176,9 @@ class CategoryController extends Controller
         session()->flash('success', 'Category updated successfully.');
         return redirect()->route('category.index');
     }
-
     /**
      * Remove the specified resource from storage.
      */
-
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
@@ -207,8 +198,17 @@ class CategoryController extends Controller
     }
     public function getActiveCategories()
     {
-        $query = Category::where('is_active', 1)->with('creator');
-        return Datatables::eloquent($query)->make(true);
+        if (request()->ajax()) {
+            $query = Category::where('is_active', 1)
+                ->with([
+                    'creator',
+                    'countries' => function ($query) {
+                        $query->select('countries.*', 'country_category.deleted_at as pivot_deleted_at', 'country_category.is_popular as pivot_is_popular')
+                            ->where('country_id', session('country')->id);
+                    },
+                ]);
+            return Datatables::eloquent($query)->make(true);
+        }
     }
     public function trashedCategory(Request $request)
     {
@@ -232,10 +232,8 @@ class CategoryController extends Controller
         session()->flash('danger', 'Category Deleted successfully.');
         return view('trash.category_list');
     }
-
     public function storeCategoryCountry(Request $request)
     {
-
         // print_r($request->all());
         $category = Category::find($request->id);
 
