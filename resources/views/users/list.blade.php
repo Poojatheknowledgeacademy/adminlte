@@ -29,7 +29,7 @@
                                         href="{{ route('users.create') }}"> Create New User</a>
                                 </div>
                             </div>
-                         
+
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div class="table-responsive">

@@ -37,18 +37,17 @@ Route::get('/login',        [AuthController::class, 'index'])->name('login');
 Route::post('custom-login', [AuthController::class, 'customLogin'])->name('login.custom');
 Route::post('logout',       [AuthController::class, 'logout'])->name('logout');
 
+
+Route::resource('permission',       PermissionController::class);
+Route::resource('roles',            RoleController::class);
+
+// Route::resource('users',         UserController::class);
 Route::middleware(['auth'])->group(function () {
 
-    // Route::group(['prefix' => '{country?}', 'where' => ['country' => '[a-z]{2}'], 'middleware' => 'country'], function () {
+
     Route::get('dashboard',             [HomeController::class, 'index'])->name('dashboard.index');
 
-    //});
-    // Route::get('aa/{name?}', function (?string $name = null) {
-    //     return $name;
-    // });
-
-
-    Route::resource('users',         UserController::class);
+    //    Route::resource('users',         UserController::class);
     Route::resource('category',         CategoryController::class);
     Route::resource('blogs',            BlogController::class);
     Route::resource('topic',            TopicController::class);

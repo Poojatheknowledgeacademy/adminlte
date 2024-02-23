@@ -13,10 +13,10 @@ class RoleController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:role-list|role-insert|role-update|role-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:role-insert', ['only' => ['insert', 'store']]);
-        $this->middleware('permission:role-update', ['only' => ['update', 'update']]);
-        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        // $this->middleware('permission:role-list|role-insert|role-update|role-delete', ['only' => ['index', 'store']]);
+        // $this->middleware('permission:role-insert', ['only' => ['insert', 'store']]);
+        // $this->middleware('permission:role-update', ['only' => ['update', 'update']]);
+        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -51,6 +51,7 @@ class RoleController extends Controller
 
         if ($request->permissions) {
             $selectedPermissions = $request->input('permissions', []);
+            // dd($selectedPermissions);
             $role->syncPermissions($selectedPermissions);
         }
         return redirect()->route('roles.index')->with('success', 'Role created successfully');
